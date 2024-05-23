@@ -1,0 +1,17 @@
+
+
+.resultsSection{
+     width:90%;
+     display: flex;
+     margin: auto;
+     height: 40vh;
+     flex-direction: column;
+     justify-content: space-around;
+     margin-bottom: 5rem;
+}
+
+.resultsSection div{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}

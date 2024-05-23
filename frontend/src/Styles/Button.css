@@ -1,0 +1,36 @@
+#button {
+     font-weight: 600;
+     background-color: rgb(33, 149, 216);
+     border-radius: 0.4rem;
+     display: flex;
+     /* font-size: 1.5rem; */
+     position: relative;
+     justify-content: center;
+     align-items: center;
+     padding: 1rem 2.5rem;
+     overflow: hidden;
+     color: white;
+     transition: all 0.2s ease-in-out;
+     width: max-content;
+}
+
+#button::after {
+     content: '';
+     height: 100%;
+     transition: width 0.5s ease-in-out;
+     border-radius: inherit;
+     width: 0;
+     background: rgb(79, 12, 204);
+     position: absolute;
+     top: 0;
+     left: 0;
+}
+
+#button:hover::after {
+     width: 100%;
+}
+
+#button span {
+     position: relative;
+     z-index: 1;
+}

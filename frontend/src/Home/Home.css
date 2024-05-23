@@ -1,0 +1,28 @@
+#navigation {
+     display: flex;
+     width: 100%;
+     margin-top: 2rem;
+}
+
+#landingPage {
+     position: relative;
+     height: 90vh;
+     width: 100%;
+     overflow: visible;
+     background-repeat: no-repeat;
+     background-size: cover;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+}
+
+#working{
+     margin-top: 1rem;
+}
+
+#results, #regulations, #form{
+     margin-top: 5rem;
+}
+
+

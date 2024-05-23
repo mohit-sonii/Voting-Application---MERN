@@ -1,0 +1,27 @@
+.formSection {
+     width: 90%;
+     display: flex;
+     margin: auto;
+     flex-direction: column;
+     justify-content: space-around;
+     gap: 5rem;
+     margin-bottom: 5rem;
+}
+
+.form-headings{
+     display: flex;
+     gap: 2rem;
+     flex-direction: column;
+}
+
+
+.ele input, select {
+     width: 400px;
+     border: none;
+     outline: none;
+     border-radius: 0.5rem;
+     padding: 1rem;
+     border: 1px solid black;
+     height: 50px;
+}
+

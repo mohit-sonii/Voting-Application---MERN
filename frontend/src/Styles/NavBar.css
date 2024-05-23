@@ -1,0 +1,62 @@
+.navbar {
+     width: 90%;
+     margin: auto;
+     justify-content: space-between;
+     display: flex;
+     gap: 2rem;
+     align-items: center;
+}
+
+.navbar .leftSide {
+     display: flex;
+     gap: 0.5rem;
+     align-items: center;
+}
+
+.navbar .leftSide img {
+     width: 6rem;
+     height: 6rem;
+}
+
+.navbar .leftSide p {
+     font-size: 2rem;
+     font-weight: 800;
+}
+
+.navbar .rightSide {
+     display: flex;
+     gap: 3rem;
+}
+
+.navbar .rightSide ul {
+     display: flex;
+     gap: 3rem;
+     justify-content: center;
+     align-items: center;
+}
+
+ul li {
+     cursor: pointer;
+     text-decoration: none;
+     transition: all 0.2s ease-in-out;
+     list-style-type: none;
+     position: relative;
+     font-weight: 400;
+}
+ul li::after{
+     content: '';
+     width: 0;
+     position: absolute;
+     height: 3px;
+     transition: all 0.5s ease-in-out;
+     border-radius: 1rem;
+     bottom:-6px;
+     background-color: rgb(79, 12, 204);
+     left: 0;
+}
+ul li:hover::after{
+     width: 100%;
+} 
+ul li:hover{
+     font-weight: 600;
+}

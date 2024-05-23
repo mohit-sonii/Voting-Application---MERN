@@ -1,0 +1,36 @@
+
+#rules{
+     margin: auto;
+     width: 90%;
+     gap: 6rem;
+     display: flex;
+     flex-direction: column;
+}
+
+
+
+#rules .innerDes span{
+     text-align: left;
+     display: flex;
+     justify-content: space-between;
+     line-height: normal;
+     width: 80%;
+     flex-direction: row; 
+     margin: auto;
+}
+
+.innerDes{
+     width: 100%;
+     display: flex;
+     gap: 1.5rem;
+     flex-direction: column;
+}
+.innerDes .numberDes{
+     width: 90%;
+}
+
+@media screen and (max-width:640px) {
+     #rules .innerDes span{
+          width: 100%;
+     }
+}

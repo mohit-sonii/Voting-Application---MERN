@@ -1,0 +1,44 @@
+
+
+#workSection{
+     width: 90%;
+     margin: auto;
+     display: flex;
+     gap: 5rem;
+     justify-content: center;
+     align-items: center;
+}
+
+.workProcess .stage img{
+     height: 250px;
+     width: 250px;
+}
+.workProcess .stage{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+.stage p{
+     font-size: 2rem;
+     display: flex;
+     gap: 1rem;
+     font-weight: 500;
+     justify-content: center;
+     align-items: center;
+}
+.workProcess .stage p img{
+     width: 25px;
+     height: 25px;
+}
+
+#workSection .innerDes{
+     font-size: 1.5rem;
+     text-align: center;
+     font-weight: 200;
+}
+#workSection .workHeading .innerDes{
+     text-align: left;
+     display: flex;
+     flex-direction: column;
+}

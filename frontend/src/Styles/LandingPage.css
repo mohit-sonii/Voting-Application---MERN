@@ -1,0 +1,31 @@
+section {
+     display: flex;
+     flex-direction: column;
+     width: 90%;
+     z-index: 2;
+     justify-content: center;
+     /* height: 80vh; */
+     margin:auto;
+     align-items: center;
+}
+
+section div {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     gap: 3rem;
+     text-align: left;
+     height: max-content;
+}
+
+section div .heading {
+     line-height: normal;
+     font-weight: 800;
+}
+
+section div .subheading {
+     line-height: normal;
+     width: 80%;
+     text-align: left;
+     font-weight: 400;
+}
