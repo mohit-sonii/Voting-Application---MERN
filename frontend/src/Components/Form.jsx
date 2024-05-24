@@ -6,25 +6,6 @@ function Form() {
 
      const [data, setData] = useState({ username: '', phone: '', state: '', pinCode: '', email: '', message: '', voterCard: '', query: '' })
 
-
-     const initialArticle = [];
-     const [articles, setArticles] = useState(initialArticle)
-
-     const getArticles = async () => {
-          const response = await fetch(('http://localhost:27017/votingApplication.api'), {
-               method: 'GET',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify()
-          })
-               .then(resp => resp.json())
-               .catch(error => console.error(error.message))
-          setArticles(response)
-     }
-
-     useEffect(()=>{
-          getArticles()
-     },[])
-
      const handleChange = (e) => {
 
           const { name, value } = e.target

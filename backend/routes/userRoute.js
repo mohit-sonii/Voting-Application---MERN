@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
      try {
           const showData = await user.find();
           res.status(200).json(showData)
+
      } catch (err) {
           res.status(400).json({ message: "Failed to get the Data from DBMS" })
           console.log(err + " Error in getting data from server")
@@ -36,7 +37,7 @@ router.post('/auth/login', async (req, res) => {
           const { uniqueIdNumber, password } = req.body
           const userData = await user.findOne({ uniqueIdNumber: uniqueIdNumber })
           const passMatch = await userData.comparePassword(password)
-          if (!userData || !passMatch) return res.status(204).json({ error: 'Either unique Number or password is incorrect' })
+          if (!userData || !passMatch) return res.status(204).json({ response: 'Either unique Number or password is incorrect' })
           const payload = {
                id: userData.id
           }
@@ -48,18 +49,5 @@ router.post('/auth/login', async (req, res) => {
      }
 })
 
-// router.get('/profile',async(req,res)=>{
-//      try {
-//           const userData = req.user;
-//           const userId = userData.id
-//           const user = await user.findById(userId)
-//           res.status(200).json({user})
-
-//      } catch (error) {
-//           console.log('Error in reaching to profile',error)
-//           res.status(500).json({error:'Error in fetching response'})
-
-//      }
-// })
 
 export default router
