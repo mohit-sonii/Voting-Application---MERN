@@ -14,7 +14,7 @@ router.get('/api',async(req,res)=>{
 
           //extracting only states name
           const onlyState = stateArray.map(item=>item.state)
-
+ 
           //to get a district list of a particular state.
           const distList = stateArray.find(item=>item.state.toLowerCase() === "bihar")
           if(distList){
