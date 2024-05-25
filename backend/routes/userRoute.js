@@ -7,6 +7,16 @@ import admin from '../model/admin.js'
 // import db from '../db.js'
 
 const router = express.Router()
+
+let currentUserType = 'user'; // Variable to hold the current user type
+
+const setUserType = (value) => {
+    currentUserType = value;
+};
+
+const whoTheUser = () => {
+    return currentUserType; // Return the user type
+};
 router.post('/auth/signup', async (req, res) => {
      try {
           // accept data form the body section
@@ -62,6 +72,8 @@ router.post('/auth/login', async (req, res) => {
                          const token = generateToken(payload)
                          //print that you are an admin
                          console.log('You are an admin')
+                         // toggle who the user is
+                         setUserType('admin')
                          // give response 
                          res.status(200).json({ adminData, token })
                     }
@@ -146,4 +158,5 @@ router.patch('/auth/forget-password/create-new-password/:id', async (req, res) =
 
 
 
-export default router
+// export  {router,whoTheUser}
+export { router as userRoute, whoTheUser, setUserType }

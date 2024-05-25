@@ -2,7 +2,6 @@
 import mongoose from 'mongoose'
 import env from 'dotenv'
 import bcrypt from 'bcrypt'
-import db from '../db.js'
 env.config()
 
 const adminSchema = new mongoose.Schema({
