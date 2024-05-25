@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
      password: {
           type: String,
           required: true
+     },
+     isVoted:{
+          type:Boolean,
+          default:false
      }
 })
 
@@ -42,7 +46,7 @@ userSchema.pre('save', async function (next) {
      // if the user hasnot modified the password then move one
      if (!user.isModified('password')) return next()
 
-          // if the user has modified 
+     // if the user has modified 
      try {
           // generate a salt using bcrypt 
           const salt = await bcrypt.genSalt(10)
@@ -68,7 +72,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
           const isMatch = await bcrypt.compare(candidatePassword, this.password)
           return isMatch
      } catch (error) {
-          console.log('Comparing an wrror causes preoblem', error)
+          console.log('Comparing an wrror causes preoblem', error.message)
      }
 }
 
