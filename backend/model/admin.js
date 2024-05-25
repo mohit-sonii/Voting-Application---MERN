@@ -19,7 +19,9 @@ const adminSchema = new mongoose.Schema({
 
 
 async function hashAdminPass(password) {
+     // generate a salt 
      const salt = await bcrypt.genSalt(10)
+     // hash the password
      return await bcrypt.hash(password, salt)
 }
 
