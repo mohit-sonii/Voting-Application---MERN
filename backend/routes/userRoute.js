@@ -11,11 +11,11 @@ const router = express.Router()
 let currentUserType = 'user'; // Variable to hold the current user type
 
 const setUserType = (value) => {
-    currentUserType = value;
+     currentUserType = value;
 };
 
 const whoTheUser = () => {
-    return currentUserType; // Return the user type
+     return currentUserType; // Return the user type
 };
 router.post('/auth/signup', async (req, res) => {
      try {
@@ -40,9 +40,14 @@ router.post('/auth/signup', async (req, res) => {
 
 router.get('/', async (req, res) => {
      try {
-          // to see the data 
-          const showData = await user.find();
-          res.status(200).json(showData)
+          if (whoTheUser() === 'admin') {
+
+               // to see the data 
+               const showData = await user.find();
+               res.status(200).json(showData)
+          } else {
+               res.status(401).json({ message: 'You are not authorized to use this API' })
+          }
 
      } catch (err) {
           res.status(400).json({ message: "Failed to get the Data from DBMS" })
@@ -100,10 +105,10 @@ router.post('/auth/login', async (req, res) => {
                     // send response
                     res.status(200).json({ userData, token })
                     console.log('you are a user')
-               } 
+               }
                // if the passowrd is incorrect
                else {
-                    res.status(400).json({ message: 'Either Id aur password is incorrect'})
+                    res.status(400).json({ message: 'Either Id aur password is incorrect' })
                }
           }
      } catch (err) {

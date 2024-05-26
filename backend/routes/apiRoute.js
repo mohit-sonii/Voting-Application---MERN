@@ -3,7 +3,7 @@ import db from "../db.js";
 import express from 'express'
 const router = express.Router()
 
-router.get('/api',async(req,res)=>{
+router.get('/api-data',async(req,res)=>{
      try{
           //going to the collection where the data is stored
           const apiCollection = db.collection('api')

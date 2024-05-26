@@ -11,7 +11,7 @@ import apiRoute from './routes/apiRoute.js'
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
-app.use('/', userRoute)
+app.use('/user', userRoute)
 app.use('/api', apiRoute)
 app.use('/candidate', candidateRoute)
 
