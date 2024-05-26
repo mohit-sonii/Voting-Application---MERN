@@ -10,31 +10,42 @@ function Form() {
      // state to store all the possible states of the country. usually fethcing from API
      const [states, setState] = useState([])
 
+     // this function is used to update the data value everytime when input field gets changed
      const handleChange = (e) => {
+          // destructure the 'name' and 'value' from target field
           const { name, value } = e.target
+          // if the 'name' for an field is 'phone' then do 
           if (name == 'phone') {
+               // validate that only Integers should allowed
                const numericRegex = /^\d*$/; // Regex to allow only integers
+               // if the test does not contain an integer then reutrn simply that means do nothing
                if (!numericRegex.test(value)) {
                     return;
                }
 
           }
+          // if alll the field are coorect then do update the value of that particular changed state
           setData({ ...data, [e.target.name]: e.target.value })
-          console.log({ ...data, [e.target.name]: e.target.value })
+          // console it just for validation
+          // console.log({ ...data, [e.target.name]: e.target.value })
      }
 
      useEffect(() => {
+          // on mouting run this function
           const getState = async () => {
                try {
+                    // fetch the API where 'states' are stored
                     const response = await axios.get('http://localhost:5000/api/api-data');
+                    // take data from that JSON
                     setState(response.data);
                     // console.log(response.data)
                } catch (error) {
+                    // catch errors in case of any
                     console.log(error.message)
                }
           };
           getState();
-     }, []);
+     }, []);// will run only when the component mount
 
      return (
           <div className="formSection">
@@ -63,6 +74,7 @@ function Form() {
                     </div>
                     <div className="ele states">
                          <select name="state" value={data.state} id="state-name" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                              {/* It should map all the states from the states list that comes after fetching the API where all the states are stored. Use their index as the Key */}
                               <option value="">Select your State</option>
                               {states && states.length > 0 && states.map((ele, index) => (
                                    <option key={index} value={ele.state}>{ele}</option>
