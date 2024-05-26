@@ -6,15 +6,13 @@ import Work from '../Components/Work'
 import Results from '../Components/Results'
 import Rules from '../Components/Rules'
 import Form from '../Components/Form'
-import { useEffect } from 'react'
-// import CountDown from '../Components/CountDown'
-
+import FormSec from '../Components/FormSec'
 
 
 
 function Home() {
      return (
-          <div className='home flex   h-full flex-col'>
+          <div className='home flex  h-full flex-col'>
                <div id="navigation">
                     <Navbar />
                </div>
@@ -30,8 +28,7 @@ function Home() {
                <div id="regulations">
                     <Rules />
                </div>
-               {/* <CountDown/> */}
-               <div id="form">
+               <div id="contact">
                     <Form />
                </div>
 

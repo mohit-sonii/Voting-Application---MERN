@@ -1,7 +1,10 @@
-import image from '../../assets/logo.png'
+// Navbar.js
+import image from '../../assets/logo.png';
 import Button from './Button';
-import '../Styles/NavBar.css'
-import { Link } from 'react-router-dom'
+import '../Styles/NavBar.css';
+import { Link } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
+// scrollLink is used to add a smooth scrolling effect when a user click on the item in the navbar it will navigate to that section
 
 const Navbar = () => {
      return (
@@ -13,16 +16,28 @@ const Navbar = () => {
                <div className="rightSide">
                     <ul className='text-2xl  2xl:text-4xl'>
                          <li>
-                             <Link to='/'> Home</Link>
+                              <Link to='/'>Home</Link>
                          </li>
                          <li>
-                              How it Works
+                              <ScrollLink to="working" smooth={true} duration={1000}>
+                                   How it Works
+                              </ScrollLink>
                          </li>
                          <li>
-                              Results
+                              <ScrollLink to="results" smooth={true} duration={1000}>
+                                   Results
+                              </ScrollLink>
                          </li>
-                         <li>Rules</li>
-                         <li>Contact Us</li>
+                         <li>
+                              <ScrollLink to="regulations" smooth={true} duration={1000}>
+                                   Rules
+                              </ScrollLink>
+                         </li>
+                         <li>
+                              <ScrollLink to="contact" smooth={true} duration={1000}>
+                                   Contact Us
+                              </ScrollLink>
+                         </li>
                     </ul>
                     <Button innerText="Register" />
                </div>

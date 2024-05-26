@@ -8,20 +8,20 @@
      margin-bottom: 5rem;
 }
 
-.form-headings{
+.form-headings {
      display: flex;
      gap: 2rem;
      flex-direction: column;
 }
 
 
-.ele input, select {
+.ele input,
+select {
      width: 400px;
      border: none;
      outline: none;
      border-radius: 0.5rem;
-     padding: 1rem;
+     padding: 1.5rem;
      border: 1px solid black;
      height: 50px;
 }
-
