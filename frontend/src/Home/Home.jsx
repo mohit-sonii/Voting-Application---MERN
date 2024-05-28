@@ -6,7 +6,6 @@ import Work from '../Components/Work'
 import Results from '../Components/Results'
 import Rules from '../Components/Rules'
 import Form from '../Components/Form'
-import FormSec from '../Components/FormSec'
 
 
 

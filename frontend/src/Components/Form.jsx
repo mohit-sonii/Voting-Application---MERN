@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react"
 import "../Styles/Form.css"
 import axios from 'axios'
-import Button from './Button'
+import Button from "./Button"
+import { useNavigate } from 'react-router-dom'
 
 function Form() {
 
@@ -15,6 +16,8 @@ function Form() {
      // to store all the API states,districts data
      const [apiAreas, setArea] = useState([])
 
+     const [isSubmitted, setSubmit] = useState(false)
+     const navigate = useNavigate()
 
      // this function is used to update the data value everytime when input field gets changed
      const handleChange = (e) => {
@@ -91,10 +94,45 @@ function Form() {
           }
      }
 
-     const handleClick = (e)=>{
+     const handleSubmit = async (e) => {
           e.preventDefault()
-          const doubt = {username,email,query,phone,state,district,message}
-          const response = 
+          try {
+
+               const addQuery = {
+                    username: data.username,
+                    phone: data.phone,
+                    state: data.state,
+                    district: data.district,
+                    email: data.email,
+                    message: data.message,
+                    query: data.query
+               };
+               const response = await axios.post('http://localhost:5000/query', addQuery, {
+                    headers: {
+                         "Content-Type": "application/json"
+                    }
+               })
+               if (response.status === 200) {
+                    setData({
+                         username: '',
+                         phone: '',
+                         state: '',
+                         email: '',
+                         message: '',
+                         query: '',
+                         district: ''
+                    })
+                    console.log('submit successfully')
+                    setSubmit(true)
+                    navigate('/')
+               } else {
+                    console.log('error in form submition')
+               }
+          } catch (err) {
+               console.log('error in form submition' + err.message)
+
+          }
+
      }
 
      return (
@@ -125,7 +163,7 @@ function Form() {
                               </select>
                          </div>
                          <div className="ele email">
-                              <input type="email" name="email" value={data.email} id="email" className="text-lg lg:text-xl xl:text-2xl" placeholder="Enter your Email" />
+                              <input type="email" name="email" value={data.email} id="email" className="text-lg lg:text-xl xl:text-2xl" placeholder="Enter your Email" onChange={handleChange} />
                          </div>
 
                          <div className="ele states">
@@ -138,7 +176,7 @@ function Form() {
                               </select>
                          </div>
                          <div className="ele districts">
-                              <select name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                              <select value={data.district} name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
                                    {/* It will map all the district extracted from the API */}
                                    <option value="">Select your District</option>
                                    {districts && districts.length > 0 && districts.map((ele, index) => (
@@ -148,12 +186,13 @@ function Form() {
                          </div>
                     </div>
                     <div className="ele message ">
-                         <textarea placeholder="Enter your message" name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
+                         <textarea value={data.message} placeholder="Enter your message" name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
                     </div>
                     <div className="button">
-                         <button type="submit" onClick={handleClick}><Button innerText={"Submit"}/></button>
+                         <button type="submit" onClick={handleSubmit} id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Submit</span></button>
                     </div>
                </form>
+               {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
           </div>
      )
 }
