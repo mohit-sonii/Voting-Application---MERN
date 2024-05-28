@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import "../Styles/Form.css"
 import axios from 'axios'
+import Button from './Button'
 
 function Form() {
 
@@ -95,48 +96,54 @@ function Form() {
                     <p className="text-2xl lg:text-2xl xl:text-3xl font-extralight">Report any problems or concerns related to the voting process</p>
                </div>
 
-               <form className="grid sm:grid-cols-2 gap-10" >
-                    <div className="ele username">
-                         <input className="text-lg lg:text-xl xl:text-2xl " type="text" name="username" value={data.username} id="username" onChange={handleChange} placeholder="Enter your name" required />
-                    </div>
-                    <div className="ele phone">
-                         <input className="text-lg lg:text-xl xl:text-2xl " type="tel" name="phone" value={data.phone} id="phone" onChange={handleChange} placeholder="Enter your Phone Number" required />
-                    </div>
-                    <div className="ele query">
-                         <select className="text-lg lg:text-xl xl:text-2xl" id="contact-type" name="query" onChange={handleChange} value={data.query} required>
-                              <option value=""  >Select your Query Type</option>
-                              <option value="general-inquiries">General Inquiries</option>
-                              <option value="technical-support">Technical Support</option>
-                              <option value="voting-issues">Voting Issues</option>
-                              <option value="feedback-suggestions">Feedback and Suggestions</option>
-                              <option value="dispute-resolution">Dispute Resolution</option>
-                              <option value="partnerships-collaborations">Partnerships and Collaborations</option>
-                         </select>
-                    </div>
-                    <div className="ele email">
-                         <input type="email" name="email" value={data.email} id="email" className="text-lg lg:text-xl xl:text-2xl" placeholder="Enter your Email" />
-                    </div>
+               <form className="flex " >
+                    <div className="allEnteries w-full grid  grid-cols-1 sm:grid-cols-2 gap-10  justify-between">
 
-                    <div className="ele states">
-                         <select name="state" value={data.state} id="state" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
-                              {/* It should map all the states from the states list that comes after fetching the API where all the states are stored. Use their index as the Key */}
-                              <option value="">Select your State</option>
-                              {states && states.length > 0 && states.map((ele, index) => (
-                                   <option key={index} value={ele.state}>{ele}</option>
-                              ))}
-                         </select>
-                    </div>
-                    <div className="ele districts">
-                         <select name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
-                              <option value="">Select your District</option>
-                              {/* {!districts && <option value="">Select your District</option>} */}
-                              {districts && districts.length > 0 && districts.map((ele, index) => (
-                                   <option key={index} value={ele}>{ele}</option>
-                              ))}
-                         </select>
+                         <div className="ele username">
+                              <input className="text-lg lg:text-xl xl:text-2xl " type="text" name="username" value={data.username} id="username" onChange={handleChange} placeholder="Enter your name" required />
+                         </div>
+                         <div className="ele phone">
+                              <input className="text-lg lg:text-xl xl:text-2xl " type="tel" name="phone" value={data.phone} id="phone" onChange={handleChange} placeholder="Enter your Phone Number" required />
+                         </div>
+                         <div className="ele query">
+                              <select className="text-lg lg:text-xl xl:text-2xl" id="contact-type" name="query" onChange={handleChange} value={data.query} required>
+                                   <option value=""  >Select your Query Type</option>
+                                   <option value="general-inquiries">General Inquiries</option>
+                                   <option value="technical-support">Technical Support</option>
+                                   <option value="voting-issues">Voting Issues</option>
+                                   <option value="feedback-suggestions">Feedback and Suggestions</option>
+                                   <option value="dispute-resolution">Dispute Resolution</option>
+                                   <option value="partnerships-collaborations">Partnerships and Collaborations</option>
+                              </select>
+                         </div>
+                         <div className="ele email">
+                              <input type="email" name="email" value={data.email} id="email" className="text-lg lg:text-xl xl:text-2xl" placeholder="Enter your Email" />
+                         </div>
+
+                         <div className="ele states">
+                              <select name="state" value={data.state} id="state" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                                   {/* It should map all the states from the states list that comes after fetching the API where all the states are stored. Use their index as the Key */}
+                                   <option value="">Select your State</option>
+                                   {states && states.length > 0 && states.map((ele, index) => (
+                                        <option key={index} value={ele.state}>{ele}</option>
+                                   ))}
+                              </select>
+                         </div>
+                         <div className="ele districts">
+                              <select name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                                   <option value="">Select your District</option>
+                                   {/* {!districts && <option value="">Select your District</option>} */}
+                                   {districts && districts.length > 0 && districts.map((ele, index) => (
+                                        <option key={index} value={ele}>{ele}</option>
+                                   ))}
+                              </select>
+                         </div>
                     </div>
                     <div className="ele message ">
-                         <textarea name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
+                         <textarea placeholder="Enter your message" name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
+                    </div>
+                    <div className="button">
+                         <button type="submit"><Button innerText={"Submit"}/></button>
                     </div>
                </form>
           </div>
