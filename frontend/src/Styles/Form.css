@@ -1,7 +1,6 @@
 .formSection {
      width: 90%;
      display: flex;
-     background-color: orange;
      margin: auto;
      flex-direction: column;
      justify-content: space-around;
@@ -15,28 +14,34 @@
      flex-direction: column;
 }
 
-.ele{
-     background-color:pink;
-}
-
 .ele input,
 select {
-     width: 400px;
+     width: 100%;
      border: none;
      outline: none;
      border-radius: 0.5rem;
-     padding: 1.5rem;
+     padding: 1rem;
      border: 1px solid black;
-     height: 50px;
+     height: 60px;
+}
+
+.ele{
+     width: 100%;
 }
 
 .textarea{
      width: 100%;
      border: none;
      border-radius: 0.5rem;
-     height: 200%;
      outline: none;
      color: #494848;
      border: 1px solid black;
      padding: 1.5rem;
+}
+
+form{
+     flex-direction: column;
+     width: 90%;
+     justify-content: center;
+     gap: 2.5rem;
 }

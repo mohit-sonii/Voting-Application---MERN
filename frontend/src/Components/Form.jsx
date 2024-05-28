@@ -7,7 +7,7 @@ import Button from './Button'
 function Form() {
 
      // state to manage all the values in the form
-     const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', voterCard: '', query: '' })
+     const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', query: '' })
      // state to store all the possible states of the country. usually fethcing from API
      const [states, setState] = useState([])
      // state to store all the district of that particular state
@@ -32,7 +32,7 @@ function Form() {
           // if alll the field are coorect then do update the value of that particular changed state
           setData({ ...data, [e.target.name]: e.target.value })
           // console it just for validation
-          console.log({ ...data, [e.target.name]: e.target.value })
+          // console.log({ ...data, [e.target.name]: e.target.value })
      }
 
 
@@ -73,6 +73,7 @@ function Form() {
      useEffect(() => {
           // if (states.length > 0) {
           setDistricts('')
+          // make the district value empty 
           setData({ ...data, [data.district]: '' })
 
           getDistrict()
@@ -81,12 +82,19 @@ function Form() {
 
      const getDistrict = async () => {
           try {
-               // finding the index for the state 
+               // finding the state from the array
                const dis = apiAreas.find(item => item.state === data.state)
+               // when found add that district in list
                setDistricts(dis.districts)
           } catch (err) {
                console.log(err.message)
           }
+     }
+
+     const handleClick = (e)=>{
+          e.preventDefault()
+          const doubt = {username,email,query,phone,state,district,message}
+          const response = 
      }
 
      return (
@@ -131,8 +139,8 @@ function Form() {
                          </div>
                          <div className="ele districts">
                               <select name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                                   {/* It will map all the district extracted from the API */}
                                    <option value="">Select your District</option>
-                                   {/* {!districts && <option value="">Select your District</option>} */}
                                    {districts && districts.length > 0 && districts.map((ele, index) => (
                                         <option key={index} value={ele}>{ele}</option>
                                    ))}
@@ -143,7 +151,7 @@ function Form() {
                          <textarea placeholder="Enter your message" name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
                     </div>
                     <div className="button">
-                         <button type="submit"><Button innerText={"Submit"}/></button>
+                         <button type="submit" onClick={handleClick}><Button innerText={"Submit"}/></button>
                     </div>
                </form>
           </div>
