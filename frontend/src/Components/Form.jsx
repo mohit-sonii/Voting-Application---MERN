@@ -6,9 +6,14 @@ import axios from 'axios'
 function Form() {
 
      // state to manage all the values in the form
-     const [data, setData] = useState({ username: '', phone: '', state: '', pinCode: '', email: '', message: '', voterCard: '', query: '' })
+     const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', voterCard: '', query: '' })
      // state to store all the possible states of the country. usually fethcing from API
      const [states, setState] = useState([])
+     // state to store all the district of that particular state
+     const [districts, setDistricts] = useState([])
+     // to store all the API states,districts data
+     const [apiAreas, setArea] = useState([])
+
 
      // this function is used to update the data value everytime when input field gets changed
      const handleChange = (e) => {
@@ -22,30 +27,66 @@ function Form() {
                if (!numericRegex.test(value)) {
                     return;
                }
-
           }
           // if alll the field are coorect then do update the value of that particular changed state
           setData({ ...data, [e.target.name]: e.target.value })
           // console it just for validation
-          // console.log({ ...data, [e.target.name]: e.target.value })
+          console.log({ ...data, [e.target.name]: e.target.value })
      }
 
+
+     async function getAreaDetail() {
+          // fetch the API before hand so that we do not need to doit again and again
+          const response = await axios.get('http://localhost:5000/api/api-data')
+          // store the API data in a state.
+          setArea(response.data)
+     }
+
+     // whne the component mount call that function
      useEffect(() => {
-          // on mouting run this function
-          const getState = async () => {
-               try {
-                    // fetch the API where 'states' are stored
-                    const response = await axios.get('http://localhost:5000/api/api-data');
-                    // take data from that JSON
-                    setState(response.data);
-                    // console.log(response.data)
-               } catch (error) {
-                    // catch errors in case of any
-                    console.log(error.message)
-               }
-          };
-          getState();
-     }, []);// will run only when the component mount
+          getAreaDetail()
+     }, []) // run only once
+
+     // when the apiAreas state change then run this function
+     useEffect(() => {
+          // if that state has vlaue only then call the getSate function
+          if (apiAreas.length > 0) {
+               getState()
+          }
+     }, [apiAreas]) // however because we have stored the API data in a vairable this will run only once
+
+
+     const getState = async () => {
+          try {
+               // now the API data is in 'apiAreas' state, do iterate to get the states
+               const res = apiAreas.map((item) => item.state)
+               // update the state
+               setState(res)
+
+          } catch (error) {
+               // catch errors in case of any
+               console.log(error.message)
+          }
+     };
+
+     useEffect(() => {
+          // if (states.length > 0) {
+          setDistricts('')
+          setData({ ...data, [data.district]: '' })
+
+          getDistrict()
+          // }
+     }, [data.state])
+
+     const getDistrict = async () => {
+          try {
+               // finding the index for the state 
+               const dis = apiAreas.find(item => item.state === data.state)
+               setDistricts(dis.districts)
+          } catch (err) {
+               console.log(err.message)
+          }
+     }
 
      return (
           <div className="formSection">
@@ -72,8 +113,12 @@ function Form() {
                               <option value="partnerships-collaborations">Partnerships and Collaborations</option>
                          </select>
                     </div>
+                    <div className="ele email">
+                         <input type="email" name="email" value={data.email} id="email" className="text-lg lg:text-xl xl:text-2xl" placeholder="Enter your Email" />
+                    </div>
+
                     <div className="ele states">
-                         <select name="state" value={data.state} id="state-name" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                         <select name="state" value={data.state} id="state" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
                               {/* It should map all the states from the states list that comes after fetching the API where all the states are stored. Use their index as the Key */}
                               <option value="">Select your State</option>
                               {states && states.length > 0 && states.map((ele, index) => (
@@ -81,7 +126,18 @@ function Form() {
                               ))}
                          </select>
                     </div>
-
+                    <div className="ele districts">
+                         <select name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
+                              <option value="">Select your District</option>
+                              {/* {!districts && <option value="">Select your District</option>} */}
+                              {districts && districts.length > 0 && districts.map((ele, index) => (
+                                   <option key={index} value={ele}>{ele}</option>
+                              ))}
+                         </select>
+                    </div>
+                    <div className="ele message ">
+                         <textarea name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
+                    </div>
                </form>
           </div>
      )

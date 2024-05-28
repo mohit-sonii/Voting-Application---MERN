@@ -10,11 +10,11 @@ router.get('/api-data',async(req,res)=>{
           // converting the collection data into an array
           const apiData = await apiCollection.find().toArray()
           //extracting only states array values
-          const stateArray = apiData.map(item=>item.states).flat()
+          const stateArray = apiData.map((item)=>item.states).flat()
 
           //extracting only states name
-          const onlyState = stateArray.map(item=>item.state)
-          res.status(200).json(onlyState)
+          // const onlyState = stateArray.map(item=>item.state)
+          res.status(200).json(stateArray)
  
           //to get a district list of a particular state.
           /*
