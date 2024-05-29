@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
     "react-scroll": "^1.9.0",
+    "react-transition-group": "^4.4.5",
     "tw-elements-react": "^1.0.0-alpha2"
   },
   "devDependencies": {
