@@ -6,6 +6,7 @@ import Work from '../Components/Work'
 import Results from '../Components/Results'
 import Rules from '../Components/Rules'
 import Form from '../Components/Form'
+import Footer from '../Components/Footer'
 
 
 
@@ -29,6 +30,9 @@ function Home() {
                </div>
                <div id="contact">
                     <Form />
+               </div>
+               <div id="footer">
+                    <Footer />
                </div>
 
           </div >

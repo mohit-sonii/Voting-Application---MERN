@@ -14,7 +14,7 @@ const Navbar = () => {
                     <p>One Vote</p>
                </div>
                <div className="rightSide">
-                    <ul className='text-2xl  2xl:text-4xl'>
+                    <ul className='text-2xl 2xl:text-4xl'>
                          <li>
                               <Link to='/'>Home</Link>
                          </li>
