@@ -8,7 +8,7 @@ import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
      return (
-          <nav className='navbar  max-sm:justify-center md:gap-4' >
+          <nav className='navbar mt-10 max-sm:justify-center md:gap-4' >
                <div className="leftSide">
                     <img src={image} alt="Logo image" />
                     <p>One Vote</p>
@@ -39,7 +39,7 @@ const Navbar = () => {
                               </ScrollLink>
                          </li>
                     </ul>
-                    <Button innerText="Register" />
+                    <Button innerText="Register" link="/auth/signup" />
                </div>
           </nav>
      );

@@ -1,0 +1,92 @@
+#signup {
+     display: flex;
+     flex-direction: column;
+     gap: 3rem;
+     margin-top: 5rem;
+     justify-content: center;
+     align-items: center;
+     height: max-content;
+     width: 100%;
+}
+.signup{
+     width: 90%;
+     display: flex;
+     gap: 5rem;
+     margin: 5rem;
+     flex-direction: column;
+     margin: auto;
+}
+
+.field {
+     display: flex;
+     flex-direction: column;
+     gap: 1rem
+}
+
+.login {
+     color: rgb(33, 149, 216);
+     cursor: pointer;
+     position: relative;
+     transition: all 0.2s ease-in-out;
+     font-size: inherit;
+     width: max-content;
+}
+
+.login::after {
+     content: '';
+     height: 3px;
+     bottom: -3px;
+     left: 0;
+     position: absolute;
+     width: 0;
+     transition: all 0.2s ease-in-out;
+     background-color: rgb(79, 12, 204);
+}
+
+.login:hover {
+     color: rgb(79, 12, 204);
+     transform: translateX(3px);
+}
+
+.login:hover::after {
+     width: 100%;
+}
+
+.login span {
+     z-index: 2;
+     position: relative;
+}
+
+
+.field input {
+     border: none;
+     outline: none;
+     border: 2px solid rgba(33, 149, 216, 0.226);
+     border-radius: 3px;
+     transition: all 0.2s ease-in-out;
+     padding: 1rem;
+
+}
+
+.field input:focus {
+     border: 2px solid rgba(79, 12, 204, 0.438);
+     
+}
+
+
+#back {
+     font-weight: 600;
+     border: 2px solid rgb(33, 149, 216);
+     border-radius: 0.4rem;
+     display: flex;
+     /* font-size: 1.5rem; */
+     position: relative;
+     justify-content: center;
+     align-items: center;
+     padding: 1rem 2.5rem;
+     overflow: hidden;
+     color: rgb(33, 149, 216);
+     transition: all 0.2s ease-in-out;
+     width: max-content;
+}
+
