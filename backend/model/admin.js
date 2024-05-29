@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 env.config()
 
 const adminSchema = new mongoose.Schema({
-     uniqueIdNumber: {
+     uniqueId: {
           type: String,
           required: true,
           unique: true
@@ -45,18 +45,18 @@ export default admin
 
 //function to create a predefined admin
 async function createAdmin() {
-     // get the uniqueIdNumber from the ENV file
-     const uniqueIdNumber = process.env.adminUniqueId;
+     // get the uniqueId from the ENV file
+     const uniqueId = process.env.adminUniqueId;
      // get the password from the ENV file
      let password = process.env.adminPass;
 
      // Hash the password
      const hashedPassword = await hashAdminPass(password);
      // Check if admin already exists
-     const existingAdmin = await Admin.findOne({ uniqueIdNumber });
+     const existingAdmin = await Admin.findOne({ uniqueId });
      // if not then create a new user with the Id and passowrd and then save it
      if (!existingAdmin) {
-          const admin = new Admin({ uniqueIdNumber, password: hashedPassword });
+          const admin = new Admin({ uniqueId, password: hashedPassword });
           await admin.save();
           console.log('Admin user created successfully.');
      }

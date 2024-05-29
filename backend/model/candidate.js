@@ -15,7 +15,7 @@ const candidateSchema = new mongoose.Schema({
           type: String,
           require: true
      },
-     uniqueIdNumber: {
+     uniqueId: {
           unique: true,
           type: Number,
           require: true,

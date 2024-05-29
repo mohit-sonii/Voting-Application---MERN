@@ -80,7 +80,7 @@ router.put('/admin/updateCandidate/:id', async (req, res) => {
                return res.status(204).json({ message: 'candidate not found' })
           }
           // if exists, then accepts these possible JSON data 
-          const { firstName, lastName, partyName, uniqueIdNumber } = req.body
+          const { firstName, lastName, partyName, uniqueId } = req.body
           // update the exisiting data
           const updateData = await candidate.findByIdAndUpdate(id, req.body, {
                new: true,

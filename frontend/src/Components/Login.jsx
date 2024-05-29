@@ -4,8 +4,6 @@ import "../Styles/SignUp.css"
 import { useState } from "react"
 import React from 'react'
 import { Link } from "react-router-dom"
-import { CSSTransition } from 'react-transition-group'
-
 
 function Login() {
      const [data, setData] = useState({
@@ -19,12 +17,6 @@ function Login() {
           console.log({ ...data, [e.target.name]: e.target.value })
      }
      return (
-          <CSSTransition
-               in={true}
-               appear={true}
-               timeout={300}
-               classNames="fade"
-          >
 
                <div id="login">
                     <div className="log">
@@ -59,7 +51,6 @@ function Login() {
                          </div>
                     </div>
                </div>
-          </CSSTransition>
 
      )
 }

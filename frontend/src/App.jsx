@@ -16,8 +16,8 @@ function App() {
                     {/* <Navbar /> */}
                     <Routes>
                          <Route path="/" element={<Home />} />
-                         <Route path="/auth/signup" element={<SignUp />} />
-                         <Route path="/auth/login" element={<Login />} />
+                         <Route path="/user/auth/signup" element={<SignUp />} />
+                         <Route path="/user/auth/login" element={<Login />} />
                     </Routes>
                     {/* <Footer /> */}
                </BrowserRouter>

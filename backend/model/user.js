@@ -3,28 +3,24 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const userSchema = new mongoose.Schema({
-     firstName: {
+     firstname: {
           type: String,
           required: true,
           trim: true
 
      },
-     lastName: {
+     lastname: {
           type: String,
           required: true,
           trim: true
 
      },
-     uniqueIdNumber: {
-          type: Number,
+     uniqueId: {
+          type: String,
           required: true,
           unique: true
      },
-     dob: {
-          type: Date,
-          required: true
-     },
-     voterCard: {
+     voter: {
           type: String,
           unique: true,
           required:true

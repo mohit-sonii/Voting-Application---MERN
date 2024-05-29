@@ -3,10 +3,13 @@ import express from 'express'
 import user from '../model/user.js'
 import generateToken from '../jwt.js'
 import admin from '../model/admin.js'
+import bodyParser from 'body-parser'
+
+const router = express.Router()
+router.use(bodyParser.json())
 
 // import db from '../db.js'
 
-const router = express.Router()
 
 let currentUserType = 'user'; // Variable to hold the current user type
 
@@ -58,11 +61,11 @@ router.get('/', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
      try {
           //take the Id and password from the body field
-          const { uniqueIdNumber, password } = req.body
+          const { uniqueId, password } = req.body
           // check if the user exist or not
-          const userData = await user.findOne({ uniqueIdNumber: uniqueIdNumber })
+          const userData = await user.findOne({ uniqueId: uniqueId })
           // chekc if the admin with the same user exist or not
-          const adminData = await admin.findOne({ uniqueIdNumber: uniqueIdNumber })
+          const adminData = await admin.findOne({ uniqueId: uniqueId })
           //if user does not exist with the Id 
           if (!userData) {
                // check if it is an admin or not
@@ -119,13 +122,13 @@ router.post('/auth/login', async (req, res) => {
 
 router.post('/auth/forget-password', async (req, res) => {
      // extract two field from body 
-     const { uniqueIdNumber, voterCard } = req.body
+     const { uniqueId, voterCard } = req.body
      //if required fields are not mentioned  
-     if (!uniqueIdNumber || !voterCard) return res.status(400).json({ error: 'Required Fields are Missing' })
+     if (!uniqueId || !voterCard) return res.status(400).json({ error: 'Required Fields are Missing' })
 
      try {
           // find a user with that unique Id the user has
-          const userId = await user.findOne({ uniqueIdNumber: uniqueIdNumber })
+          const userId = await user.findOne({ uniqueId: uniqueId })
           // find the user with that voter card as well
           const userVoter = await user.findOne({ voterCard: voterCard })
           // if any of them is incorrect then return the error

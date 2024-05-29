@@ -142,7 +142,7 @@ function Form() {
                     <p className="text-2xl lg:text-2xl xl:text-3xl font-extralight">Report any problems or concerns related to the voting process</p>
                </div>
 
-               <form className="flex " >
+               <form className="flex" onSubmit={handleSubmit} >
                     <div className="allEnteries w-full grid  grid-cols-1 sm:grid-cols-2 gap-10  justify-between">
 
                          <div className="ele username">
@@ -189,7 +189,7 @@ function Form() {
                          <textarea value={data.message} placeholder="Enter your message" name="message" id="message" onChange={handleChange} className="textarea text-lg xl:text-xl"></textarea>
                     </div>
                     <div className="button">
-                         <button type="submit" onClick={handleSubmit} id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Submit</span></button>
+                         <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Submit</span></button>
                     </div>
                </form>
                {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
