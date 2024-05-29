@@ -7,7 +7,6 @@ import Results from '../Components/Results'
 import Rules from '../Components/Rules'
 import Form from '../Components/Form'
 import Footer from '../Components/Footer'
-import SignUp from '../Components/SignUp'
 
 
 function Home() {

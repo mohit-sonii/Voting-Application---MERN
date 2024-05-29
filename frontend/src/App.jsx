@@ -1,6 +1,7 @@
 
 
 import Footer from "./Components/Footer"
+import Login from "./Components/Login"
 import Navbar from "./Components/NavBar"
 import SignUp from "./Components/SignUp"
 import Home from "./Home/Home"
@@ -16,6 +17,7 @@ function App() {
                     <Routes>
                          <Route path="/" element={<Home />} />
                          <Route path="/auth/signup" element={<SignUp />} />
+                         <Route path="/auth/login" element={<Login />} />
                     </Routes>
                     {/* <Footer /> */}
                </BrowserRouter>

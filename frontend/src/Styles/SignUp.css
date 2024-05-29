@@ -1,4 +1,4 @@
-#signup {
+#signup,#login {
      display: flex;
      flex-direction: column;
      gap: 3rem;
@@ -8,7 +8,7 @@
      height: max-content;
      width: 100%;
 }
-.signup{
+.signup,.log{
      width: 90%;
      display: flex;
      gap: 5rem;
@@ -90,7 +90,6 @@
      width: max-content;
 }
 
-/* SignUp.css */
 
 .fade-appear,
 .fade-enter {
