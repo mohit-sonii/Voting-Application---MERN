@@ -39,7 +39,7 @@ const Navbar = () => {
                               </ScrollLink>
                          </li>
                     </ul>
-                    <Button innerText="Register" link="/auth/signup" />
+                    <Button innerText="Register" link="/user/auth/signup" />
                </div>
           </nav>
      );

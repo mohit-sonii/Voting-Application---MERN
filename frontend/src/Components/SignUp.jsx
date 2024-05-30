@@ -62,7 +62,7 @@ function SignUp() {
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Register</p>
                          <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold">Already Have an Account?
-                              <Link to="/auth/login">
+                              <Link to="/user/auth/login">
                                    <span className="login">Login</span>
                               </Link>
                          </p>

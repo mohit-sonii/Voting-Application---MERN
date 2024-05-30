@@ -1,5 +1,5 @@
 
-import express from 'express'
+import express, { response } from 'express'
 import user from '../model/user.js'
 import generateToken from '../jwt.js'
 import admin from '../model/admin.js'
@@ -49,11 +49,11 @@ router.get('/', async (req, res) => {
                const showData = await user.find();
                res.status(200).json(showData)
           } else {
-               res.status(401).json({ message: 'You are not authorized to use this API' })
+               res.status(401).json({ response: 'You are not authorized to use this API' })
           }
 
      } catch (err) {
-          res.status(400).json({ message: "Failed to get the Data from DBMS" })
+          res.status(400).json({ response: "Failed to get the Data from DBMS" })
           console.log(err + " Error in getting data from server")
      }
 })
@@ -63,9 +63,9 @@ router.post('/auth/login', async (req, res) => {
           //take the Id and password from the body field
           const { uniqueId, password } = req.body
           // check if the user exist or not
-          const userData = await user.findOne({ uniqueId: uniqueId })
+          const userData = await user.findOne({ uniqueId })
           // chekc if the admin with the same user exist or not
-          const adminData = await admin.findOne({ uniqueId: uniqueId })
+          const adminData = await admin.findOne({ uniqueId })
           //if user does not exist with the Id 
           if (!userData) {
                // check if it is an admin or not
@@ -79,7 +79,6 @@ router.post('/auth/login', async (req, res) => {
                          //generate token for that person
                          const token = generateToken(payload)
                          //print that you are an admin
-                         console.log('You are an admin')
                          // toggle who the user is
                          setUserType('admin')
                          // give response 
@@ -87,12 +86,12 @@ router.post('/auth/login', async (req, res) => {
                     }
                     // if the password if not correct
                     else {
-                         res.status(400).json({ message: 'Either Id aur password is incorrect' })
+                         res.status(400).json({ response: 'Either Id aur password is incorrect' })
                     }
                }
                // if the admin does not exist with the ID given
                else {
-                    res.status(400).json({ message: 'User not Registered' })
+                    res.status(201).json({ response: 'User not Registered' })
                }
           }
           // if the user exist with the ID 
@@ -107,15 +106,13 @@ router.post('/auth/login', async (req, res) => {
                     const token = generateToken(payload)
                     // send response
                     res.status(200).json({ userData, token })
-                    console.log('you are a user')
                }
                // if the passowrd is incorrect
                else {
-                    res.status(400).json({ message: 'Either Id aur password is incorrect' })
+                    res.status(400).json({ response: 'Either Id aur password is incorrect' })
                }
           }
      } catch (err) {
-          console.log('errro in login ' + err.message)
           res.status(400).json({ error: err.message })
      }
 })

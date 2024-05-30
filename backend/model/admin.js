@@ -2,6 +2,7 @@
 import mongoose from 'mongoose'
 import env from 'dotenv'
 import bcrypt from 'bcrypt'
+import db from "../db.js"
 env.config()
 
 const adminSchema = new mongoose.Schema({
@@ -37,7 +38,10 @@ adminSchema.methods.comparePassword = async function (password) {
 
 // create a mongoose model name admin
 // it was in the createAdmin function but beacuse the admin is added in the databse so we don't need this function now
+// this can be used when we need to add an Admin
+// const Admin = mongoose.model('admin', adminSchema); 
 const admin = mongoose.model('admin', adminSchema);
+
 export default admin
 
 
@@ -50,6 +54,7 @@ async function createAdmin() {
      // get the password from the ENV file
      let password = process.env.adminPass;
 
+     // const Admin = db.collection('admin')
      // Hash the password
      const hashedPassword = await hashAdminPass(password);
      // Check if admin already exists

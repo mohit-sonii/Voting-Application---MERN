@@ -1,6 +1,7 @@
 
 
-import "../Styles/SignUp.css"
+import axios from "axios"
+import "../Styles/Login.css"
 import { useState } from "react"
 import React from 'react'
 import { Link } from "react-router-dom"
@@ -10,34 +11,60 @@ function Login() {
           uniqueId: '',
           password: '',
      })
+     const [err, setErr] = useState('')
 
      const handleChange = (e) => {
           const { name, value } = e.target;
-          setData({ ...data, [e.target.name]: e.target.value })
-          console.log({ ...data, [e.target.name]: e.target.value })
+          setData({ ...data, [name]: value })
+     }
+
+     const handleSubmit = async (e) => {
+          e.preventDefault();
+          try {
+               const user = {
+                    uniqueId: data.uniqueId,
+                    password: data.password
+               }
+               const response = await fetch('http://localhost:5000/user/auth/login', {
+                    method:"POST",
+                    body:JSON.stringify(user),
+                    headers:{
+                         "Content-Type":"application/json"
+                    }
+               })
+               const result = await response.json()
+               setErr(result.response)
+               
+          } catch (error) {
+               setErr(error.message)
+          }
      }
      return (
 
-               <div id="login">
-                    <div className="log">
-                         <div className="signup-heading flex gap-5 flex-col">
-                              <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Login</p>
-                              <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold">Don't Have an Account?
-                                   <Link to="/auth/signup">
-                                        <span className="login ">Signup</span>
-                                   </Link>
-                              </p>
-                         </div>
+          <div id="login">
+               {err && <h1 className="text-xl">{err}</h1>}
+               <div className="log">
+                    <div className="signup-heading flex gap-5 flex-col">
+                         <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Login</p>
+                         <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold">Don't Have an Account?
+                              <Link to="/user/auth/signup">
+                                   <span className="login ">Signup</span>
+                              </Link>
+                         </p>
+                    </div>
+                    <form className="flex" onSubmit={handleSubmit}>
+
                          <div className="signup-form grid gap-10 sm:grid-cols-2">
 
                               <div className="field uniqueId">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="uniqueId">Enter Aadhar Card Number</label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="uniqueId" id="uniqueId" type="number" onChange={handleChange} value={data.uniqueId} />
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="uniqueId" id="uniqueId" type="text" maxLength={'12'} onChange={handleChange} value={data.uniqueId} />
                               </div>
 
                               <div className="field password">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="password">Enter  Password </label>
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="password" id="password" type="password" onChange={handleChange} value={data.password} />
+                                   <p className="text-sm sm:text-xl cursor-pointer forget-password ">Forget Password?</p>
                               </div>
                          </div>
                          <div className="button flex gap-8">
@@ -49,8 +76,9 @@ function Login() {
                                    </Link>
                               </button>
                          </div>
-                    </div>
+                    </form>
                </div>
+          </div>
 
      )
 }
