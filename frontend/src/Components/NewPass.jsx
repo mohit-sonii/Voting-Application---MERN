@@ -1,17 +1,23 @@
 
 
 import { Link, useParams } from 'react-router-dom'
+// Link is for Routing
+// useParams is for taking Id from the URL
 import React from 'react'
 import { useState } from 'react'
 
 function NewPass() {
 
-     const {id} = useParams()
+     // it will take the ID from the URL
+     const { id } = useParams()
+     // state that upates the password
      const [data, setData] = useState({
           password: '',
           repass: ''
      })
+     // error state in case of any error while routing or posting
      const [err, setErr] = useState('')
+
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
@@ -19,21 +25,29 @@ function NewPass() {
      const handleSubmit = async (e) => {
           e.preventDefault();
 
-          try {
-               const pass = {
-                    password:data.password
-               }
-               const response = await fetch(`http://localhost:5000/user/auth/forget-password/create-new-password/${id}`, {
-                    method: "PATCH",
-                    body: JSON.stringify(pass),
-                    headers: {
-                         "Content-Type": "application/json" 
+          if (data.password === data.repass) {
+
+               try {
+                    // it will take the password form the data state
+                    const pass = {
+                         password: data.password
                     }
-               });
-               const result = await response.json()
-               console.log('Password updated:', result);
-          } catch (err) {
-               setErr(err.message);
+                    // using fetch to update the password
+                    const response = await fetch(`http://localhost:5000/user/auth/forget-password/create-new-password/${id}`, {
+                         method: "PATCH",
+                         body: JSON.stringify(pass),
+                         headers: {
+                              "Content-Type": "application/json"
+                         }
+                    });
+                    const result = await response.json()
+                    console.log('Password updated:', result);
+               } catch (err) {
+                    setErr(err.message);
+               }
+          }
+          else{
+               setErr('Password should match')
           }
      };
 
@@ -50,12 +64,12 @@ function NewPass() {
 
                               <div className="field password">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="password">Create Password</label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="password" id="pass" type="text" onChange={handleChange} value={data.password} required />
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="password" id="pass" type="password" onChange={handleChange} value={data.password} required />
                               </div>
 
                               <div className="field pass-check">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="repass">Re-Enter your Password </label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="repass" id="repass" type="text" onChange={handleChange} value={data.repass} required />
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="repass" id="repass" type="password" onChange={handleChange} value={data.repass} required />
                               </div>
                          </div>
                          <div className="button flex gap-8">
