@@ -4,6 +4,8 @@ import user from '../model/user.js'
 import generateToken from '../jwt.js'
 import admin from '../model/admin.js'
 import bodyParser from 'body-parser'
+import userExist from "../middleware/userExist.js"
+import validateUser from "../middleware/validateUser.js"
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -86,12 +88,12 @@ router.post('/auth/login', async (req, res) => {
                     }
                     // if the password if not correct
                     else {
-                         res.status(400).json({ response: 'Either Id aur password is incorrect' })
+                         res.status(400).json({ message: 'Either Id aur password is incorrect' })
                     }
                }
                // if the admin does not exist with the ID given
                else {
-                    res.status(201).json({ response: 'User not Registered' })
+                    res.status(201).json({ message: 'User not Registered' })
                }
           }
           // if the user exist with the ID 
@@ -109,7 +111,7 @@ router.post('/auth/login', async (req, res) => {
                }
                // if the passowrd is incorrect
                else {
-                    res.status(400).json({ response: 'Either Id aur password is incorrect' })
+                    res.status(400).json({ message: 'Either Id aur password is incorrect' })
                }
           }
      } catch (err) {
@@ -117,26 +119,14 @@ router.post('/auth/login', async (req, res) => {
      }
 })
 
-router.post('/auth/forget-password', async (req, res) => {
-     // extract two field from body 
-     const { uniqueId, voter } = req.body
-     //if required fields are not mentioned  
-     if (!uniqueId || !voter) return res.status(400).json({ message: 'Required Fields are Missing' })
-
+router.post('/auth/forget-password', userExist, validateUser, async (req, res) => {
      try {
-          // find a user with that unique Id the user has
-          const userId = await user.findOne({ uniqueId: uniqueId })
-          // find the user with that voter card as well
-          const userVoter = await user.findOne({ voter: voter })
-          // if any of them is incorrect then return the error
-          if (!userId || !userVoter)
-               return res.status(204). json({ message: 'Ussssser does not exist.' })
-          //extract the id from the userId and redirect user to another route
-          res.redirect(`/auth/forget-password/create-new-password/${userId._id}`)
-
+          // taking the user id from the user. means when we found the match we will take that user's ID
+          const userId = req.user._id;
+          res.status(200).json({ redirectUrl: `/user/auth/forget-password/create-new-password/${userId}` });
      } catch (err) {
-          console.log('error in forgetting the passworrd')
-          res.send(400).json({ error: err })
+          console.log('Error in forgetting the password', err);
+          res.status(500).json({ error: 'Internal Server Error' });
      }
 })
 

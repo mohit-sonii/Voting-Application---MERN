@@ -4,7 +4,7 @@ import axios from "axios"
 import "../Styles/Login.css"
 import { useState } from "react"
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Login() {
      // create a state to store the login credentials
@@ -21,6 +21,7 @@ function Login() {
           setData({ ...data, [name]: value })
      }
 
+     const navigate = useNavigate()
      // submit to submit the data.
      const handleSubmit = async (e) => {
           // stop for any default behaviour
@@ -44,9 +45,10 @@ function Login() {
                          uniqueId: '',
                          password: '',
                     })
-                    setErr('')
-                    // navigate('/')
-               } 
+                    navigate('/')
+               } else{
+                    setErr(response.data.message)
+               }
           } catch (error) {
                setErr(error.message)
           }

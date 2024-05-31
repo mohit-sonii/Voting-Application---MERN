@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function ForgetPass() {
 
@@ -14,7 +15,7 @@ function ForgetPass() {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
      }
-
+     const navigate = useNavigate()
      const handleSubmit = async (e) => {
 
           e.preventDefault();
@@ -28,14 +29,18 @@ function ForgetPass() {
                          "Content-Type": "application/json",
                     }
                })
-               console.log(response)
+               if (response.data.redirectUrl) {
+                    navigate(response.data.redirectUrl);
+               } else {
+                    setErr('Error: User not found');
+               }
                if (response.status === 200) {
                     setData({
                          uniqueId: '',
                          voter: ''
                     })
                     setErr('')
-               }else{
+               } else {
                     setErr('User does not exists')
                }
           } catch (error) {
