@@ -49,7 +49,6 @@ function Login() {
                     const {token}= response
                     // to store the token in the localstorage
                     localStorage.setItem('token',token)
-
                     
                     // console.log('Token is ', token)
                     // console.log('login successvully',user)
