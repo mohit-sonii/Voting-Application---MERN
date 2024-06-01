@@ -1,7 +1,9 @@
 
 import express, { response } from 'express'
 import user from '../model/user.js'
-import generateToken from '../jwt.js'
+// import generateToken from '../jwt.js' 
+import tokenUtils from '../jwt.js';
+const { verifyToken, generateToken } = tokenUtils; 
 import admin from '../model/admin.js'
 import bodyParser from 'body-parser'
 import userExist from "../middleware/userExist.js"
@@ -9,9 +11,6 @@ import validateUser from "../middleware/validateUser.js"
 
 const router = express.Router()
 router.use(bodyParser.json())
-
-// import db from '../db.js'
-
 
 let currentUserType = 'user'; // Variable to hold the current user type
 
@@ -28,18 +27,24 @@ router.post('/auth/signup', async (req, res) => {
           const data = req.body;
           // create a new user with the following data
           const newUser = new user(data)
-          // save the user 
-          const response = await newUser.save()
           // extract the Id of that user
           const payload = {
-               id: response.id
+               id: newUser._id
           }
           // and give them a token 
           const token = generateToken(payload)
+          newUser.token = token
+          // save the user 
+          const response = await newUser.save()
           res.status(200).json({ response: response, token: token })
      } catch (error) {
-          console.log('Error in adding a new user', error.message)
-          res.status(400).json({ error: error.message })
+          if (error.code === 11000) { // MongoDB duplicate key error code
+               return res.status(400).json({ message: `Duplicate key error: ${error.message}` });
+          } else {
+               return res.status(500).json({ message: `Error in adding a new user: ${error.message}` });
+          }
+          // console.log('Error in adding a new user', error.message)
+          // res.status(400).json({ error: error.message })
      }
 })
 

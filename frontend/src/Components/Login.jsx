@@ -45,7 +45,18 @@ function Login() {
                          uniqueId: '',
                          password: '',
                     })
-                    navigate('/') // if the user is  neterd its credentials then we can login in 
+                    // to store the token in the databse 
+                    const {token}= response
+                    // to store the token in the localstorage
+                    localStorage.setItem('token',token)
+
+                    
+                    // console.log('Token is ', token)
+                    // console.log('login successvully',user)
+                    
+                    // jsut tot ensure that the token is generating
+                    // setErr(response.data.token)
+                    // navigate('/') // if the user is  neterd its credentials then we can login in 
                } else{
                     setErr(response.data.message)
                }

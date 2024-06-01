@@ -3,11 +3,11 @@ import "../Styles/SignUp.css"
 import { useState } from "react"
 import React from 'react'
 import { Link } from "react-router-dom"
-import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 
 
 function SignUp() {
+     // state to store data field
      const [data, setData] = useState({
           firstname: '',
           lastname: '',
@@ -15,18 +15,20 @@ function SignUp() {
           uniqueId: '',
           password: ''
      })
-
+     // error state in case of any error encourntered
      const [err, setErr] = useState('')
+     // nvaigate to naviage the user 
      const navigate = useNavigate()
+     // change for updataino in input fields
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
      }
-
+     // to subkit the data
      const handleSubmit = async (e) => {
           e.preventDefault();
           try {
-
+               // to add the user data from the fileds
                const addUser = {
                     firstname: data.firstname,
                     lastname: data.lastname,
@@ -34,11 +36,16 @@ function SignUp() {
                     uniqueId: data.uniqueId,
                     password: data.password
                }
-               const response = await axios.post('http://localhost:5000/user/auth/signup', addUser, {
+               // POST request to add user in the server
+               const res = await fetch('http://localhost:5000/user/auth/signup', {
+                    method: "POST",
+                    body: JSON.stringify(addUser),
                     headers: {
                          "Content-Type": "application/json"
                     }
                })
+               const response = await res.json()
+               console.log(response)
                if (response.status === 200) {
                     setData({
                          firstname: '',
@@ -47,8 +54,22 @@ function SignUp() {
                          lastname: '',
                          password: '',
                     })
-                    setErr('')
+                    // to get the token and the user detail from the fetched response
+                    const { token, user } = response;
+
+                    // Store the token in localStorage
+                    localStorage.setItem('token', token);
+
+                    console.log('User signed up:', user);
+                    console.log('toke', token)
+                    // just to ensure that the token is generating
+                    // setErr(response.data.token)
+
+                    // Navigate to the home route
                     // navigate('/')
+               }
+               else {
+                    setErr(response.message)
                }
           } catch (err) {
                setErr(err.message)
@@ -96,7 +117,7 @@ function SignUp() {
                               </div>
                          </div>
                          <div className="button flex gap-8">
-                              <button type="submit" id="button"  className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Register</span></button>
+                              <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Register</span></button>
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
                                    <Link to="/">
