@@ -60,13 +60,13 @@ function SignUp() {
                     // Store the token in localStorage
                     localStorage.setItem('token', token);
 
-                    console.log('User signed up:', user);
-                    console.log('toke', token)
+                    // console.log('User signed up:', user);
+                    // console.log('toke', token)
                     // just to ensure that the token is generating
                     // setErr(response.data.token)
 
                     // Navigate to the home route
-                    // navigate('/')
+                    navigate('/')
                }
                else {
                     setErr(response.message)
@@ -78,7 +78,7 @@ function SignUp() {
 
      return (
           <div id="signup">
-               {err && <h1>{err}</h1>}
+               {err && <p className="text-xl">{err}</p>}
                <div className="signup">
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Register</p>
