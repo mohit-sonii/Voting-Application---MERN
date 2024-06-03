@@ -2,7 +2,8 @@
 
 import axios from "axios"
 import "../Styles/Login.css"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { useAuth } from "../Context"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
 
@@ -14,6 +15,10 @@ function Login() {
      })
      // create a state to store the error that may occur while login
      const [err, setErr] = useState('')
+
+     // state to store the user type in order to display different funcitonlaity 
+     const {setUserType} = useAuth()
+9
 
      // change for the input field state
      const handleChange = (e) => {
@@ -46,17 +51,32 @@ function Login() {
                          password: '',
                     })
                     // to store the token in the databse 
-                    const {token}= response
+                    const { token, userType } = response.data
+                    //just to check the user type 
+                    // console.log(userType)
                     // to store the token in the localstorage
-                    localStorage.setItem('token',token)
-                    
+                    localStorage.setItem('token', token)
+
+                    setUserType(userType)
+                    if (userType === 'admin') {
+                         console.log('admin')
+                    }
+                    console.log(userType)
+
+
+                    // if(whoTheUser()=='admin'){
+                    //      navigate('/auth/signup')
+                    // }
+                    // else{
+                    //      navigate('/')
+                    // }
                     // console.log('Token is ', token)
                     // console.log('login successvully',user)
-                    
+
                     // jsut tot ensure that the token is generating
                     // setErr(response.data.token)
                     // navigate('/') // if the user is  neterd its credentials then we can login in 
-               } else{
+               } else {
                     setErr(response.data.message)
                }
           } catch (error) {

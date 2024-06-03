@@ -1,5 +1,5 @@
 
-import express, { response } from 'express'
+import express from 'express'
 import user from '../model/user.js'
 // import generateToken from '../jwt.js' 
 import tokenUtils from '../jwt.js';
@@ -88,8 +88,10 @@ router.post('/auth/login', async (req, res) => {
                          //print that you are an admin
                          // toggle who the user is
                          setUserType('admin')
+                         // just to check whether the switching is working correct or not
+                         // console.log('admin is trying to access the DB')
                          // give response 
-                         res.status(200).json({ adminData, token })
+                         res.status(200).json({ adminData, token,userType:'admin' })
                     }
                     // if the password if not correct
                     else {
@@ -112,7 +114,9 @@ router.post('/auth/login', async (req, res) => {
                     // generate token for that ID
                     const token = generateToken(payload)
                     // send response
-                    res.status(200).json({ userData, token })
+                    // just to check whether it is wokring or not
+                    // console.log('user is login in ')
+                    res.status(200).json({ userData, token, userType:'user' })
                }
                // if the passowrd is incorrect
                else {

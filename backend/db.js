@@ -11,7 +11,7 @@ db.on('connected', () => {
      // init()
 })
 db.on('error', (error) => {
-     console.log(error.message + "Error in conncetion")
+     console.log(error + "Error in conncetion")
 })
 // async function init() {
 //      try {
