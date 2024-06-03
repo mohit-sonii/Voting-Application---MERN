@@ -2,8 +2,9 @@
 
 import axios from "axios"
 import "../Styles/Login.css"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { useAuth } from "../Context"
+// imported 'useAuth', a custom hook that will provide access to state 
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
 
@@ -16,7 +17,7 @@ function Login() {
      // create a state to store the error that may occur while login
      const [err, setErr] = useState('')
 
-     // state to store the user type in order to display different funcitonlaity 
+     // Context API method to update the state 
      const {setUserType} = useAuth()
 9
 
@@ -57,11 +58,12 @@ function Login() {
                     // to store the token in the localstorage
                     localStorage.setItem('token', token)
 
+                    // update the state 
                     setUserType(userType)
-                    if (userType === 'admin') {
-                         console.log('admin')
-                    }
-                    console.log(userType)
+                    // if (userType === 'admin') {
+                    //      console.log('admin')
+                    // }
+                    // console.log(userType)
 
 
                     // if(whoTheUser()=='admin'){

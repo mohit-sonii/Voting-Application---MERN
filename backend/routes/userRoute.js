@@ -91,6 +91,7 @@ router.post('/auth/login', async (req, res) => {
                          // just to check whether the switching is working correct or not
                          // console.log('admin is trying to access the DB')
                          // give response 
+                         // added a userType as 'admin' if the visitor is admin
                          res.status(200).json({ adminData, token,userType:'admin' })
                     }
                     // if the password if not correct
@@ -116,6 +117,7 @@ router.post('/auth/login', async (req, res) => {
                     // send response
                     // just to check whether it is wokring or not
                     // console.log('user is login in ')
+                    // added the userType to 'user' if the visitor is user
                     res.status(200).json({ userData, token, userType:'user' })
                }
                // if the passowrd is incorrect
