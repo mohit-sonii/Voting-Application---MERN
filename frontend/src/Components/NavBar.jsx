@@ -4,9 +4,13 @@ import Button from './Button';
 import '../Styles/NavBar.css';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+import { useAuth } from '../Context';
+// import { useContext } from 'react';
 // scrollLink is used to add a smooth scrolling effect when a user click on the item in the navbar it will navigate to that section
 
 const Navbar = () => {
+     // include the state value from the context in order to response accordingly
+     const { userType } = useAuth()
      return (
           <nav className='navbar mt-10 max-sm:justify-center md:gap-4' >
                <div className="leftSide">
@@ -38,8 +42,17 @@ const Navbar = () => {
                                    Contact Us
                               </ScrollLink>
                          </li>
+                         {/* if the visitor validate as user then do show "Profile"  in the NavBar  */}
+                         {userType === 'user' &&
+                              <li>
+                                   Profile
+                              </li>
+                         }
                     </ul>
-                    <Button innerText="Register" link="/user/auth/signup" />
+                    {/* if the user type is user then do should " Vote Now" button and it will navigate to the candidate route to vote but if not then do register button with signup route */}
+                    {userType === 'user' ? <Button innerText="Vote Now" /> :
+                         <Button innerText="Register" link="/user/auth/signup" />
+                    }
                </div>
           </nav>
      );

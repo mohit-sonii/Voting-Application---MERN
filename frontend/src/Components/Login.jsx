@@ -60,6 +60,7 @@ function Login() {
 
                     // update the state 
                     setUserType(userType)
+                    navigate('/')
                     // if (userType === 'admin') {
                     //      console.log('admin')
                     // }
