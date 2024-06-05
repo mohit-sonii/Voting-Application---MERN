@@ -2,7 +2,7 @@
 import image from '../../assets/logo.png';
 import Button from './Button';
 import '../Styles/NavBar.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { useAuth } from '../Context';
 // import { useContext } from 'react';
@@ -11,6 +11,7 @@ import { useAuth } from '../Context';
 const Navbar = () => {
      // include the state value from the context in order to response accordingly
      const { userType } = useAuth()
+     const id = localStorage.getItem('id')
      return (
           <nav className='navbar mt-10 max-sm:justify-center md:gap-4' >
                <div className="leftSide">
@@ -43,10 +44,13 @@ const Navbar = () => {
                               </ScrollLink>
                          </li>
                          {/* if the visitor validate as user then do show "Profile"  in the NavBar  */}
+                         
                          {userType === 'user' &&
-                              <li>
-                                   Profile
-                              </li>
+                              <Link to={`/user/profile/${id}`}>
+                                   <li>
+                                        Profile
+                                   </li>
+                              </Link>
                          }
                     </ul>
                     {/* if the user type is user then do should " Vote Now" button and it will navigate to the candidate route to vote but if not then do register button with signup route */}

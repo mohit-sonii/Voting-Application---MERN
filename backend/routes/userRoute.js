@@ -92,7 +92,7 @@ router.post('/auth/login', async (req, res) => {
                          // console.log('admin is trying to access the DB')
                          // give response 
                          // added a userType as 'admin' if the visitor is admin
-                         res.status(200).json({ adminData, token,userType:'admin' })
+                         res.status(200).json({ adminData, token,userType:'admin', id:adminData.id })
                     }
                     // if the password if not correct
                     else {
@@ -118,7 +118,7 @@ router.post('/auth/login', async (req, res) => {
                     // just to check whether it is wokring or not
                     // console.log('user is login in ')
                     // added the userType to 'user' if the visitor is user
-                    res.status(200).json({ userData, token, userType:'user' })
+                    res.status(200).json({ userData, token, userType:'user', id:userData.id })
                }
                // if the passowrd is incorrect
                else {

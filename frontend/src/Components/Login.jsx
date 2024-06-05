@@ -18,8 +18,8 @@ function Login() {
      const [err, setErr] = useState('')
 
      // Context API method to update the state 
-     const {setUserType} = useAuth()
-9
+     const { setUserType,login } = useAuth()
+     
 
      // change for the input field state
      const handleChange = (e) => {
@@ -52,33 +52,23 @@ function Login() {
                          password: '',
                     })
                     // to store the token in the databse 
-                    const { token, userType } = response.data
+                    const { token, userType, id } = response.data
+
                     //just to check the user type 
                     // console.log(userType)
+                    // just to validate the ID of the user 
+                    // console.log(id)
                     // to store the token in the localstorage
+                    localStorage.setItem('id', id)
                     localStorage.setItem('token', token)
 
                     // update the state 
                     setUserType(userType)
+                    // call the function with the token  and usertype values. This will occur when we login in the site, in this way it will make the perosn authenticate
+                    login(token,userType)
+                    // navigate to the '/' route with the additional functionliaty
                     navigate('/')
-                    // if (userType === 'admin') {
-                    //      console.log('admin')
-                    // }
-                    // console.log(userType)
 
-
-                    // if(whoTheUser()=='admin'){
-                    //      navigate('/auth/signup')
-                    // }
-                    // else{
-                    //      navigate('/')
-                    // }
-                    // console.log('Token is ', token)
-                    // console.log('login successvully',user)
-
-                    // jsut tot ensure that the token is generating
-                    // setErr(response.data.token)
-                    // navigate('/') // if the user is  neterd its credentials then we can login in 
                } else {
                     setErr(response.data.message)
                }
