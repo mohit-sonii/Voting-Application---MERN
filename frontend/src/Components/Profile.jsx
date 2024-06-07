@@ -35,7 +35,7 @@ function Profile() {
                
                try {
                     // fetch the profile route of the user
-                    const response = await axios.get(`http://localhost:5000/user/profile/${id}`, {
+                    const response = await axios.get(`/user/profile/${id}`, {
                          // add bearer token to he authorization header to let the user logged in untill it refresh the page or click on logout
                          headers: { Authorization: `Bearer ${token}` }
                     })

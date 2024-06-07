@@ -39,7 +39,7 @@ function Login() {
                     password: data.password
                }
                // use fetch to post the data to login field
-               const response = await axios.post('http://localhost:5000/user/auth/login', user, {
+               const response = await axios.post('/user/auth/login', user, {
                     headers: {
                          "Content-Type": "application/json"
                     }

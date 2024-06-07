@@ -41,7 +41,7 @@ function Form() {
 
      async function getAreaDetail() {
           // fetch the API before hand so that we do not need to doit again and again
-          const response = await axios.get('http://localhost:5000/api/api-data')
+          const response = await axios.get('/api/api-data')
           // store the API data in a state.
           setArea(response.data)
      }
@@ -107,7 +107,7 @@ function Form() {
                     message: data.message,
                     query: data.query
                };
-               const response = await axios.post('http://localhost:5000/query', addQuery, {
+               const response = await axios.post('/query', addQuery, {
                     headers: {
                          "Content-Type": "application/json"
                     }

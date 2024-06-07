@@ -33,7 +33,7 @@ function NewPass() {
                          password: data.password
                     }
                     // using fetch to update the password
-                    const response = await fetch(`http://localhost:5000/user/auth/forget-password/create-new-password/${id}`, {
+                    const response = await fetch(`/user/auth/forget-password/create-new-password/${id}`, {
                          method: "PATCH",
                          body: JSON.stringify(pass),
                          headers: {

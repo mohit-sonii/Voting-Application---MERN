@@ -24,7 +24,7 @@ function ForgetPass() {
                     uniqueId: data.uniqueId,
                     voter: data.voter
                }
-               const response = await axios.post('http://localhost:5000/user/auth/forget-password', user, {
+               const response = await axios.post('/user/auth/forget-password', user, {
                     headers: {
                          "Content-Type": "application/json",
                     }
