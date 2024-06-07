@@ -17,3 +17,26 @@
      ]
 }
 
+
+
+fo r backend
+{
+         "src": "/user/(.*)",
+         "dest": "/backend/server.js"
+       },
+       {
+         "src": "/api/(.*)",
+         "dest": "/backend/server.js"
+       },
+       {
+         "src": "/candidate/(.*)",
+         "dest": "/backend/server.js"
+       },
+       {
+         "src": "/query/(.*)",
+         "dest": "/backend/server.js"
+       },
+       {
+         "src": "/user/profile/(.*)",
+         "dest": "/backend/server.js"
+       },
