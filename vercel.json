@@ -7,36 +7,12 @@
          "config": {
            "distDir": "frontend/dist"
          }
-       },
-       {
-         "src": "backend/server.js",
-         "use": "@vercel/node"
        }
      ],
      "routes": [
        {
-         "src": "/user/(.*)",
-         "dest": "/backend/server.js"
-       },
-       {
-         "src": "/api/(.*)",
-         "dest": "/backend/server.js"
-       },
-       {
-         "src": "/candidate/(.*)",
-         "dest": "/backend/server.js"
-       },
-       {
-         "src": "/query/(.*)",
-         "dest": "/backend/server.js"
-       },
-       {
-         "src": "/user/profile/(.*)",
-         "dest": "/backend/server.js"
-       },
-       {
          "src": "/(.*)",
-         "dest": "/frontend/$1"
+         "dest": "/frontend/dist/$1"
        }
      ]
    }
