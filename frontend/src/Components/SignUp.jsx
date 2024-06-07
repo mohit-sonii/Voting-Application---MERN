@@ -37,7 +37,7 @@ function SignUp() {
                     password: data.password
                }
                // POST request to add user in the server
-               const res = await fetch('http://localhost:5000/user/auth/signup', {
+               const res = await fetch('/user/auth/signup', {
                     method: "POST",
                     body: JSON.stringify(addUser),
                     headers: {
