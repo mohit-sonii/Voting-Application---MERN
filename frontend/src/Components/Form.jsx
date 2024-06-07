@@ -41,9 +41,12 @@ function Form() {
 
      async function getAreaDetail() {
           // fetch the API before hand so that we do not need to doit again and again
-          const response = await axios.get('/api/api-data')
+          // const response = await axios.get('/api/api-data')
+          const response = await fetch('/api/api-data')
+          const result  = await response.json()
           // store the API data in a state.
-          setArea(response.data)
+          // setArea(response.data)
+          setArea(result)
      }
 
      // whne the component mount call that function
