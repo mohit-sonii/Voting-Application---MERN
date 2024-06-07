@@ -20,6 +20,6 @@ app.use('/query',queryRoute)
 app.use('/user/profile', userProfileRoute)
 
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
      console.log('App is listing to 5000')
 })

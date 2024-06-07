@@ -27,12 +27,14 @@ router.post('/auth/signup', async (req, res) => {
           const data = req.body;
           // create a new user with the following data
           const newUser = new user(data)
+          console.log(newUser)
           // extract the Id of that user
           const payload = {
                id: newUser._id
           }
           // and give them a token 
           const token = generateToken(payload)
+          console.log(token)
           newUser.token = token
           // save the user 
           const response = await newUser.save()
