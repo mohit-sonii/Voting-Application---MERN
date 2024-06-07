@@ -43,10 +43,10 @@ adminSchema.methods.comparePassword = async function (password) {
 // create a mongoose model name admin
 // it was in the createAdmin function but beacuse the admin is added in the databse so we don't need this function now
 // this can be used when we need to add an Admin
-// const Admin = mongoose.model('admin', adminSchema); 
-const admin = mongoose.model('admin', adminSchema);
+const Admin = mongoose.model('admin', adminSchema); 
+// const admin = mongoose.model('admin', adminSchema);
 
-export default admin
+// export default admin
 
 
 // createAdmin function is no needed now
@@ -75,5 +75,5 @@ async function createAdmin() {
 }
 
 // we do not need to export this function now
-// export default createAdmin
+export default createAdmin
 
