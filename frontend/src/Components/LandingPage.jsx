@@ -12,7 +12,7 @@ function LandingPage() {
                          <p className="subheading  text-2xl md:text-3xl lg:text-4xl">Shape the Country you want to live in. Participate in the democratic process and let your voice be heard. Every vote counts towards building a better future.</p>
                          {/* if the user is null that means it is the first time visiting. If it did login and validate as user then do navigate the button to candidate list to vote and if not then do navigate signup  */}
                          {userType === '' ?
-                              <Button innerText={'Vote Now'} link={'/auth/signup'} />
+                              <Button innerText={'Vote Now'} link={'/user/auth/signup'} />
                               : <Button innerText={'Vote Now'} />
                          }
                     </div>
