@@ -41,9 +41,14 @@ function Form() {
 
      async function getAreaDetail() {
           // fetch the API before hand so that we do not need to doit again and again
-          const response = await axios.get('/api/api-data')
-          // store the API data in a state.
-          setArea(response.data)
+          try {
+
+               const response = await axios.get('https://voting-application-mern.vercel.app/api/data')
+               // store the API data in a state.
+               setArea(response.data)
+          } catch (err) {
+               console.log(err.message)
+          }
      }
 
      // whne the component mount call that function

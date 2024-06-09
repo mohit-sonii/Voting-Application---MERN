@@ -37,7 +37,7 @@ function SignUp() {
                     password: data.password
                }
                // POST request to add user in the server
-               const res = await fetch('/user/auth/signup', {
+               const res = await fetch('user/auth/signup', {
                     method: "POST",
                     body: JSON.stringify(addUser),
                     headers: {
@@ -72,7 +72,7 @@ function SignUp() {
                     setErr(response.message)
                }
           } catch (err) {
-               setErr(err.message)
+               setErr(err)
           }
      }
 
