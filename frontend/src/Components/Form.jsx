@@ -43,7 +43,7 @@ function Form() {
           // fetch the API before hand so that we do not need to doit again and again
           try {
 
-               const response = await axios.get('https://voting-application-mern.vercel.app/api/data')
+               const response = await axios.get('/api/data')
                // store the API data in a state.
                setArea(response.data)
           } catch (err) {

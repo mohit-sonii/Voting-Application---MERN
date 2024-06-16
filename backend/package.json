@@ -1,27 +1,29 @@
 {
   "name": "backend",
-  "type": "module",
   "version": "1.0.0",
+  "description": "A revised backend database for voting application",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.server.js"
   },
-  "author": "",
+  "keywords": [
+    "backend",
+    "MERN",
+    "nodejs",
+    "full",
+    "stack"
+  ],
+  "author": "Mohit Soni",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.2"
-  },
-  "description": ""
+    "nodemon": "^3.1.3",
+    "prettier": "^3.3.2"
+  }
 }
