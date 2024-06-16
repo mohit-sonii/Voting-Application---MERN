@@ -1,6 +1,6 @@
 
 // inherit the default Error class functionalities and functions
-class ApiError extends Error {
+class handleError extends Error {
      // defines the constructor function that initializes the new instance of 'ApiError'.it accepts three arguments one is error which will pass when it gets called, a default message and a statusCode
      constructor(error = [], message = "Something went wrong", statusCode, stack = '') {
           // it initialize the message property of teh Error class with the provided message
@@ -15,4 +15,4 @@ class ApiError extends Error {
      }
 }
 
-export { ApiError }
+export { handleError }

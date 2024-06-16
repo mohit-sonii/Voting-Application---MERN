@@ -10,12 +10,12 @@ dotenv.config(
      })
 import { mongoDB } from './database/db.database.js'
 import { app } from './app.js'
-import { ApiError } from './utils/Error.util.js'
+import { HandleError } from './utils/handleError.util.js'
 mongoDB().then(() => {
      app.listen(process.env.PORT || 8000, () => {
           console.log(`App is running on ${process.env.PORT}`)
      })
 }).catch((err) => {
-     throw new ApiError(err, 500, 'Error in running the server')
+     throw new HandleError(err, 500, 'Error in running the server')
 })
 
