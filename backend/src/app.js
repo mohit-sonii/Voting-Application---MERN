@@ -5,6 +5,7 @@
 
 import express from 'express'
 const app = express()
-import getAdminDetails from "./routes/getAdminData.routes.js"
-app.use('/api/v1/admin',getAdminDetails)
+import getDetails from "./routes/getDetails.routes.js"
+app.use('/api/v1/admin',getDetails)
+app.use('/api/v1/api/districts-and-states',getDetails)
 export { app }
