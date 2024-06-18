@@ -1,7 +1,6 @@
 
 import mongoose, { Schema } from 'mongoose'
-import { verifyPassword, hashPassword } from '../utils/password.util.js'
-import {  handleError } from '../utils/handleError.util.js'
+import bcrypt from 'bcrypt'
 
 const adminSchema = new Schema({
      uniqueId: {
@@ -19,29 +18,10 @@ const adminSchema = new Schema({
      }
 })
 
-// run this function before saving
-adminSchema.pre('save', async function (next) {
-     // check is the password modified, if no then do nothing, 
-     if (!this.isModified('password')) return next()
-     try {
-          //if yes, then do hash the password
-          this.password = await hashPassword(this.password)
-          // move on to next middleware
-          next()
-     } catch (err) {
-          //handle error gradually
-          next(err)
-     }
-
-})
-
-//compare the password
-adminSchema.methods.comparePassword = async function (password) {
-     try {
-          return await verifyPassword(password, this.password)
-     } catch (err) {
-          throw new handleError(400, 'Error in comparing the admin password')
-     }
+//compare password
+adminSchema.methods.isPasswordCorrect = async function (requestPassword) {
+     return await bcrypt.compare(requestPassword, this.password)
 }
+
 
 export const Admin = mongoose.model('Admin', adminSchema)

@@ -1,6 +1,6 @@
 
 import { Admin } from "../models/admin.model.js"
-import { hashPassword } from "./password.util.js"
+import bcrypt from 'bcrypt'
 export const createAdmin = async () => {
      const uniqueId = process.env.adminUniqueId
      const password = process.env.adminPassword
@@ -8,7 +8,7 @@ export const createAdmin = async () => {
      try {
           const alreadyExist = await Admin.findOne({ uniqueId })
           if (!alreadyExist) {
-               const hashPassForAdmin = await hashPassword(password)
+               const hashPassForAdmin = await bcrypt.hash(password,10)
                const newAdmin = new Admin({ uniqueId: uniqueId, password: hashPassForAdmin })
                await newAdmin.save()
                console.log('Admin created successfully', newAdmin, hashPassForAdmin)

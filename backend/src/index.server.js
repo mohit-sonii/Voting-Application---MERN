@@ -11,8 +11,6 @@ dotenv.config(
 import { mongoDB } from './database/db.database.js'
 import { app } from './app.js'
 import { handleError } from './utils/handleError.util.js'
-
-
 mongoDB().then(() => {
      app.listen(process.env.PORT || 8000, () => {
           console.log(`App is running on ${process.env.PORT}`)
