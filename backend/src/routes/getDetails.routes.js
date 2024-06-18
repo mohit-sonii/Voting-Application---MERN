@@ -4,10 +4,11 @@
 import { Router } from 'express'
 import { getAdminDetails } from "../controllers/getAdminData.controller.js"
 import { getStateDistrictsData } from "../controllers/getStateDistrict.controller.js"
+import { getCandidate } from '../controllers/candidates.controller.js'
 const router = Router()
 
 router.route('/admin-data').get(getAdminDetails)
 router.route('/district-state').get(getStateDistrictsData)
-
+router.route('/').get(getCandidate)
 
 export default router
