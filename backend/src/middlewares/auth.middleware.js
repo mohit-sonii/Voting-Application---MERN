@@ -19,19 +19,16 @@ export const verifyJwt = asyncHandler(async (req, _, next) => {
           req.data = data
           next()
      } catch (err) {
-          console.log(err.message)
-          throw new handleError("Error in verifyJWT", 500)
+          throw new handleError(err, "Error in verifyJWT", 500)
      }
 })
 export const isAdmin = asyncHandler(async (req, _,next) => {
      try {
           const tokenData = req.data
-          console.log(tokenData)
           const ifAdmin = await tokenData.role
           if (ifAdmin == 'admin') next()
           else throw new handleError(401, "You are not authorized to access this route")
      } catch (err) {
-          console.log(err.message)
-          throw new handleError(err?.message || 'error in isAdmin', 500)
+          throw new handleError(err, 'error in isAdmin', 500)
      }
 })

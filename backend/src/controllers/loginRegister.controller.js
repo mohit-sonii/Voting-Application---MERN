@@ -20,7 +20,6 @@ export const login = asyncHandler(async (req, res) => {
           throw new handleError(401, "Incorrect password");
      }
      const accessTokenForAdmin = generateAccessToken(adminData._id)
-     console.log(accessTokenForAdmin)
 
      const options = {
           httpOnly: true,

@@ -11,7 +11,7 @@ router.route('/').post(
      isAdmin,
      addCandidate)
 router.route('/:id').delete(verifyJwt, isAdmin, deleteCandidate)
-router.route('/:id').patch(verifyJwt, isAdmin, updateCandidate)
+router.route('/:id').patch(verifyJwt, isAdmin, upload.single('avatar'), updateCandidate)
 
 
 export default router
