@@ -14,6 +14,7 @@ app.use(cookieParser())
 import getDetails from "./routes/getDetails.routes.js"
 import loginRegister from "./routes/loginRegister.routes.js"
 import candidates from "./routes/candidates.routes.js"
+import users from "./routes/users.routes.js"
 
 // GET details routes
 app.use('/api/v1/admin',getDetails)
@@ -25,5 +26,8 @@ app.use('/api/v1/auth',loginRegister)
 //candidatelist routes
 app.use('/api/v1/candidates/candidate-list',getDetails)
 app.use('/api/v1/candidates/candidate-list',candidates)
+
+// user routes
+app.use('/api/v1/user',users)
 
 export { app }
