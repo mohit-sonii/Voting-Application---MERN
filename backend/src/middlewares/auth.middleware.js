@@ -20,14 +20,12 @@ export const verifyJwt = asyncHandler(async (req, _, next) => {
           let data
           let userCheck = await User.findById(verifyWithSecret._id).select("-refreshToken")
           if (userCheck) {
-               data = userCheck
-               req.data = data
+               req.data = userCheck
                return next()
           }
           let adminCheck = await Admin.findById(verifyWithSecret._id)
           if (adminCheck) {
-               data = adminCheck
-               req.data = data
+               req.data = adminCheck
                return next()
           }
           throw new handleError(400, "Invalid Token Details")

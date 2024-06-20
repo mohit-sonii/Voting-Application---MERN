@@ -16,7 +16,7 @@ export const login = asyncHandler(async (req, res) => {
           }
           const userData = await User.findOne({ uniqueId: uniqueId })
           if (userData) {
-               const validatePassword = await userData.isPasswordCorrect(password)
+               const validatePassword = await bcrypt.compare(password, userData.password)
                if (!validatePassword) throw new handleError(401, 'Either ID or passowrd is incorrect')
                const accessToken = generateAccessToken(userData._id)
                const refreshToken = generateRefreshToken(userData._id)
@@ -44,7 +44,7 @@ export const login = asyncHandler(async (req, res) => {
                if (!adminData) {
                     throw new handleError(400, "Admin not found");
                }
-               const isMatch = await adminData.isPasswordCorrect(password);
+               const isMatch = await bcrypt.compare(password, adminData.password);
                if (!isMatch) {
                     throw new handleError(401, "Incorrect password");
                }
@@ -69,17 +69,12 @@ export const login = asyncHandler(async (req, res) => {
                     ));
           }
      } catch (err) {
-          // res.status(err.statusCode || 500).json({
-          //      data: {},
-          //      status: err.statusCode || 500,
-          //      message: err.message || "Error while logging in a user"
-          // });
 
           throw new handleError(err, err.message || "Error while login the user", err.statusCode || 500)
      }
 });
 
-export const logout = asyncHandler(async (_, res) => {
+export const logout = asyncHandler(async (req, res) => {
      const options = {
           httpOnly: true,
           secure: true
@@ -87,6 +82,7 @@ export const logout = asyncHandler(async (_, res) => {
      return res
           .status(200)
           .clearCookie("accessToken", options)
+          .clearCookie("refreshToken", options)
           .json(new apiResponse(
                200,
                {},
@@ -123,9 +119,10 @@ export const register = asyncHandler(async (req, res) => {
                uniqueId,
                refreshToken: "",
                voterId,
-               password
+               password: await bcrypt.hash(password, 10)
           })
 
+          await user.save()
           return res
                .status(200)
                .json(new apiResponse(
