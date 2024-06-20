@@ -7,9 +7,9 @@ class handleError extends Error {
           super(message)
           // this.message = message //already done in super but just for clearification
           this.success = false
-          this.error = message
-          this.data = null
           this.statusCode = statusCode
+          this.error = error
+          this.data = null
           if (stack) this.stack = stack //if any stack is provided
           else Error.captureStackTrace(this, this.constructor) // if not then the stack trace will include the point where the ApiError was instantiated
      }

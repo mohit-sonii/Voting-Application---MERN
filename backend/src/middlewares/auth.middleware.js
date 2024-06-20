@@ -4,8 +4,11 @@ import jwt from 'jsonwebtoken'
 import { Admin } from "../models/admin.model.js"
 import { asyncHandler } from '../utils/asyncHandler.util.js'
 import { handleError } from '../utils/handleError.util.js'
-export const verifyJwt = asyncHandler(async (req, _, next) => {
+import { User } from '../models/User.model.js'
 
+
+
+export const verifyJwt = asyncHandler(async (req, _, next) => {
      try {
           // token extraction and validation
           const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
@@ -14,15 +17,27 @@ export const verifyJwt = asyncHandler(async (req, _, next) => {
           const verifyWithSecret = jwt.verify(token, process.env.accessTokenSecret)
           if (!verifyWithSecret) throw new handleError(401, "verificaiton of token failed")
           // database lookup
-          const data = await Admin.findById(verifyWithSecret._id).select("-password -uniqueId")
-          // atach data with req.data
-          req.data = data
-          next()
+          let data
+          let userCheck = await User.findById(verifyWithSecret._id).select("-refreshToken")
+          if (userCheck) {
+               data = userCheck
+               req.data = data
+               return next()
+          }
+          let adminCheck = await Admin.findById(verifyWithSecret._id)
+          if (adminCheck) {
+               data = adminCheck
+               req.data = data
+               return next()
+          }
+          throw new handleError(400, "Invalid Token Details")
      } catch (err) {
-          throw new handleError(err, "Error in verifyJWT", 500)
+          throw new handleError(500, err.message || "Error in verifyJWT")
      }
 })
-export const isAdmin = asyncHandler(async (req, _,next) => {
+
+
+export const isAdmin = asyncHandler(async (req, _, next) => {
      try {
           const tokenData = req.data
           const ifAdmin = await tokenData.role
