@@ -1,21 +1,19 @@
 
 import { useEffect, useState } from "react"
 import "../Styles/Form.css"
-import axios from 'axios'
-import Button from "./Button"
 import api from "../axiosInstance.js"
-import { useNavigate } from 'react-router-dom'
 
 function Form() {
 
-     const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', query: '' })
+     const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', queryType: '' })
      const [states, setState] = useState([])
      const [districts, setDistricts] = useState([])
      const [apiAreas, setArea] = useState([])
-
+     const [formError, setFormError] = useState(null)
      const [isSubmitted, setSubmit] = useState(false)
-     const navigate = useNavigate()
 
+
+     // this will update the  fields
      const handleChange = (e) => {
           const { name, value } = e.target
           if (name == 'phone') {
@@ -27,7 +25,7 @@ function Form() {
           setData({ ...data, [e.target.name]: e.target.value })
      }
 
-
+     // this will fetch the districts-state list from the API to show in District and State dropdown
      async function getAreaDetail() {
           try {
 
@@ -35,31 +33,36 @@ function Form() {
                const areas = response.data?.[0]?.apiData?.states
                setArea(areas)
           } catch (err) {
-               console.log(err.message)
+               setFormError(err.response?.data?.message || 'An error occured while sending your query')
+
           }
      }
 
+     // this function should run when the component mounts
      useEffect(() => {
           getAreaDetail()
      }, [])
 
+     // if the length of the areas is greateer than 0, that means API fetched successfully, now we do is to extract the States from the areas list. when the apiArears got data it will run this getState()
      useEffect(() => {
           if (apiAreas.length > 0) {
                getState()
           }
      }, [apiAreas])
 
-
+     // this will get the states list and store it in the state variable
      const getState = async () => {
           try {
                const res = apiAreas.map((item) => item.state)
                setState(res)
 
           } catch (error) {
-               console.log(error.message)
+               setFormError(err.response?.data?.message || 'An error occured while sending your query')
+
           }
      };
 
+     // whenever the state got updated, that means when the state gets filed by the user or in crux when a user select a state value from the dropdown it will run the getDistrict() function to get the districts corresponding to the state
      useEffect(() => {
           setDistricts('')
           setData({ ...data, [data.district]: '' })
@@ -67,15 +70,21 @@ function Form() {
           getDistrict()
      }, [data.state])
 
+     // if got the districts then it will be filled in the dropdown but if not then it will be an empty array.this is very good apprach as when a componen mount it shows error of undefined int he console.
      const getDistrict = async () => {
           try {
                const dis = apiAreas.find(item => item.state === data.state)
-               setDistricts(dis.districts)
+               if (dis) {
+                    setDistricts(dis.districts);
+               } else {
+                    setDistricts([]);
+               }
           } catch (err) {
-               console.log(err.message)
+               setFormError(err.response?.data?.message || 'An error occured while sekhjhjknding your query')
           }
      }
 
+     // function that trigger when we click on submit
      const handleSubmit = async (e) => {
           e.preventDefault()
           try {
@@ -87,35 +96,44 @@ function Form() {
                     district: data.district,
                     email: data.email,
                     message: data.message,
-                    query: data.query
+                    queryType: data.queryType
                };
-               const response = await axios.post('/query', addQuery, {
+               const response = await api.post('/', addQuery, {
                     headers: {
                          "Content-Type": "application/json"
                     }
                })
                if (response.status === 200) {
+                    setSubmit(true)
                     setData({
                          username: '',
                          phone: '',
                          state: '',
                          email: '',
                          message: '',
-                         query: '',
+                         queryType: '',
                          district: ''
                     })
-                    console.log('submit successfully')
-                    setSubmit(true)
-                    navigate('/')
+
                } else {
-                    console.log('error in form submition')
+                    throw new Error('Error while sending your query')
                }
           } catch (err) {
-               console.log('error in form submition' + err.message)
-
+               setFormError(err.response?.data?.message || 'An error occured while sending your query')
           }
 
+
      }
+
+     // either successfully or got an error, in both the cases the user will notified and after 5 seconds that message will get disappear
+     useEffect(() => {
+          const timer = setTimeout(() => {
+               setSubmit(false);
+               setFormError(null);
+          }, 5000);
+
+          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+     }, [isSubmitted, formError]);
 
      return (
           <div className="formSection">
@@ -131,11 +149,11 @@ function Form() {
                               <input className="text-lg lg:text-xl xl:text-2xl " type="text" name="username" value={data.username} id="username" onChange={handleChange} placeholder="Enter your name" required />
                          </div>
                          <div className="ele phone">
-                              <input className="text-lg lg:text-xl xl:text-2xl " type="tel" name="phone" value={data.phone} id="phone" onChange={handleChange} placeholder="Enter your Phone Number" required />
+                              <input className="text-lg lg:text-xl xl:text-2xl " type="tel" name="phone" value={data.phone} id="phone" maxLength={10} onChange={handleChange} placeholder="Enter your Phone Number" required />
                          </div>
-                         <div className="ele query">
-                              <select className="text-lg lg:text-xl xl:text-2xl" id="contact-type" name="query" onChange={handleChange} value={data.query} required>
-                                   <option value=""  >Select your Query Type</option>
+                         <div className="ele queryType">
+                              <select className="text-lg lg:text-xl xl:text-2xl" id="contact-type" name="queryType" onChange={handleChange} value={data.queryType} required>
+                                   <option value="">Select your queryType Type</option>
                                    <option value="general-inquiries">General Inquiries</option>
                                    <option value="technical-support">Technical Support</option>
                                    <option value="voting-issues">Voting Issues</option>
@@ -174,10 +192,11 @@ function Form() {
                          <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Submit</span></button>
                     </div>
                </form>
-               {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
+               <div>
+                    {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
+                    {formError && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">{formError}</p>}
+               </div>
           </div>
      )
 }
-
-
 export default Form
