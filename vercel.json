@@ -16,6 +16,10 @@
      "routes": [
        {
          "src": "/(.*)",
+         "dest": "/backend/src/index.server.js"
+       },
+       {
+         "src": "/(.*)",
          "dest": "/frontend/dist/$1"
        }
      ]
