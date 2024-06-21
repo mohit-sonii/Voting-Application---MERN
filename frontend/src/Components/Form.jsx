@@ -31,7 +31,7 @@ function Form() {
      async function getAreaDetail() {
           try {
 
-               const response = await api.get('/api/v1/api/districts-and-states/district-state')
+               const response = await api.get('api/v1/api/districts-and-states/district-state')
                const areas = response.data?.[0]?.apiData?.states
                setArea(areas)
           } catch (err) {
