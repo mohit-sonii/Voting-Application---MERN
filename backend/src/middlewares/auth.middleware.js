@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { Admin } from "../models/admin.model.js"
 import { asyncHandler } from '../utils/asyncHandler.util.js'
 import { handleError } from '../utils/handleError.util.js'
-import { User } from '../models/User.model.js'
+import { User } from '../models/user.model.js'
 
 
 

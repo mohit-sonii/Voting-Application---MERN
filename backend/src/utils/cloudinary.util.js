@@ -23,6 +23,16 @@ export const uploadOnCloudinary = async (localFilePath) => {
           return err
      }
 }
-export const deleteFromCloudinary = async (filePath) => {
-     return await cloudinary.uploader.destroy(filePath)
+export const deleteFromCloudinary = async (incomingFile) => {
+     const publicIdMatch = incomingFile.match(/\/upload\/(?:v\d+\/)?([^\/]+)\/([^\/]+)\.[a-z]+$/);
+     if (!publicIdMatch || publicIdMatch.length < 3) {
+          throw new Error('Invalid Cloudinary URL');
+     }
+
+     //find the folder
+     const folder = decodeURIComponent(publicIdMatch[1]);
+
+     // get the public Id of that file
+     const publicId = `${folder}/${publicIdMatch[2]}`;
+     return await cloudinary.uploader.destroy(publicId)
 }

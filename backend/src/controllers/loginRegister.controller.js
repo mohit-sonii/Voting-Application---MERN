@@ -3,10 +3,11 @@ import { asyncHandler } from '../utils/asyncHandler.util.js';
 import { Admin } from '../models/admin.model.js';
 import bcrypt from "bcrypt"
 import { handleError } from '../utils/handleError.util.js';
-import { User } from '../models/User.model.js';
+import { User } from '../models/user.model.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.util.js';
 import { apiResponse } from "../utils/response.util.js"
 import { generateAccessToken, generateRefreshToken } from "../utils/tokens.util.js"
+import { Candidate } from '../models/candidate.model.js';
 
 export const login = asyncHandler(async (req, res) => {
      try {
@@ -103,6 +104,13 @@ export const register = asyncHandler(async (req, res) => {
                uniqueId,
                voterId
           })
+          const isCandidate = await Candidate.findOne({
+               uniqueId,
+               voterId
+          })
+          const isAdmin = await Admin.findOne({uniqueId})
+          if(isAdmin) throw new handleError(400,'User cannot be registered')
+          if (isCandidate) throw new handleError(400, 'Candidate can not register')
           if (existsUser) throw Error("user with this ID already exists")
           //chech whether user provide avatar or not
           const avatarFile = req.file?.path

@@ -1,7 +1,7 @@
 
 
 import mongoose, { Schema } from 'mongoose'
-import { User } from './User.model.js'
+import { User } from './user.model.js'
 
 const candidateSchema = new Schema({
      firstName: {
@@ -24,12 +24,16 @@ const candidateSchema = new Schema({
           type: Number,
           required: true
      },
-     votesCount: [
+     votedUsers: [
           {
                type: Schema.Types.ObjectId,
                ref: User
-          }
+          },
      ],
+     votesCount:{
+          type:Number,
+          default:0
+     },
      partyName: {
           type: String,
           required: true

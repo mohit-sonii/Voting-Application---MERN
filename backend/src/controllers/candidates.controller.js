@@ -115,7 +115,6 @@ export const updateCandidate = asyncHandler(async (req, res) => {
           const avatar = req.file?.path
 
           if (avatar) {
-
                // Add the new Avatar
                const avatarLocalPath = req.file?.path
                if (!avatarLocalPath) throw new handleError("", 'Avatar is Required', 400)
@@ -126,20 +125,8 @@ export const updateCandidate = asyncHandler(async (req, res) => {
                // find the already stored avatar file path
                const avatarFile = candidateData.avatar
 
-               // extract the public ID from the url
-               const publicIdMatch = avatarFile.match(/\/upload\/(?:v\d+\/)?([^\/]+)\/([^\/]+)\.[a-z]+$/);
-               if (!publicIdMatch || publicIdMatch.length < 3) {
-                    throw new Error('Invalid Cloudinary URL');
-               }
-
-               //find the folder
-               const folder = decodeURIComponent(publicIdMatch[1]);
-
-               // get the public Id of that file
-               const publicId = `${folder}/${publicIdMatch[2]}`;
-
-               // delete the file whose publicID matched
-               const deleteFile = await deleteFromCloudinary(publicId)
+               // delete the file from cloudinary
+               const deleteFile = await deleteFromCloudinary(avatarFile)
                if (!deleteFile) throw new handleError(400, 'Not found the file')
 
                candidateData.avatar = uploadAvatar.url
