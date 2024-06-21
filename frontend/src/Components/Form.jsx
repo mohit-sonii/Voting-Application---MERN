@@ -3,96 +3,73 @@ import { useEffect, useState } from "react"
 import "../Styles/Form.css"
 import axios from 'axios'
 import Button from "./Button"
+import api from "../axiosInstance.js"
 import { useNavigate } from 'react-router-dom'
 
 function Form() {
 
-     // state to manage all the values in the form
      const [data, setData] = useState({ username: '', phone: '', state: '', district: '', email: '', message: '', query: '' })
-     // state to store all the possible states of the country. usually fethcing from API
      const [states, setState] = useState([])
-     // state to store all the district of that particular state
      const [districts, setDistricts] = useState([])
-     // to store all the API states,districts data
      const [apiAreas, setArea] = useState([])
 
      const [isSubmitted, setSubmit] = useState(false)
      const navigate = useNavigate()
 
-     // this function is used to update the data value everytime when input field gets changed
      const handleChange = (e) => {
-          // destructure the 'name' and 'value' from target field
           const { name, value } = e.target
-          // if the 'name' for an field is 'phone' then do 
           if (name == 'phone') {
-               // validate that only Integers should allowed
                const numericRegex = /^\d*$/; // Regex to allow only integers
-               // if the test does not contain an integer then reutrn simply that means do nothing
                if (!numericRegex.test(value)) {
                     return;
                }
           }
-          // if alll the field are coorect then do update the value of that particular changed state
           setData({ ...data, [e.target.name]: e.target.value })
-          // console it just for validation
-          // console.log({ ...data, [e.target.name]: e.target.value })
      }
 
 
      async function getAreaDetail() {
-          // fetch the API before hand so that we do not need to doit again and again
           try {
 
-               const response = await axios.get('/api/data')
-               // store the API data in a state.
-               setArea(response.data)
+               const response = await api.get('/api/districts-and-states/district-state')
+               const areas = response.data?.[0]?.apiData?.states
+               setArea(areas)
           } catch (err) {
                console.log(err.message)
           }
      }
 
-     // whne the component mount call that function
      useEffect(() => {
           getAreaDetail()
-     }, []) // run only once
+     }, [])
 
-     // when the apiAreas state change then run this function
      useEffect(() => {
-          // if that state has vlaue only then call the getSate function
           if (apiAreas.length > 0) {
                getState()
           }
-     }, [apiAreas]) // however because we have stored the API data in a vairable this will run only once
+     }, [apiAreas])
 
 
      const getState = async () => {
           try {
-               // now the API data is in 'apiAreas' state, do iterate to get the states
                const res = apiAreas.map((item) => item.state)
-               // update the state
                setState(res)
 
           } catch (error) {
-               // catch errors in case of any
                console.log(error.message)
           }
      };
 
      useEffect(() => {
-          // if (states.length > 0) {
           setDistricts('')
-          // make the district value empty 
           setData({ ...data, [data.district]: '' })
 
           getDistrict()
-          // }
      }, [data.state])
 
      const getDistrict = async () => {
           try {
-               // finding the state from the array
                const dis = apiAreas.find(item => item.state === data.state)
-               // when found add that district in list
                setDistricts(dis.districts)
           } catch (err) {
                console.log(err.message)
