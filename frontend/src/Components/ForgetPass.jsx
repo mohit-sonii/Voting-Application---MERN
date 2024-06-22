@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import api from '../axiosInstance.js'
 
 function ForgetPass() {
 
 
      const [data, setData] = useState({
           uniqueId: '',
-          voter: ''
+          voterId: ''
      })
      const [err, setErr] = useState('')
+
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
@@ -20,33 +21,33 @@ function ForgetPass() {
 
           e.preventDefault();
           try {
-               const user = {
-                    uniqueId: data.uniqueId,
-                    voter: data.voter
-               }
-               const response = await axios.post('/user/auth/forget-password', user, {
+               const response = await api.post('api/v1/auth/login/forget-password', data, {
                     headers: {
                          "Content-Type": "application/json",
                     }
                })
-               if (response.data.redirectUrl) {
-                    navigate(response.data.redirectUrl);
-               } else {
-                    setErr('Error: User not found');
-               }
+
                if (response.status === 200) {
                     setData({
                          uniqueId: '',
-                         voter: ''
+                         voterId: ''
                     })
+                    navigate(`/api/v1/auth/login/forget-password/create-new-password/${response.data.data._id}`);
                     setErr('')
                } else {
-                    setErr('User does not exists')
+                    throw new Error("Error while forgeting the password")
                }
           } catch (error) {
-               setErr(error.message)
+               setErr(error.response?.data?.message || 'An error occured while updating the password')
           }
      }
+     useEffect(() => {
+          const timer = setTimeout(() => {
+               setErr('');
+          }, 2000);
+
+          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+     }, [err]);
 
      return (
           <div id="login">
@@ -54,7 +55,7 @@ function ForgetPass() {
                <div className="log">
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Forget Password ?</p>
-                         <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold"> Use your uniqueId and voter Id to create new password
+                         <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold"> Use your uniqueId and voterId to create new password
                          </p>
                     </div>
                     <form className="flex" onSubmit={handleSubmit}>
@@ -66,16 +67,16 @@ function ForgetPass() {
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="uniqueId" id="uniqueId" type="text" maxLength={'12'} onChange={handleChange} value={data.uniqueId} required />
                               </div>
 
-                              <div className="field voter">
-                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="voter">Enter Voter Id Number </label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="voter" id="voter" type="text" onChange={handleChange} value={data.voter} required />
+                              <div className="field voterId">
+                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="voterId">Enter Voter Id Number </label>
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="voterId" id="voterId" type="text" onChange={handleChange} value={data.voterId} required />
                               </div>
                          </div>
                          <div className="button flex gap-8">
                               <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Check for my Account</span></button>
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
-                                   <Link to="/user/auth/login">
+                                   <Link to="/api/v1/auth/login">
                                         <span>Back</span>
                                    </Link>
                               </button>

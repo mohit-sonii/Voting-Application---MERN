@@ -1,81 +1,65 @@
 
 import "../Styles/SignUp.css"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import React from 'react'
 import { Link } from "react-router-dom"
+import api from "../axiosInstance.js"
 import { useNavigate } from "react-router-dom"
 
 
-function SignUp() {
-     // state to store data field
+function Register() {
      const [data, setData] = useState({
-          firstname: '',
-          lastname: '',
-          voter: '',
+          firstName: '',
+          lastName: '',
+          voterId: '',
           uniqueId: '',
-          password: ''
+          password: '',
+          avatar: ""
      })
-     // error state in case of any error encourntered
      const [err, setErr] = useState('')
-     // nvaigate to naviage the user 
      const navigate = useNavigate()
-     // change for updataino in input fields
      const handleChange = (e) => {
           const { name, value } = e.target;
-          setData({ ...data, [name]: value })
+          if (name === "avatar") {
+               // console.log(e.target.files[0], "this is the e.target.file")
+               setData({ ...data, avatar: e.target.files[0] });
+          } else {
+               setData({ ...data, [name]: value })
+          }
      }
-     // to subkit the data
      const handleSubmit = async (e) => {
           e.preventDefault();
           try {
-               // to add the user data from the fileds
-               const addUser = {
-                    firstname: data.firstname,
-                    lastname: data.lastname,
-                    voter: data.voter,
-                    uniqueId: data.uniqueId,
-                    password: data.password
-               }
-               // POST request to add user in the server
-               const res = await fetch('user/auth/signup', {
-                    method: "POST",
-                    body: JSON.stringify(addUser),
+               const response = await api.post('api/v1/auth/register', data, {
                     headers: {
-                         "Content-Type": "application/json"
+                         "Content-Type": "multipart/form-data"
                     }
                })
-               const response = await res.json()
-               console.log(response)
                if (response.status === 200) {
                     setData({
-                         firstname: '',
-                         voter: '',
+                         firstName: '',
+                         voterId: '',
                          uniqueId: '',
-                         lastname: '',
+                         lastName: '',
                          password: '',
+                         avatar: ''
                     })
-                    // to get the token and the user detail from the fetched response
-                    const { token, user } = response;
-
-                    // Store the token in localStorage
-                    localStorage.setItem('token', token);
-
-                    // console.log('User signed up:', user);
-                    // console.log('toke', token)
-                    // just to ensure that the token is generating
-                    // setErr(response.data.token)
-
-                    // Navigate to the home route
-                    navigate('/')
+                    navigate(`/${response.data.data._id}`)
                }
                else {
-                    setErr(response.message)
+                    throw new Error("Error while register a user")
                }
           } catch (err) {
-               setErr(err)
+               setErr(err.response?.data?.message || 'An error occured while registering a user')
           }
      }
+     useEffect(() => {
+          const timer = setTimeout(() => {
+               setErr('');
+          }, 2000);
 
+          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+     }, [err]);
      return (
           <div id="signup">
                {err && <p className="text-xl">{err}</p>}
@@ -83,7 +67,7 @@ function SignUp() {
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Register</p>
                          <p className=" flex flex-row gap-5 sm:text-2xl lg:text-3xl xl:text-2xl font-semibold">Already Have an Account?
-                              <Link to="/user/auth/login">
+                              <Link to="/api/v1/auth/login">
                                    <span className="login">Login</span>
                               </Link>
                          </p>
@@ -91,13 +75,13 @@ function SignUp() {
                     <form className="flex" onSubmit={handleSubmit}>
                          <div className="signup-form grid gap-10 sm:grid-cols-2">
                               <div className="field firstName">
-                                   <label className="text-2xl 2xl:text-4xl font-light" htmlFor="firstname">Enter your First Name</label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="firstname" id="firstName" type="text" onChange={handleChange} value={data.firstname} required />
+                                   <label className="text-2xl 2xl:text-4xl font-light" htmlFor="firstName">Enter your First Name</label>
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="firstName" id="firstName" type="text" onChange={handleChange} value={data.firstName} required />
                               </div>
 
                               <div className="field lastName">
-                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="lastname">Enter your Last Name</label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="lastname" id="lastName" required type="text" onChange={handleChange} value={data.lastname} />
+                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="lastName">Enter your Last Name</label>
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="lastName" id="lastName" required type="text" onChange={handleChange} value={data.lastName} />
                               </div>
 
                               <div className="field uniqueId">
@@ -105,15 +89,19 @@ function SignUp() {
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="uniqueId" id="uniqueId" type="text" required maxLength={'12'} onChange={handleChange} value={data.uniqueId} />
                               </div>
 
-                              <div className="field voter">
-                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="voter">Enter your Voter Card Number</label>
-                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="voter" id="voter" type="text" maxLength={7} required onChange={handleChange} value={data.voter} />
+                              <div className="field voterId">
+                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="voterId">Enter your Voter Card Number</label>
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="voterId" id="voterId" type="text" maxLength={7} required onChange={handleChange} value={data.voterId} />
                               </div>
 
 
                               <div className="field password">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="password">Create Password </label>
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="password" id="password" required type="password" onChange={handleChange} value={data.password} />
+                              </div>
+                              <div className="field avatar">
+                                   <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="avatar">Upload your Avatar </label>
+                                   <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" id="avatar" name="avatar" type="file" onChange={handleChange} />
                               </div>
                          </div>
                          <div className="button flex gap-8">
@@ -132,4 +120,4 @@ function SignUp() {
      )
 }
 
-export default SignUp
+export default Register

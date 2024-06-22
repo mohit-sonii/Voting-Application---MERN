@@ -1,62 +1,63 @@
 
 
 import { Link, useParams } from 'react-router-dom'
-// Link is for Routing
-// useParams is for taking Id from the URL
+import api from '../axiosInstance'
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function NewPass() {
 
-     // it will take the ID from the URL
      const { id } = useParams()
-     // state that upates the password
      const [data, setData] = useState({
           password: '',
           repass: ''
      })
-     // error state in case of any error while routing or posting
      const [err, setErr] = useState('')
 
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
      }
+
+     const navigate = useNavigate()
+
      const handleSubmit = async (e) => {
           e.preventDefault();
-
-          if (data.password === data.repass) {
-
-               try {
-                    // it will take the password form the data state
-                    const pass = {
-                         password: data.password
-                    }
-                    // using fetch to update the password
-                    const response = await fetch(`/user/auth/forget-password/create-new-password/${id}`, {
-                         method: "PATCH",
-                         body: JSON.stringify(pass),
+          try {
+               if (data.password === data.repass) {
+                    const response = await api.patch(`api/v1/auth/login/forget-password/create-new-password/${id}`, { password: data.password }, {
                          headers: {
                               "Content-Type": "application/json"
                          }
                     });
-                    const result = await response.json()
-                    console.log('Password updated:', result);
-               } catch (err) {
-                    setErr(err.message);
+                    if (response.status === 200) {
+                         data.password = ''
+                         data.repass = ''
+                         navigate('/api/v1/auth/login')
+                    }
                }
-          }
-          else{
-               setErr('Password should match')
+               else {
+                    throw new Error("Password mismatch")
+               }
+          } catch (error) {
+               setErr(error.response?.data?.message || 'An error occured while resetting the password')
           }
      };
+     useEffect(() => {
+          const timer = setTimeout(() => {
+               setErr('');
+          }, 2000);
+
+          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+     }, [err]);
 
      return (
           <div id="login">
                {err && <h1 className="text-xl">{err}</h1>}
                <div className="log">
                     <div className="signup-heading flex gap-5 flex-col">
-                         <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Create New Password ?</p>
+                         <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Create  New Password :</p>
                     </div>
                     <form className="flex" onSubmit={handleSubmit}>
 

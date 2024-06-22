@@ -2,7 +2,7 @@
 
 import Login from "./Components/Login"
 import ForgetPass from "./Components/ForgetPass"
-import SignUp from "./Components/SignUp"
+import Register from "./Components/Register"
 import Home from "./Home/Home"
 import Profile from "./Components/Profile"
 import {useAuth} from './Context'
@@ -18,10 +18,11 @@ function App() {
                <BrowserRouter>
                     <Routes>
                          <Route path="/" element={<Home />} />
-                         <Route path="/user/auth/signup" element={<SignUp />} />
-                         <Route path="/user/auth/login" element={<Login />} />
-                         <Route path="/user/auth/forget-password" element={<ForgetPass />} />
-                         <Route path="/user/auth/forget-password/create-new-password/:id" element={<NewPass />} />
+                         <Route path="/:id" element={<Home />} />
+                         <Route path="/api/v1/auth/register" element={<Register />} />
+                         <Route path="/api/v1/auth/login" element={<Login />} />
+                         <Route path="/api/v1/auth/login/forget-password" element={<ForgetPass />} />
+                         <Route path="/api/v1/auth/login/forget-password/create-new-password/:id" element={<NewPass />} />
                          <Route path="/user/profile/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     </Routes>
                </BrowserRouter>

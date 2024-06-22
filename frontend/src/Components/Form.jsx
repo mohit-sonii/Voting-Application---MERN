@@ -130,7 +130,7 @@ function Form() {
           const timer = setTimeout(() => {
                setSubmit(false);
                setFormError(null);
-          }, 5000);
+          }, 2000);
 
           return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
      }, [isSubmitted, formError]);

@@ -70,7 +70,6 @@ export const login = asyncHandler(async (req, res) => {
                     ));
           }
      } catch (err) {
-
           throw new handleError(err, err.message || "Error while login the user", err.statusCode || 500)
      }
 });
@@ -92,85 +91,100 @@ export const logout = asyncHandler(async (req, res) => {
 })
 
 export const register = asyncHandler(async (req, res) => {
-     try {
-          // extract fields from body
-          const { uniqueId, voterId, firstName, lastName, password } = req.body
-          // validatoin for non-empty fields
-          if ([uniqueId, voterId, firstName, lastName, password].some((field) => field?.trim() === "")) {
-               throw Error("Fields cannot be empty")
-          }
-          // verification for existed User 
-          const existsUser = await User.findOne({
-               uniqueId,
-               voterId
-          })
-          const isCandidate = await Candidate.findOne({
-               uniqueId,
-               voterId
-          })
-          const isAdmin = await Admin.findOne({uniqueId})
-          if(isAdmin) throw new handleError(400,'User cannot be registered')
-          if (isCandidate) throw new handleError(400, 'Candidate can not register')
-          if (existsUser) throw Error("user with this ID already exists")
-          //chech whether user provide avatar or not
-          const avatarFile = req.file?.path
-          let savedAvatar
-          if (avatarFile) {
-               savedAvatar = await uploadOnCloudinary(avatarFile)
-
-          }
-
-          const user = await User.create({
-               firstName: firstName.toLowerCase(),
-               avatar: savedAvatar?.url || "",
-               lastName: lastName.toLowerCase(),
-               uniqueId,
-               refreshToken: "",
-               voterId,
-               password: await bcrypt.hash(password, 10)
-          })
-
-          await user.save()
-          return res
-               .status(200)
-               .json(new apiResponse(
-                    200,
-                    "User Registered Successfully",
-                    user
-               ))
-     } catch (err) {
-          throw new handleError(err, err.message || "Error while registering a user", 400)
+     // extract fields from body
+     const { uniqueId, voterId, firstName, lastName, password } = req.body
+     // validatoin for non-empty fields
+     if ([uniqueId, voterId, firstName, lastName, password].some((field) => field?.trim() === "")) {
+          throw Error("Fields cannot be empty")
      }
+     // verification for existed User 
+     const existsUser = await User.findOne({
+          uniqueId,
+          voterId
+     })
+     const isCandidate = await Candidate.findOne({
+          uniqueId,
+          voterId
+     })
+     const isAdmin = await Admin.findOne({ uniqueId })
+     if (isAdmin) throw new handleError(400, 'User cannot be registered')
+     if (isCandidate) throw new handleError(400, 'Candidate can not register')
+     if (existsUser) throw Error("user with this ID already exists")
+     const avatarFile = req.file?.path
+     let savedAvatar
+     if (avatarFile) {
+          savedAvatar = await uploadOnCloudinary(avatarFile)
+     }
+
+     const user = await User.create({
+          firstName: firstName.toLowerCase(),
+          avatar: savedAvatar?.url || "",
+          lastName: lastName.toLowerCase(),
+          uniqueId,
+          refreshToken: "",
+          voterId,
+          password: await bcrypt.hash(password, 10)
+     })
+     const accessToken = generateAccessToken(user._id)
+     const refreshToken = generateRefreshToken(user._id)
+     user.refreshToken = refreshToken
+     await user.save()
+
+     const options = {
+          httpOnly: true,
+          secure: true
+     }
+     return res
+          .status(200)
+          .cookie("accessToken", accessToken, options)
+          .cookie("refreshToken", refreshToken, options)
+          .json(new apiResponse(
+               200,
+               "User Registered Successfully",
+               user
+          ))
 })
 
 export const forgetPassword = asyncHandler(async (req, res) => {
-     const { uniqueId, voterId } = req.body
-     if (!uniqueId || !voterId) throw new handleError(400, "Incomplete credentials")
-     const userData = await User.findOne({ uniqueId }).select("-refreshToken")
-     console.log(userData, "this is user data")
-     console.log(userData.voterId, " ID stroed in DB")
-     if (userData) {
-          if (voterId === userData.voterId) {
-               res.status(200).json({ redirectUrl: `/api/v1/auth/login/forget-password/create-new-password/${req.data._id}` })
+
+     try {
+          const { uniqueId, voterId } = req.body
+          if (!uniqueId || !voterId) throw new handleError(400, "Incomplete credentials")
+          const userData = await User.findOne({ uniqueId }).select("-refreshToken")
+          if (!userData) throw new handleError(400, `User with this ID doesn't exist`)
+          if (userData) {
+               if (voterId === userData.voterId) {
+                    res.status(200).json(new apiResponse(
+                         200,
+                         "User verified successfully",
+                         userData
+                    ))
+               }
+               else {
+                    throw new Error(400, 'Voter Id is incorrect')
+               }
+          } else {
+               throw new Error(400, "Id is incorrect")
           }
-          else {
-               throw new handleError(400, 'Voter Id is incorrect')
-          }
-     } else {
-          throw new handleError(400, "Id is incorrect")
+     } catch (error) {
+          throw new handleError(400, error.message || 'Error while updating the password')
      }
 })
 
 export const newPassword = asyncHandler(async (req, res) => {
-     const { id } = req.params
-     const { password } = req.body
-     const hashPassword = await bcrypt.hash(password, 10)
-     const updateData = await User.findByIdAndUpdate(id, { password: hashPassword }, { new: true })
-     return res
-          .status(200)
-          .json(new apiResponse(
-               200,
-               "Password Updated Successfully",
-               updateData
-          ))
+     try {
+          const { id } = req.params
+          const { password } = req.body
+          const hashPassword = await bcrypt.hash(password, 10)
+          const updateData = await User.findByIdAndUpdate(id, { password: hashPassword }, { new: true })
+          return res
+               .status(200)
+               .json(new apiResponse(
+                    200,
+                    "Password Updated Successfully",
+                    updateData
+               ))
+     } catch (error) {
+          throw new handleError(400, error.message || 'Error while setting up the new password')
+     }
 })

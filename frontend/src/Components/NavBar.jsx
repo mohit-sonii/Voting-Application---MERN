@@ -55,7 +55,7 @@ const Navbar = () => {
                     </ul>
                     {/* if the user type is user then do should " Vote Now" button and it will navigate to the candidate route to vote but if not then do register button with signup route */}
                     {userType === 'user' ? <Button innerText="Vote Now" /> :
-                         <Button innerText="Register" link="/user/auth/signup" />
+                         <Button innerText="Register" link="api/v1/auth/register" />
                     }
                </div>
           </nav>
