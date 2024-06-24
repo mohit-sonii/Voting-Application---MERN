@@ -1,0 +1,20 @@
+.candidateList {
+     width: 90%;
+     margin: auto;
+     gap: 5rem;
+     margin-top: 5rem;
+}
+
+.errorField {
+     width: 50%;
+     margin: auto;
+     justify-content: center;
+     align-items: center;
+     padding: 1rem;
+     font-size: 20px;
+     color: white;
+     text-align: center;
+     font-weight: bold;
+     background-color: rgb(240, 77, 27);
+}
+

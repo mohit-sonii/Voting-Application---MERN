@@ -156,8 +156,7 @@ export const getCandidate = asyncHandler(async (req, res) => {
           .status(200)
           .json(new apiResponse(
                200,
-               "All candidated fetched Successfully",
-               candidateData
+               "All candidated fetched Successfully",               candidateData
 
           ))
 })

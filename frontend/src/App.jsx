@@ -6,10 +6,11 @@ import Register from "./Components/Register"
 import Home from "./Home/Home"
 import Profile from "./Components/Profile"
 import React from "react"
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 import userContext from "./context.js"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import NewPass from "./Components/NewPass"
+import CandidateList from "./Components/CandidateList.jsx"
 
 function App() {
      const [visitorType, setWhoTheVisitor] = useState('');
@@ -30,6 +31,7 @@ function App() {
                               <Route path="/api/v1/auth/login" element={<Login />} />
                               <Route path="/api/v1/auth/login/forget-password" element={<ForgetPass />} />
                               <Route path="/api/v1/auth/login/forget-password/create-new-password/:id" element={<NewPass />} />
+                              <Route path="/:id/api/v1/candidates/candidate-list" element={<CandidateList />} />
                          </Routes>
                     </userContext.Provider>
                </BrowserRouter>

@@ -8,7 +8,6 @@ const Button = (props) => {
           <>
                <button id='button' className=' text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24'>
                     <Link to={props.link}><span>{props.innerText}</span></Link>
-                    {/* What to display on the button will come from the parent component */}
                </button>
           </>
      )

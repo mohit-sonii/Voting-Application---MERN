@@ -2,7 +2,7 @@
 import image from '../../assets/logo.png';
 import Button from './Button';
 import '../Styles/NavBar.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import userContext from '../context';
 import { useContext } from 'react';
@@ -39,25 +39,21 @@ const Navbar = () => {
                          </li>
 
                          {visitorType === 'user' &&
-                              // <Link to>
                               <li>
                                    Profile
                               </li>
-                              // </Link>
-                         }
+                         }        
                     </ul>
                     {visitorType === ''
                          && <Button innerText="Register" link="api/v1/auth/register" />
                     }
                     {visitorType === 'user'
-                         && <Button innerText="Vote Now" link="api/v1/auth/login" />
+                         && <Button innerText="Vote Now" link="api/v1/candidates/candidate-list" />
                     }
                     {visitorType === 'admin'
                          && <Button innerText="Admin Panel" link="api/v1/auth/register" />
                     }
 
-                    {/* <Button innerText="Vote Now" />
-                    <Button innerText="Register" link="api/v1/auth/register" /> */}
                </div>
           </nav>
      );

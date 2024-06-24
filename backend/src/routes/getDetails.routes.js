@@ -5,6 +5,7 @@ import { Router } from 'express'
 import { getAdminDetails } from "../controllers/getAdminData.controller.js"
 import { getStateDistrictsData } from "../controllers/getStateDistrict.controller.js"
 import { getCandidate, getSpecificCandidate } from '../controllers/candidates.controller.js'
+import { verifyJwt } from '../middlewares/auth.middleware.js'
 const router = Router()
 
 // GET admin Data
@@ -12,7 +13,7 @@ router.route('/admin-data').get(getAdminDetails)
 // GET District State List
 router.route('/district-state').get(getStateDistrictsData)
 // GET Candidates List
-router.route('/').get(getCandidate)
+router.route('/').get(verifyJwt, getCandidate)
 // GET a specific Candidate
 router.route('/:id').get(getSpecificCandidate)
 
