@@ -21,9 +21,6 @@ function Home() {
                <div id="working">
                     <Work />
                </div>
-               <div id="results">
-                    <Results />
-               </div>
                <div id="regulations">
                     <Rules />
                </div>
@@ -33,8 +30,6 @@ function Home() {
                <div id="footer">
                     <Footer />
                </div>
-               {/* <SignUp/> */}
-
           </div >
      )
 }

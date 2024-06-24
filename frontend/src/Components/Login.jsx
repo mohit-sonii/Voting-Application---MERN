@@ -2,7 +2,8 @@
 
 import api from "../axiosInstance.js"
 import "../Styles/Login.css"
-import { useState,useEffect } from "react"
+import userContext from "../context.js"
+import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
 
@@ -19,7 +20,8 @@ function Login() {
      }
 
      const navigate = useNavigate()
-
+     const { visitorType, changeVisitorType } = useContext(userContext)
+       
      const handleSubmit = async (e) => {
           e.preventDefault();
           try {
@@ -32,7 +34,13 @@ function Login() {
                          "Content-Type": "application/json"
                     }
                })
+               localStorage.setItem("accessToken", response.data.data.accessToken)
                if (response.status === 200) {
+                    if (response.data.data.user.role === 'user') {
+                         changeVisitorType('user')
+                    } else {
+                         changeVisitorType('admin')
+                    }
                     setData({
                          uniqueId: '',
                          password: '',
@@ -89,7 +97,7 @@ function Login() {
                               <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Login</span></button>
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
-                                   <Link to="api/v1/auth/register">
+                                   <Link to="/api/v1/auth/register">
                                         <span>Back</span>
                                    </Link>
                               </button>

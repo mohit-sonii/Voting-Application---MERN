@@ -24,8 +24,10 @@ export const login = asyncHandler(async (req, res) => {
                userData.refreshToken = refreshToken
                await User.updateOne({ _id: userData._id }, { refreshToken });
                const options = {
-                    httpOnly: true,
-                    secure: true
+                    httpOnly: false,
+                    secure: false,
+                    path:'/'
+                    // domain'localhost'
                }
                return res
                     .status(200)
@@ -43,29 +45,30 @@ export const login = asyncHandler(async (req, res) => {
           if (!userData) {
                const adminData = await Admin.findOne({ uniqueId: uniqueId });
                if (!adminData) {
-                    throw new handleError(400, "Admin not found");
+                    throw new handleError(400, "User with this Id does not exists");
                }
                const isMatch = await bcrypt.compare(password, adminData.password);
                if (!isMatch) {
                     throw new handleError(401, "Incorrect password");
                }
-               const accessTokenForAdmin = generateAccessToken(adminData._id)
+               const accessToken = generateAccessToken(adminData._id)
 
                const options = {
                     httpOnly: true,
-                    secure: true
+                    sameSite: 'None', // Change to 'None' for cross-site cookies
+                    secure: false,
                }
 
                // If the password matches, proceed with login logic
                return res
                     .status(200)
-                    .cookie("accessToken", accessTokenForAdmin, options)
+                    .cookie("accessToken", accessToken, options)
                     .json(new apiResponse(
                          200,
                          "Admin login successfully",
                          {
-                              user: uniqueId,
-                              accessTokenForAdmin
+                              user: adminData,
+                              accessToken
                          },
                     ));
           }
@@ -132,7 +135,9 @@ export const register = asyncHandler(async (req, res) => {
 
      const options = {
           httpOnly: true,
-          secure: true
+          secure: true,
+          sameSite: 'None'
+
      }
      return res
           .status(200)

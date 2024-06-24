@@ -4,14 +4,14 @@ import Button from './Button';
 import '../Styles/NavBar.css';
 import { Link, useParams } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
-import { useAuth } from '../Context';
+import userContext from '../context';
+import { useContext } from 'react';
 // import { useContext } from 'react';
 // scrollLink is used to add a smooth scrolling effect when a user click on the item in the navbar it will navigate to that section
 
 const Navbar = () => {
      // include the state value from the context in order to response accordingly
-     const { userType } = useAuth()
-     const id = localStorage.getItem('id')
+const {visitorType}=useContext(userContext)
      return (
           <nav className='navbar mt-10 max-sm:justify-center md:gap-4' >
                <div className="leftSide">
@@ -29,11 +29,6 @@ const Navbar = () => {
                               </ScrollLink>
                          </li>
                          <li>
-                              <ScrollLink to="results" smooth={true} duration={1000}>
-                                   Results
-                              </ScrollLink>
-                         </li>
-                         <li>
                               <ScrollLink to="regulations" smooth={true} duration={1000}>
                                    Rules
                               </ScrollLink>
@@ -43,20 +38,17 @@ const Navbar = () => {
                                    Contact Us
                               </ScrollLink>
                          </li>
-                         {/* if the visitor validate as user then do show "Profile"  in the NavBar  */}
-                         
-                         {userType === 'user' &&
-                              <Link to={`/user/profile/${id}`}>
+
+                         {visitorType === 'user' &&
+                              // <Link to>
                                    <li>
                                         Profile
                                    </li>
-                              </Link>
+                              // </Link>
                          }
                     </ul>
-                    {/* if the user type is user then do should " Vote Now" button and it will navigate to the candidate route to vote but if not then do register button with signup route */}
-                    {userType === 'user' ? <Button innerText="Vote Now" /> :
-                         <Button innerText="Register" link="api/v1/auth/register" />
-                    }
+                    <Button innerText="Vote Now" />
+                    <Button innerText="Register" link="api/v1/auth/register" />
                </div>
           </nav>
      );

@@ -11,7 +11,7 @@ import { User } from '../models/user.model.js'
 export const verifyJwt = asyncHandler(async (req, _, next) => {
      try {
           // token extraction and validation
-          const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+          const token = localStorage.getItem('accessToken') || req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
           if (!token) throw new handleError(401, "Token is not valid", "")
           // token verification
           const verifyWithSecret = jwt.verify(token, process.env.accessTokenSecret)

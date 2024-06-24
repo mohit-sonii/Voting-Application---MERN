@@ -3,50 +3,30 @@
 import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '../Context'
-// to validate the user
 import {useNavigate} from 'react-router-dom'
-// to navigate the user
 import { useParams } from 'react-router-dom'
-// to get the ID from the URL
 
 function Profile() {
-     // store the Id in the id variable 
      const { id } = useParams()
-     // error state
      const [err, setErr] = useState('')
-     // name state
      const [userName, setName] = useState('')
-     // voter state
      const [voter, setVoter] = useState('')
-     // unique Id state
      const [uniqueId, setUnique] = useState('')
-     // is voted state
      const [isVoted] = useState('')
-     // extract token and logout from the useAuth()
-     const { token, logout } = useAuth()
-     // check for voted or not
      const [vote, setVoted] = useState('')
-     // variable to use useNavigate()
      const navigate = useNavigate()
-     // this will run whenever the id changes
      useEffect(() => {
           const fetching = async () => {
                
                try {
-                    // fetch the profile route of the user
                     const response = await axios.get(`/user/profile/${id}`, {
-                         // add bearer token to he authorization header to let the user logged in untill it refresh the page or click on logout
                          headers: { Authorization: `Bearer ${token}` }
                     })
-                    // store the data in result vairable
                     const result = response.data
-                    // update the states
                     setName([result.firstname + " " + result.lastname])
                     setVoter(result.voter)
                     setUnique(result.uniqueId)
                     setVoted(result.isVoted ? 'You already have voted' : `You haven't voted yet`);
-                    // if the person is voted already it will show a text and if not then show another text
                } catch (err) {
                     setErr(err.message)
                }
@@ -55,9 +35,7 @@ function Profile() {
      }, [id])
 
      const handleLogout = () => {
-          // when click on logout button it will navigate to the '/' route
           navigate('/')
-          // and this will be logged out  
           logout()
      }
 
