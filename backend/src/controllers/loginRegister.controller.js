@@ -25,7 +25,7 @@ export const login = asyncHandler(async (req, res) => {
                await User.updateOne({ _id: userData._id }, { refreshToken });
                const options = {
                     httpOnly: false,
-                    secure: false,
+                    secure: true,
                     path:'/'
                     // domain'localhost'
                }
@@ -55,11 +55,10 @@ export const login = asyncHandler(async (req, res) => {
 
                const options = {
                     httpOnly: true,
-                    sameSite: 'None', // Change to 'None' for cross-site cookies
-                    secure: false,
+                    sameSite: 'None', 
+                    secure: true,
                }
 
-               // If the password matches, proceed with login logic
                return res
                     .status(200)
                     .cookie("accessToken", accessToken, options)
@@ -94,13 +93,10 @@ export const logout = asyncHandler(async (req, res) => {
 })
 
 export const register = asyncHandler(async (req, res) => {
-     // extract fields from body
      const { uniqueId, voterId, firstName, lastName, password } = req.body
-     // validatoin for non-empty fields
      if ([uniqueId, voterId, firstName, lastName, password].some((field) => field?.trim() === "")) {
           throw Error("Fields cannot be empty")
      }
-     // verification for existed User 
      const existsUser = await User.findOne({
           uniqueId,
           voterId

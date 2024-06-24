@@ -48,11 +48,11 @@ function Footer() {
                     <div className="follow">
                          <p className="text-3xl lg:text-3xl font-extrabold">Follow Us</p>
                          <div className="media-icons">
-                              <SocialMedia icon={facebook} />
-                              <SocialMedia icon={instagram} />
-                              <SocialMedia icon={reddit} />
-                              <SocialMedia icon={linkedin} />
-                              <SocialMedia icon={github} />
+                              <SocialMedia icon={facebook} link={'bento.me/mohit-sonii'} />
+                              <SocialMedia icon={instagram} link={'instagram.com/developer.mohit'} />
+                              <SocialMedia icon={linkedin} link={'linkedin.com/in/mohit-soni-808984265/'} />
+                              <SocialMedia icon={reddit} link={'bento.me/mohit-sonii'} />
+                              <SocialMedia icon={github} link={'github.com/mohit-sonii'} />
                          </div>
                     </div>
                </div>

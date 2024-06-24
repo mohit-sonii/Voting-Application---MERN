@@ -13,11 +13,10 @@ function Form() {
      const [isSubmitted, setSubmit] = useState(false)
 
 
-     // this will update the  fields
      const handleChange = (e) => {
           const { name, value } = e.target
           if (name == 'phone') {
-               const numericRegex = /^\d*$/; // Regex to allow only integers
+               const numericRegex = /^\d*$/; 
                if (!numericRegex.test(value)) {
                     return;
                }
@@ -25,12 +24,11 @@ function Form() {
           setData({ ...data, [e.target.name]: e.target.value })
      }
 
-     // this will fetch the districts-state list from the API to show in District and State dropdown
      async function getAreaDetail() {
           try {
 
                const response = await api.get('api/v1/api/districts-and-states/district-state')
-               const areas = response.data?.[0]?.apiData?.states
+               const areas = response.data.data?.[0]?.apiData?.states
                setArea(areas)
           } catch (err) {
                setFormError(err.response?.data?.message || 'An error occured while sending your query')
@@ -38,39 +36,31 @@ function Form() {
           }
      }
 
-     // this function should run when the component mounts
      useEffect(() => {
           getAreaDetail()
      }, [])
 
-     // if the length of the areas is greateer than 0, that means API fetched successfully, now we do is to extract the States from the areas list. when the apiArears got data it will run this getState()
      useEffect(() => {
           if (apiAreas.length > 0) {
                getState()
           }
      }, [apiAreas])
 
-     // this will get the states list and store it in the state variable
      const getState = async () => {
           try {
                const res = apiAreas.map((item) => item.state)
                setState(res)
-
           } catch (error) {
                setFormError(err.response?.data?.message || 'An error occured while sending your query')
-
           }
      };
 
-     // whenever the state got updated, that means when the state gets filed by the user or in crux when a user select a state value from the dropdown it will run the getDistrict() function to get the districts corresponding to the state
      useEffect(() => {
           setDistricts('')
           setData({ ...data, [data.district]: '' })
-
           getDistrict()
      }, [data.state])
 
-     // if got the districts then it will be filled in the dropdown but if not then it will be an empty array.this is very good apprach as when a componen mount it shows error of undefined int he console.
      const getDistrict = async () => {
           try {
                const dis = apiAreas.find(item => item.state === data.state)
@@ -80,15 +70,13 @@ function Form() {
                     setDistricts([]);
                }
           } catch (err) {
-               setFormError(err.response?.data?.message || 'An error occured while sekhjhjknding your query')
+               setFormError(err.response?.data?.message || 'An error occured while sending your query')
           }
      }
 
-     // function that trigger when we click on submit
      const handleSubmit = async (e) => {
           e.preventDefault()
           try {
-
                const addQuery = {
                     username: data.username,
                     phone: data.phone,
@@ -114,25 +102,21 @@ function Form() {
                          queryType: '',
                          district: ''
                     })
-
                } else {
                     throw new Error('Error while sending your query')
                }
           } catch (err) {
                setFormError(err.response?.data?.message || 'An error occured while sending your query')
           }
-
-
      }
 
-     // either successfully or got an error, in both the cases the user will notified and after 5 seconds that message will get disappear
      useEffect(() => {
           const timer = setTimeout(() => {
                setSubmit(false);
                setFormError(null);
           }, 2000);
 
-          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+          return () => clearTimeout(timer); 
      }, [isSubmitted, formError]);
 
      return (
@@ -168,7 +152,6 @@ function Form() {
 
                          <div className="ele states">
                               <select name="state" value={data.state} id="state" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
-                                   {/* It should map all the states from the states list that comes after fetching the API where all the states are stored. Use their index as the Key */}
                                    <option value="">Select your State</option>
                                    {states && states.length > 0 && states.map((ele, index) => (
                                         <option key={index} value={ele.state}>{ele}</option>
@@ -177,7 +160,6 @@ function Form() {
                          </div>
                          <div className="ele districts">
                               <select value={data.district} name="district" id="district" required className="text-lg lg:text-xl xl:text-2xl" onChange={handleChange} >
-                                   {/* It will map all the district extracted from the API */}
                                    <option value="">Select your District</option>
                                    {districts && districts.length > 0 && districts.map((ele, index) => (
                                         <option key={index} value={ele}>{ele}</option>
