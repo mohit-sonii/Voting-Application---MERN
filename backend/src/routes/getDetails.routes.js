@@ -6,6 +6,7 @@ import { getAdminDetails } from "../controllers/getAdminData.controller.js"
 import { getStateDistrictsData } from "../controllers/getStateDistrict.controller.js"
 import { getCandidate, getSpecificCandidate } from '../controllers/candidates.controller.js'
 import { verifyJwt } from '../middlewares/auth.middleware.js'
+import { voteCandidate } from '../controllers/users.controller.js'
 const router = Router()
 
 // GET admin Data
@@ -15,6 +16,7 @@ router.route('/district-state').get(getStateDistrictsData)
 // GET Candidates List
 router.route('/').get(verifyJwt, getCandidate)
 // GET a specific Candidate
-router.route('/:id').get(getSpecificCandidate)
+router.route('/:id').get(verifyJwt, getSpecificCandidate)
+router.route('/:id').post(verifyJwt,voteCandidate)
 
 export default router

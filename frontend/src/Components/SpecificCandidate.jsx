@@ -2,15 +2,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import "../Styles/SpecificCandidate.css"
 import Button from "./Button"
 import api from '../axiosInstance'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { candidateContext, userContext } from '../context'
+import { toogleVoted, setUserId } from '../Redux/slicer'
+
 function SpecificCandidate() {
      const { candidateId } = useContext(candidateContext)
      const { visitorId, visitorType } = useContext(userContext)
      const [err, setErr] = useState('')
+     const dispatch = useDispatch()
+     const [voteResponse, setVoteResponse] = useState('')
+     const isVoted = useSelector(state => state.userValues.voted)
      const [candidateData, setCandidateData] = useState({})
      const [newDate, setDate] = useState('')
-     const [voted] = useState(false)
+     const [voted, setVoted] = useState(false)
 
      useEffect(() => {
           getSpecificCandidateDetails()
@@ -18,9 +24,13 @@ function SpecificCandidate() {
 
      const getSpecificCandidateDetails = async () => {
           try {
-               const response = await api.get(`api/v1/candidates/candidate-list/${candidateId}`)
+               const token = localStorage.getItem('accessToken')
+               const response = await api.get(`api/v1/candidates/candidate-list/${candidateId}`, {
+                    headers: {
+                         Authorization: `Bearer ${token}`
+                    }
+               })
                const date = new Date(response.data.data.dob)
-               console.log(response.data.data)
                const formattedDateLocal = date.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: '2-digit',
@@ -32,6 +42,29 @@ function SpecificCandidate() {
                setErr(error.response?.data?.message || 'An error occured while using this route')
           }
      }
+
+     const performVote = async () => {
+          try {
+               const token = localStorage.getItem('accessToken')
+               const response = await api.post(`api/v1/candidates/candidate-list/${candidateId}`, { candidateId }, {
+                    headers: {
+                         Authorization: `Bearer ${token}`
+                    }
+               })
+
+               setVoteResponse(response.data.message)
+          } catch (err) {
+               setErr(err.response?.data?.message || 'An error occured while using this route')
+
+          }
+     }
+
+     const handleClick = () => {
+          setVoted(true)
+          performVote()
+          dispatch(toogleVoted())
+     }
+
      useEffect(() => {
           const timer = setTimeout(() => {
                setErr('');
@@ -46,9 +79,9 @@ function SpecificCandidate() {
                          <p>{err}</p>
                     </div>
                }
-               {voted &&
+               {voteResponse &&
                     <div className="successField">
-                         <p>User Voted Successfully</p>
+                         <p>{voteResponse}</p>
                     </div>
                }
                <div className="parent-container-candidate m-auto mt-5  mb-16 h-max flex w-[90%] ">
@@ -97,8 +130,8 @@ function SpecificCandidate() {
                                         </strong>
                                    </p>
                               </div>
-                              <div className="vote-button  flex justify-center items-center">
-                                   <Button innerText="Vote This Candidate" />
+                              <div className="vote-button  flex justify-center items-center" >
+                                   <Button innerText="Vote This Candidate" disabled={voted} onClick={handleClick} />
                               </div>
                          </div>
                          <div className="section-2 flex  gap-10 flex-col">

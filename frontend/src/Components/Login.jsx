@@ -6,8 +6,11 @@ import { userContext } from "../context.js"
 import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setUserId } from "../Redux/slicer.js"
 
 function Login() {
+     const dispatch=useDispatch()
      const [data, setData] = useState({
           uniqueId: '',
           password: '',
@@ -48,6 +51,7 @@ function Login() {
                          password: '',
                     })
                     updateVisitorId(response.data.data.user._id)
+                    dispatch(setUserId(response.data.data.user._id))
                     navigate(`/${response.data.data.user._id}`)
 
                } else {

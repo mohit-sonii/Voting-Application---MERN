@@ -97,7 +97,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 export const voteCandidate = asyncHandler(async (req, res) => {
      const currentUser = req.data
      if (currentUser.isVoted) throw new handleError(400, 'User Already Voted')
-
+          
      const { candidateId } = req.body
      if (!candidateId) throw new handleError(400, 'Candidate does not exist')
 

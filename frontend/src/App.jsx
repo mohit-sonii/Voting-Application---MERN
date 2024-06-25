@@ -13,6 +13,8 @@ import NewPass from "./Components/NewPass"
 import { candidateContext } from "./context.js"
 import CandidateList from "./Components/CandidateList.jsx"
 import SpecificCandidate from "./Components/SpecificCandidate.jsx"
+import { Provider } from "react-redux"
+import { store } from "./Redux/store.js"
 
 function App() {
      const [visitorType, setWhoTheVisitor] = useState('');
@@ -32,20 +34,22 @@ function App() {
      return (
           <>
                <BrowserRouter>
-                    <userContext.Provider value={{ visitorType, changeVisitorType, visitorId, updateVisitorId }}>
-                         <candidateContext.Provider value={{ candidateId, updateCandidateId }}>
-                              <Routes>
-                                   <Route path="/" element={<Home />} />
-                                   <Route path="/:id" element={<Home />} />
-                                   <Route path="/api/v1/auth/register" element={<Register />} />
-                                   <Route path="/api/v1/auth/login" element={<Login />} />
-                                   <Route path="/api/v1/auth/login/forget-password" element={<ForgetPass />} />
-                                   <Route path="/api/v1/auth/login/forget-password/create-new-password/:id" element={<NewPass />} />
-                                   <Route path="/:id/api/v1/candidates/candidate-list" element={<CandidateList />} />
-                                   <Route path="/:id/api/v1/candidates/candidate-list/:id" element={<SpecificCandidate />} />
-                              </Routes>
-                         </candidateContext.Provider>
-                    </userContext.Provider>
+                    <Provider store={store}>
+                         <userContext.Provider value={{ visitorType, changeVisitorType, visitorId, updateVisitorId }}>
+                              <candidateContext.Provider value={{ candidateId, updateCandidateId }}>
+                                   <Routes>
+                                        <Route path="/" element={<Home />} />
+                                        <Route path="/:id" element={<Home />} />
+                                        <Route path="/api/v1/auth/register" element={<Register />} />
+                                        <Route path="/api/v1/auth/login" element={<Login />} />
+                                        <Route path="/api/v1/auth/login/forget-password" element={<ForgetPass />} />
+                                        <Route path="/api/v1/auth/login/forget-password/create-new-password/:id" element={<NewPass />} />
+                                        <Route path="/:id/api/v1/candidates/candidate-list" element={<CandidateList />} />
+                                        <Route path="/:id/api/v1/candidates/candidate-list/:id" element={<SpecificCandidate />} />
+                                   </Routes>
+                              </candidateContext.Provider>
+                         </userContext.Provider>
+                    </Provider>
                </BrowserRouter >
           </>
      )
