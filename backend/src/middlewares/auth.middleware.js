@@ -12,7 +12,6 @@ export const verifyJwt = asyncHandler(async (req, _, next) => {
      try {
           // token extraction and validation
           const token =  req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
-          console.log(token)
           if (!token) throw new handleError(401, "Token is not valid", "")
           // token verification
           const verifyWithSecret = jwt.verify(token, process.env.accessTokenSecret)

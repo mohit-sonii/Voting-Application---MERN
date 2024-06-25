@@ -4,7 +4,7 @@ import CandidateCard from './CandidateCard'
 import api from '../axiosInstance'
 import { Link, useParams } from 'react-router-dom'
 import "../Styles/CandidateList.css"
-import userContext from '../context'
+import {userContext} from '../context'
 
 function CandidateList() {
 
@@ -53,7 +53,7 @@ function CandidateList() {
                          <p className='text-lg sm:text-xl'>Choose your candidate considering the Rules and Regulation</p>
                     </div>
                     <div className="backButton">
-                         <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
+                         <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10     2xl:px-24">
                               <Link to={`/${id}`} state={{visitorType}}>
                                    <span>Back</span>
                               </Link>
@@ -64,7 +64,7 @@ function CandidateList() {
                     {candidate.length <= 0 && 'No Candidates are Registered Yet'}
                     {candidate.length > 0 && candidate.map((_, index) => (
                          <div className="cardContainer" key={candidate[index]._id}>
-                              <CandidateCard partyName={candidate[index].partyName} candidateImage={candidate[index].avatar} candidateName={`${candidate[index].firstName} ${candidate[index].lastName}`} link={candidate[index]._id} />
+                              <CandidateCard partyName={candidate[index].partyName} candidateImage={candidate[index].avatar} candidateName={`${candidate[index].firstName} ${candidate[index].lastName}`} link={candidate[index]._id}/>
                          </div>
                     ))}
                </div>

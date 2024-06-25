@@ -1,7 +1,9 @@
 import { createContext } from "react";
-const userContext = createContext({
+export const userContext = createContext({
      visitorType: '',
      changeVisitorType: () => {}
 })
-
-export default userContext
+export const candidateContext = createContext({
+     candidateId:'',
+     updateCandidateId:()=>{}
+})

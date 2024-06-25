@@ -30,9 +30,13 @@ const candidateSchema = new Schema({
                ref: User
           },
      ],
-     votesCount:{
-          type:Number,
-          default:0
+     votesCount: {
+          type: Number,
+          default: 0
+     },
+     promise: {
+          type: [String],
+          required: true
      },
      partyName: {
           type: String,

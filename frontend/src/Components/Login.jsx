@@ -2,7 +2,7 @@
 
 import api from "../axiosInstance.js"
 import "../Styles/Login.css"
-import userContext from "../context.js"
+import {userContext} from "../context.js"
 import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"

@@ -4,7 +4,7 @@ import Button from './Button';
 import '../Styles/NavBar.css';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
-import userContext from '../context';
+import {userContext} from '../context';
 import { useContext } from 'react';
 // scrollLink is used to add a smooth scrolling effect when a user click on the item in the navbar it will navigate to that section
 

@@ -8,8 +8,8 @@ import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.ut
 
 export const addCandidate = asyncHandler(async (req, res) => {
 
-     const { uniqueId, voterId, firstName, lastName, partyName } = req.body
-     if ([uniqueId, voterId, firstName, lastName, partyName].some((field) => field?.trim() === "")) {
+     const { uniqueId, voterId, firstName, lastName, partyName, promise } = req.body
+     if ([uniqueId, voterId, firstName, lastName, partyName, promise].some((field) => field?.trim() === "")) {
           throw new handleError(400, 'Required fields are mandatory')
      }
 
@@ -26,6 +26,8 @@ export const addCandidate = asyncHandler(async (req, res) => {
      const uploadAvatar = await uploadOnCloudinary(avatarLocalPath)
      if (!uploadAvatar) throw new handleError("", 'Avatar is required in this field', 400)
 
+     const arrayOfPromise = promise.split(", ").map(item => item.trim().replace(/'/g, ""));
+
      const candidate = await Candidate.create({
           firstName,
           uniqueId,
@@ -33,14 +35,15 @@ export const addCandidate = asyncHandler(async (req, res) => {
           partyName,
           lastName,
           voterId,
+          promise: arrayOfPromise
      })
      if (!candidate) throw new handleError("", 'problem in creating a candidate', 500)
 
      return res.status(200)
           .json(new apiResponse(
                200,
+               "Candidate Added Successfully",
                candidate,
-               "Candidate Added Successfully"
           ))
 })
 
@@ -80,8 +83,8 @@ export const deleteCandidate = asyncHandler(async (req, res) => {
                .status(200)
                .json(new apiResponse(
                     200,
+                    "Candidate Deleted Successfully",
                     {},
-                    "Candidate Deleted Successfully"
                ))
      } catch (error) {
           throw new handleError(500, error?.message || 'Problem in Deleting a file')
@@ -156,7 +159,7 @@ export const getCandidate = asyncHandler(async (req, res) => {
           .status(200)
           .json(new apiResponse(
                200,
-               "All candidated fetched Successfully",               candidateData
+               "All candidated fetched Successfully", candidateData
 
           ))
 })

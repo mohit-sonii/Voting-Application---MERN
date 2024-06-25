@@ -1,6 +1,6 @@
 import Button from "./Button"
 import '../Styles/LandingPage.css'
-import userContext from "../context.js"
+import {userContext} from "../context.js"
 import { useContext } from "react"
 function LandingPage() {
      const { visitorType } = useContext(userContext)

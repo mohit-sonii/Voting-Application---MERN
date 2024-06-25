@@ -1,9 +1,17 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import "../Styles/CandidateCard.css"
 import Button from './Button'
+import { useNavigate } from 'react-router-dom'
+import { candidateContext } from '../context'
 
 function CandidateCard(props) {
+     const {updateCandidateId } = useContext(candidateContext)
+     const navigate = useNavigate()
+     const handleSpecificCandidate = () => {
+          updateCandidateId(`${props.link}`)
+          navigate(`${props.link}`)
+     }
      return (
           <div className="card w-[200px] h-[300px] sm:w-[240px] sm:h-[340px]">
                <div className="image">
@@ -12,7 +20,9 @@ function CandidateCard(props) {
                <div className="candidate-content flex flex-col flex-wrap">
                     <p className='candidate-p font-bold text-2xl sm:text-3xl'>{props.candidateName}</p>
                     <p className="candidate-p text-lg sm:text-xl">{props.partyName}</p>
-                    <Button innerText={"More Details"} link={`${props.link}`} />
+                    <div onClick={handleSpecificCandidate}>
+                         <Button innerText={"More Details"} link={`${props.link}`} />
+                    </div>
                </div>
           </div>
      )

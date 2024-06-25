@@ -9,7 +9,7 @@ import Footer from '../Components/Footer'
 import { useLocation } from 'react-router-dom'
 import { useContext } from 'react'
 import { useEffect } from 'react'
-import userContext from '../context'
+import {userContext} from '../context'
 
 
 // const location = useLocation() ---> This line uses the useLocation hook from React Router (assuming this is react-router-dom) to get access to the current location object in the React router context. It provides information about the current URL and allows components to react to changes in the URL.
@@ -48,7 +48,6 @@ function Home() {
                <div id="footer">
                     <Footer />
                </div>
-               {/* <CandidateCard/> */}
           </div >
      )
 }
