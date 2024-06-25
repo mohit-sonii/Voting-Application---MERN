@@ -1,0 +1,18 @@
+
+.main-candidate-container{
+     background-color: white;
+     filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.10)) drop-shadow(0px 0px 18px rgba(116, 57, 240, 0.50));
+     border-radius: 10px;
+     margin-top: 50px;
+}
+
+.candidate-avatar{
+     border-radius: 10px;
+}
+.candidate-avatar img{
+     border-radius: inherit;
+}
+
+.successField{
+     background-color: rgb(59, 59, 241);
+}

@@ -5,16 +5,18 @@
      margin-top: 5rem;
 }
 
-.errorField {
+.errorField ,.successField{
      width: 50%;
      margin: auto;
+     margin-top: 10px;
      justify-content: center;
      align-items: center;
      padding: 1rem;
-     font-size: 20px;
+     font-size: 16px;
      color: white;
      text-align: center;
-     font-weight: bold;
-     background-color: rgb(240, 77, 27);
+     border-radius: 10px;
+     font-weight: 600;
+     background-color: rgb(245, 109, 68);
 }
 

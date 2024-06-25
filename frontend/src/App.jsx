@@ -16,18 +16,23 @@ import SpecificCandidate from "./Components/SpecificCandidate.jsx"
 
 function App() {
      const [visitorType, setWhoTheVisitor] = useState('');
+     const [visitorId, setVisitorId] = useState('')
      const [candidateId, setCandidateId] = useState('')
+
      const changeVisitorType = (value) => {
           setWhoTheVisitor(value);
-     };
+     }
      const updateCandidateId = (value) => {
           setCandidateId(value)
+     }
+     const updateVisitorId = (value) => {
+          setVisitorId(value)
      }
 
      return (
           <>
                <BrowserRouter>
-                    <userContext.Provider value={{ visitorType, changeVisitorType }}>
+                    <userContext.Provider value={{ visitorType, changeVisitorType, visitorId, updateVisitorId }}>
                          <candidateContext.Provider value={{ candidateId, updateCandidateId }}>
                               <Routes>
                                    <Route path="/" element={<Home />} />

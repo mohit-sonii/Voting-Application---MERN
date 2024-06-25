@@ -55,7 +55,7 @@ function CandidateList() {
                     <div className="backButton">
                          <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10     2xl:px-24">
                               <Link to={`/${id}`} state={{visitorType}}>
-                                   <span>Back</span>
+                                   <span>&lt; Back</span>
                               </Link>
                          </button>
                     </div>

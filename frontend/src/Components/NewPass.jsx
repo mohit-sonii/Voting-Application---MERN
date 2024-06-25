@@ -54,7 +54,11 @@ function NewPass() {
 
      return (
           <div id="login">
-               {err && <h1 className="text-xl">{err}</h1>}
+               {err &&
+                    <div className="errorField">
+                         <p>{err}</p>
+                    </div>
+               }
                <div className="log">
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Create  New Password :</p>

@@ -62,7 +62,11 @@ function Register() {
      }, [err]);
      return (
           <div id="signup">
-               {err && <p className="text-xl">{err}</p>}
+                {err &&
+                    <div className="errorField">
+                         <p>{err}</p>
+                    </div>
+               }
                <div className="signup">
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Register</p>
@@ -109,7 +113,7 @@ function Register() {
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
                                    <Link to="/">
-                                        <span>Back</span>
+                                        <span>&lt; Back</span>
                                    </Link>
                               </button>
                          </div>

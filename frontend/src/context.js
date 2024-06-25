@@ -1,9 +1,11 @@
 import { createContext } from "react";
 export const userContext = createContext({
      visitorType: '',
-     changeVisitorType: () => {}
+     visitorId: '',
+     changeVisitorType: () => { },
+     updateVisitorId: () => { }
 })
 export const candidateContext = createContext({
-     candidateId:'',
-     updateCandidateId:()=>{}
+     candidateId: '',
+     updateCandidateId: () => { }
 })

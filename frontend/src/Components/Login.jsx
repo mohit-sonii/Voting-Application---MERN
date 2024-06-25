@@ -2,7 +2,7 @@
 
 import api from "../axiosInstance.js"
 import "../Styles/Login.css"
-import {userContext} from "../context.js"
+import { userContext } from "../context.js"
 import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
@@ -14,14 +14,16 @@ function Login() {
      })
      const [err, setErr] = useState('')
 
+     
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
      }
-
+     
      const navigate = useNavigate()
      const { visitorType, changeVisitorType } = useContext(userContext)
-       
+     const { visitorId, updateVisitorId } = useContext(userContext)
+
      const handleSubmit = async (e) => {
           e.preventDefault();
           try {
@@ -45,6 +47,7 @@ function Login() {
                          uniqueId: '',
                          password: '',
                     })
+                    updateVisitorId(response.data.data.user._id)
                     navigate(`/${response.data.data.user._id}`)
 
                } else {
@@ -66,7 +69,11 @@ function Login() {
      return (
 
           <div id="login">
-               {err && <h1 className="text-xl">{err}</h1>}
+               {err &&
+                    <div className="errorField">
+                         <p>{err}</p>
+                    </div>
+               }
                <div className="log">
                     <div className="signup-heading flex gap-5 flex-col">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Login</p>
@@ -98,7 +105,7 @@ function Login() {
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
                                    <Link to="/api/v1/auth/register">
-                                        <span>Back</span>
+                                        <span>&lt; Back</span>
                                    </Link>
                               </button>
                          </div>

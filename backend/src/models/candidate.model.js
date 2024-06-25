@@ -30,6 +30,23 @@ const candidateSchema = new Schema({
                ref: User
           },
      ],
+     town: {
+          type: String,
+          required: true
+     },
+     representative: {
+          type: String,
+          required: true
+     },
+     candidateType: {
+          type: String,
+          enum: ['New', 'Existing'],
+          required: true
+     },
+     dob: {
+          type: Date,
+          required: true
+     },
      votesCount: {
           type: Number,
           default: 0
@@ -38,10 +55,6 @@ const candidateSchema = new Schema({
           type: [String],
           required: true
      },
-     partyName: {
-          type: String,
-          required: true
-     }
 })
 
 export const Candidate = mongoose.model('Candidate', candidateSchema)

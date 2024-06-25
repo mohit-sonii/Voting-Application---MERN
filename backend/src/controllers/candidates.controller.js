@@ -8,11 +8,10 @@ import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.ut
 
 export const addCandidate = asyncHandler(async (req, res) => {
 
-     const { uniqueId, voterId, firstName, lastName, partyName, promise } = req.body
-     if ([uniqueId, voterId, firstName, lastName, partyName, promise].some((field) => field?.trim() === "")) {
+     const { uniqueId, voterId, firstName, town,lastName,candidateType, representative, promise, dob } = req.body
+     if ([uniqueId, voterId, firstName,town, lastName,candidateType, representative, promise, dob].some((field) => field?.trim() === "")) {
           throw new handleError(400, 'Required fields are mandatory')
      }
-
      const existedCandidate = await Candidate.findOne({
           uniqueId,
           voterId
@@ -32,9 +31,12 @@ export const addCandidate = asyncHandler(async (req, res) => {
           firstName,
           uniqueId,
           avatar: uploadAvatar.url,
-          partyName,
+          representative,
           lastName,
           voterId,
+          town,
+          candidateType:candidateType.charAt(0).toUpperCase() + candidateType.slice(1),
+          dob,
           promise: arrayOfPromise
      })
      if (!candidate) throw new handleError("", 'problem in creating a candidate', 500)

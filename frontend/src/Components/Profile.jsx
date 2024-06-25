@@ -17,7 +17,6 @@ function Profile() {
      const navigate = useNavigate()
      useEffect(() => {
           const fetching = async () => {
-               
                try {
                     const response = await axios.get(`/user/profile/${id}`, {
                          headers: { Authorization: `Bearer ${token}` }
@@ -41,7 +40,11 @@ function Profile() {
 
      return (
           <div id="login">
-               {err && <h1 className="text-xl">{err}</h1>}
+                {err &&
+                    <div className="errorField">
+                         <p>{err}</p>
+                    </div>
+               }
                <div className="log">
                     <div className="signup-heading flex gap-5">
                          <p className='text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold'>Profile</p>

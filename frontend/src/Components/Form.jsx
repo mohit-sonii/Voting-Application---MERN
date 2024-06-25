@@ -26,7 +26,6 @@ function Form() {
 
      async function getAreaDetail() {
           try {
-
                const response = await api.get('api/v1/api/districts-and-states/district-state')
                const areas = response.data.data?.[0]?.apiData?.states
                setArea(areas)
@@ -176,7 +175,11 @@ function Form() {
                </form>
                <div>
                     {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
-                    {formError && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">{formError}</p>}
+                    {formError &&
+                    <div className="errorField">
+                         <p>{formError}</p>
+                    </div>
+               }
                </div>
           </div>
      )
