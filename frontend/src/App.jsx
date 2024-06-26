@@ -15,12 +15,17 @@ import CandidateList from "./Components/CandidateList.jsx"
 import SpecificCandidate from "./Components/SpecificCandidate.jsx"
 import { Provider } from "react-redux"
 import { store } from "./Redux/store.js"
+import ProfileUpdate from "./Components/ProfileUpdate.jsx"
 
 function App() {
      const [visitorType, setWhoTheVisitor] = useState('');
      const [visitorId, setVisitorId] = useState('')
      const [candidateId, setCandidateId] = useState('')
+     const [userData, setUserData] = useState('')
 
+     const updateUserData = (value) => {
+          setUserData(value)
+     }
      const changeVisitorType = (value) => {
           setWhoTheVisitor(value);
      }
@@ -35,7 +40,7 @@ function App() {
           <>
                <BrowserRouter>
                     <Provider store={store}>
-                         <userContext.Provider value={{ visitorType, changeVisitorType, visitorId, updateVisitorId }}>
+                         <userContext.Provider value={{ visitorType, changeVisitorType, visitorId, updateVisitorId, userData, updateUserData }}>
                               <candidateContext.Provider value={{ candidateId, updateCandidateId }}>
                                    <Routes>
                                         <Route path="/" element={<Home />} />
@@ -47,6 +52,7 @@ function App() {
                                         <Route path="/:id/api/v1/candidates/candidate-list" element={<CandidateList />} />
                                         <Route path="/:id/api/v1/candidates/candidate-list/:id" element={<SpecificCandidate />} />
                                         <Route path="/:id/api/v1/user/profile" element={<Profile />} />
+                                        <Route path="/:id/api/v1/user/profile/update" element={<ProfileUpdate />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>

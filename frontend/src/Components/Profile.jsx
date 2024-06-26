@@ -9,9 +9,9 @@ import Button from './Button'
 
 function Profile() {
      const userId = useSelector(state => state.userValues.userId)
-     const isVoted = useSelector(state => state.userValues.voted)
      const [user, setUserData] = useState({})
      const [err, setErr] = useState('')
+     const { updateUserData } = useContext(userContext)
      const { visitorType } = useContext(userContext)
 
      useEffect(() => {
@@ -28,6 +28,7 @@ function Profile() {
                })
                if (!response) throw new Error('Error while fethcing the user details')
                setUserData(response.data.data)
+               updateUserData(response.data.data)
           } catch (err) {
                setErr(err.response?.data?.message || 'Please Login again to see the credentials')
           }
@@ -68,7 +69,6 @@ function Profile() {
                               <p className='text-2xl md:text-xl lg:text-2xl'><strong>Unique ID:</strong> {user.uniqueId}</p>
                               <p className='text-2xl md:text-xl lg:text-2xl'><strong>Voter ID:</strong> {user.voterId}</p>
                               <p className='text-2xl md:text-xl lg:text-2xl'><strong>Voted:</strong> {user.isVoted ? "Yes" : "No"}</p>
-
                          </div>
                     </div>
                </div>

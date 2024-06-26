@@ -21,7 +21,9 @@ export const getUser = asyncHandler(async (req, res) => {
 
 
 export const updateUser = asyncHandler(async (req, res) => {
-     const updates = {}
+     const { firstName, lastName } = req.body
+     let updates = {}
+
      const currentUser = req.data
 
      const avatarLocalPath = req.file?.path
@@ -60,8 +62,12 @@ export const updateUser = asyncHandler(async (req, res) => {
           updates.password = newHashedPassword
 
      }
-     if (Object.keys(updates).length === 0) {
-          throw new handleError(400, 'No updates provided');
+     if (firstName) {
+          updates.firstName = firstName;
+     }
+
+     if (lastName) {
+          updates.lastName = lastName;
      }
      const user = await User.findByIdAndUpdate(
           req.data?._id,
@@ -71,7 +77,7 @@ export const updateUser = asyncHandler(async (req, res) => {
           },
           {
                new: true
-          }).select("-password")
+          }).select("-password -refreshToken -role")
 
 
      return res.status(200)
