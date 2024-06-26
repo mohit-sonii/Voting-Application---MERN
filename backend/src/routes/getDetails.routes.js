@@ -17,6 +17,6 @@ router.route('/district-state').get(getStateDistrictsData)
 router.route('/').get(verifyJwt, getCandidate)
 // GET a specific Candidate
 router.route('/:id').get(verifyJwt, getSpecificCandidate)
-router.route('/:id').post(verifyJwt,voteCandidate)
+router.route('/:id').post(verifyJwt, voteCandidate)
 
 export default router

@@ -2,7 +2,6 @@
 import '../Styles/Button.css'
 import React from 'react'
 import { Link } from 'react-router-dom'
-// this compoennt accepts the props 
 const Button = (props) => {
      return (
           <>

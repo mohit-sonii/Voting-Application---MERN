@@ -1,0 +1,50 @@
+.user-profile {
+     font-family: Arial, sans-serif;
+     margin: 20px;
+     padding: 20px;
+     border: 1px solid #ccc;
+     border-radius: 10px;
+     max-width: 800px;
+     background-color: #f9f9f9;
+}
+
+.header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 20px;
+}
+
+.back-button,
+.update-button {
+     padding: 10px 20px;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+}
+
+.back-button {
+     background-color: #007bff;
+     color: white;
+}
+
+.update-button {
+     background-color: #28a745;
+     color: white;
+}
+
+.profile-details {
+     display: flex;
+     align-items: center;
+}
+
+.avatar {
+     width: 100px;
+     height: 100px;
+     border-radius: 50%;
+     margin-right: 20px;
+}
+
+.info p {
+     margin: 5px 0;
+}

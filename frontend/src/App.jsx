@@ -46,6 +46,7 @@ function App() {
                                         <Route path="/api/v1/auth/login/forget-password/create-new-password/:id" element={<NewPass />} />
                                         <Route path="/:id/api/v1/candidates/candidate-list" element={<CandidateList />} />
                                         <Route path="/:id/api/v1/candidates/candidate-list/:id" element={<SpecificCandidate />} />
+                                        <Route path="/:id/api/v1/user/profile" element={<Profile />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>

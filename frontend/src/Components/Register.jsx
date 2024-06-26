@@ -50,7 +50,7 @@ function Register() {
                     throw new Error("Error while register a user")
                }
           } catch (err) {
-               setErr(err.response?.data?.message || 'An error occured while registering a user')
+               setErr(err.response?.data?.message || 'Sorry for inconvenience, I am trying to resolve the issue')
           }
      }
      useEffect(() => {
@@ -58,7 +58,7 @@ function Register() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+          return () => clearTimeout(timer); 
      }, [err]);
      return (
           <div id="signup">

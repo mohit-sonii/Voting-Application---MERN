@@ -32,7 +32,8 @@ app.use('/api/v1/candidates/candidate-list', getDetails)
 app.use('/api/v1/candidates/candidate-list', candidates)
 
 // user routes
-app.use('/api/v1/user', users)
+app.use('/:id/api/v1/user/profile', users)
+
 
 //query route
 app.use('/', query)

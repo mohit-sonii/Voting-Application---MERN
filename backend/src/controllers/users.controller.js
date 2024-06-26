@@ -7,6 +7,19 @@ import { Candidate } from "../models/candidate.model.js"
 import bcrypt from "bcrypt"
 
 
+export const getUser = asyncHandler(async (req, res) => {
+     const currentUser = req.data
+     if (!currentUser) throw new handleError(400, 'User is not authourized')
+     return res
+          .status(200)
+          .json(new apiResponse(
+               200,
+               "User data is fetched",
+               currentUser
+          ))
+})
+
+
 export const updateUser = asyncHandler(async (req, res) => {
      const updates = {}
      const currentUser = req.data
@@ -21,7 +34,6 @@ export const updateUser = asyncHandler(async (req, res) => {
           updates.avatar = uploadAvatar.url
 
           if (alreadyHaveAvatar) {
-               // delete the file whose publicID matched
                const deleteFile = await deleteFromCloudinary(alreadyHaveAvatar)
                if (!deleteFile) throw new handleError(400, 'Not found the file')
           }
@@ -97,7 +109,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 export const voteCandidate = asyncHandler(async (req, res) => {
      const currentUser = req.data
      if (currentUser.isVoted) throw new handleError(400, 'User Already Voted')
-          
+
      const { candidateId } = req.body
      if (!candidateId) throw new handleError(400, 'Candidate does not exist')
 

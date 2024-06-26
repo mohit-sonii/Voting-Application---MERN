@@ -16,7 +16,6 @@ function SpecificCandidate() {
      const isVoted = useSelector(state => state.userValues.voted)
      const [candidateData, setCandidateData] = useState({})
      const [newDate, setDate] = useState('')
-     const [voted, setVoted] = useState(false)
 
      useEffect(() => {
           getSpecificCandidateDetails()
@@ -39,7 +38,7 @@ function SpecificCandidate() {
                setCandidateData(response.data.data)
                setDate(formattedDateLocal)
           } catch (error) {
-               setErr(error.response?.data?.message || 'An error occured while using this route')
+               setErr(error.response?.data?.message || 'Please Login again to visit this route')
           }
      }
 
@@ -51,16 +50,14 @@ function SpecificCandidate() {
                          Authorization: `Bearer ${token}`
                     }
                })
-
                setVoteResponse(response.data.message)
           } catch (err) {
-               setErr(err.response?.data?.message || 'An error occured while using this route')
+               setErr(err.response?.data?.message || 'Please Login again to perform Voting')
 
           }
      }
 
      const handleClick = () => {
-          setVoted(true)
           performVote()
           dispatch(toogleVoted())
      }
@@ -77,11 +74,6 @@ function SpecificCandidate() {
                {err &&
                     <div className="errorField">
                          <p>{err}</p>
-                    </div>
-               }
-               {voteResponse &&
-                    <div className="successField">
-                         <p>{voteResponse}</p>
                     </div>
                }
                <div className="parent-container-candidate m-auto mt-5  mb-16 h-max flex w-[90%] ">
@@ -130,9 +122,18 @@ function SpecificCandidate() {
                                         </strong>
                                    </p>
                               </div>
-                              <div className="vote-button  flex justify-center items-center" >
-                                   <Button innerText="Vote This Candidate" disabled={voted} onClick={handleClick} />
-                              </div>
+                              {!isVoted ?
+                                   <div className="vote-button  flex justify-center items-center" >
+                                        <Button innerText="Vote This Candidate" disabled={isVoted} onClick={handleClick} />
+                                   </div>
+                                   : { err } ? <div className="errorField ">
+                                        <p>User Already Voted!!</p>
+                                   </div>
+                                        : <div className="greenField">
+                                             <p>Thanks for voting!!</p>
+                                        </div>
+
+                              }
                          </div>
                          <div className="section-2 flex  gap-10 flex-col">
                               <p className='text-2xl md:text-3xl lg:text-4xl  font-medium'>Promises</p>
