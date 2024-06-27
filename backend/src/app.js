@@ -9,7 +9,10 @@ const app = express()
 app.use(express.json())
 
 import cors from "cors"
-app.use(cors())
+app.use(cors({
+     origin: `https://voting-application-mern.vercel.app/`,
+     optionsSuccessStatus: 200
+}))
 
 import cookieParser from 'cookie-parser'
 app.use(cookieParser())
