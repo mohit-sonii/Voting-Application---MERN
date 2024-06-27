@@ -16,6 +16,7 @@ import SpecificCandidate from "./Components/SpecificCandidate.jsx"
 import { Provider } from "react-redux"
 import { store } from "./Redux/store.js"
 import ProfileUpdate from "./Components/ProfileUpdate.jsx"
+import UpdatePassword from "./Components/UpdatePassword.jsx"
 
 function App() {
      const [visitorType, setWhoTheVisitor] = useState('');
@@ -53,6 +54,7 @@ function App() {
                                         <Route path="/:id/api/v1/candidates/candidate-list/:id" element={<SpecificCandidate />} />
                                         <Route path="/:id/api/v1/user/profile" element={<Profile />} />
                                         <Route path="/:id/api/v1/user/profile/update" element={<ProfileUpdate />} />
+                                        <Route path="/:id/api/v1/user/profile/update/password" element={<UpdatePassword />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>

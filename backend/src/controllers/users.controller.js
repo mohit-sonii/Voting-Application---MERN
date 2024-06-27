@@ -41,27 +41,6 @@ export const updateUser = asyncHandler(async (req, res) => {
           }
      }
 
-     const { currentPassword, newPassword } = req.body
-     let newHashedPassword
-     if (currentPassword && newPassword) {
-
-          if (!currentPassword || !newPassword) throw new handleError(400, 'Invalid credentials')
-
-          if ([currentPassword, newPassword].some((field) => field?.trim() === "")) {
-               throw new handleError(400, 'Required fields are mandatory')
-          }
-
-          const currentUser = req.data
-
-          const isPassCorrect = await bcrypt.compare(currentPassword, currentUser.password)
-          if (!isPassCorrect) throw new handleError(400, "Password is incorrect")
-
-          if (newPassword === currentPassword) throw new handleError(400, 'New password cannot be set as old password')
-          newHashedPassword = await bcrypt.hash(newPassword, 10)
-
-          updates.password = newHashedPassword
-
-     }
      if (firstName) {
           updates.firstName = firstName;
      }
@@ -90,26 +69,66 @@ export const updateUser = asyncHandler(async (req, res) => {
 })
 
 
-export const deleteUser = asyncHandler(async (req, res) => {
-     const currentUser = req.data
-     if (!currentUser) throw new handleError(400, 'Verification of user failed')
-     // delete the avatar
-     await deleteFromCloudinary(currentUser.avatar)
-     await User.findByIdAndDelete(currentUser._id)
-     const options = {
-          httpOnly: true,
-          secure: true
+export const updateUserPassword = asyncHandler(async (req, res) => {
+     const { currentPassword, newPassword, confirmNewPassword } = req.body
+     let newHashedPassword
+     let currentUser = req.data
+
+     if (!currentPassword || !newPassword || !confirmNewPassword) throw new handleError(400, 'Invalid credentials')
+
+     if ([currentPassword, newPassword, confirmNewPassword].some((field) => field?.trim() === "")) {
+          throw new handleError(400, 'Required fields are mandatory')
      }
+     const isPassCorrect = await bcrypt.compare(currentPassword, currentUser.password)
+     if (!isPassCorrect) throw new handleError(400, "Password is incorrect")
+
+     if (newPassword === currentPassword) throw new handleError(400, 'New password cannot be set as old password')
+
+     if (!newPassword === confirmNewPassword) throw new handleError(400, 'Password does not match')
+     newHashedPassword = await bcrypt.hash(newPassword, 10)
+
+     const updatedUserPass = await User.findByIdAndUpdate(
+          req.data?._id,
+          {
+               password: newHashedPassword
+
+          },
+          {
+               new: true
+          }).select("-password -refreshToken -role")
      return res
           .status(200)
-          .clearCookie("accessToken", options)
-          .clearCookie("refreshToken", options)
           .json(new apiResponse(
                200,
-               "User deleted successfully",
-               {}
+               "Password Updated Successfully",
+               updatedUserPass
           ))
+
 })
+
+
+
+// this functionality is not done in frontend
+// export const deleteUser = asyncHandler(async (req, res) => {
+//      const currentUser = req.data
+//      if (!currentUser) throw new handleError(400, 'Verification of user failed')
+//      // delete the avatar
+//      await deleteFromCloudinary(currentUser.avatar)
+//      await User.findByIdAndDelete(currentUser._id)
+//      const options = {
+//           httpOnly: true,
+//           secure: true
+//      }
+//      return res
+//           .status(200)
+//           .clearCookie("accessToken", options)
+//           .clearCookie("refreshToken", options)
+//           .json(new apiResponse(
+//                200,
+//                "User deleted successfully",
+//                {}
+//           ))
+// })
 
 
 export const voteCandidate = asyncHandler(async (req, res) => {

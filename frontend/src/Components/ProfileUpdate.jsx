@@ -163,7 +163,11 @@ function ProfileUpdate() {
                                         >
                                              <span>Submit</span>
                                         </button>
-                                        <button type="button" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Update Password</span></button>
+                                        <button type="button" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
+                                             <Link to={'password'} state={visitorType}>
+                                                  <span>Update Password</span>
+                                             </Link>
+                                        </button>
                                         {success &&
                                              <div className="errorField greenField">
                                                   <p>{success}</p>
