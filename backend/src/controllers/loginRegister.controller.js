@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 import { handleError } from '../utils/handleError.util.js';
 import { User } from '../models/user.model.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.util.js';
-import { apiResponse } from "../utils/response.util.js"
+import { response } from "../utils/response.util.js"
 import { generateAccessToken, generateRefreshToken } from "../utils/tokens.util.js"
 import { Candidate } from '../models/candidate.model.js';
 
@@ -33,7 +33,7 @@ export const login = asyncHandler(async (req, res) => {
                     .status(200)
                     .cookie("accessToken", accessToken, options)
                     .cookie("refreshToken", refreshToken, options)
-                    .json(new apiResponse(
+                    .json(new response(
                          200,
                          "User login successfully",
                          {
@@ -62,7 +62,7 @@ export const login = asyncHandler(async (req, res) => {
                return res
                     .status(200)
                     .cookie("accessToken", accessToken, options)
-                    .json(new apiResponse(
+                    .json(new response(
                          200,
                          "Admin login successfully",
                          {
@@ -85,7 +85,7 @@ export const logout = asyncHandler(async (req, res) => {
           .status(200)
           .clearCookie("accessToken", options)
           .clearCookie("refreshToken", options)
-          .json(new apiResponse(
+          .json(new response(
                200,
                {},
                "logout successfully"
@@ -139,7 +139,7 @@ export const register = asyncHandler(async (req, res) => {
           .status(200)
           .cookie("accessToken", accessToken, options)
           .cookie("refreshToken", refreshToken, options)
-          .json(new apiResponse(
+          .json(new response(
                200,
                "User Registered Successfully",
                user
@@ -155,7 +155,7 @@ export const forgetPassword = asyncHandler(async (req, res) => {
           if (!userData) throw new handleError(400, `User with this ID doesn't exist`)
           if (userData) {
                if (voterId === userData.voterId) {
-                    res.status(200).json(new apiResponse(
+                    res.status(200).json(new response(
                          200,
                          "User verified successfully",
                          userData
@@ -180,7 +180,7 @@ export const newPassword = asyncHandler(async (req, res) => {
           const updateData = await User.findByIdAndUpdate(id, { password: hashPassword }, { new: true })
           return res
                .status(200)
-               .json(new apiResponse(
+               .json(new response(
                     200,
                     "Password Updated Successfully",
                     updateData

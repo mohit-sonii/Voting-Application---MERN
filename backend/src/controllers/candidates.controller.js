@@ -1,7 +1,7 @@
 
 import { asyncHandler } from "../utils/asyncHandler.util.js";
 import { handleError } from "../utils/handleError.util.js";
-import { apiResponse } from "../utils/response.util.js";
+import { response } from "../utils/response.util.js";
 import mongoose from "mongoose";
 import { Candidate } from "../models/candidate.model.js";
 import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.util.js";
@@ -42,7 +42,7 @@ export const addCandidate = asyncHandler(async (req, res) => {
      if (!candidate) throw new handleError("", 'problem in creating a candidate', 500)
 
      return res.status(200)
-          .json(new apiResponse(
+          .json(new response(
                200,
                "Candidate Added Successfully",
                candidate,
@@ -83,7 +83,7 @@ export const deleteCandidate = asyncHandler(async (req, res) => {
 
           return res
                .status(200)
-               .json(new apiResponse(
+               .json(new response(
                     200,
                     "Candidate Deleted Successfully",
                     {},
@@ -138,7 +138,7 @@ export const updateCandidate = asyncHandler(async (req, res) => {
           }
           await candidateData.save()
           return res.status(200)
-               .json(new apiResponse(
+               .json(new response(
                     200,
                     "Candidate Updated Successfully",
                     candidateData
@@ -159,7 +159,7 @@ export const getCandidate = asyncHandler(async (req, res) => {
      const candidateData = await Candidate.find()
      return res
           .status(200)
-          .json(new apiResponse(
+          .json(new response(
                200,
                "All candidated fetched Successfully", candidateData
 
@@ -177,7 +177,7 @@ export const getSpecificCandidate = asyncHandler(async (req, res) => {
      const candidateData = await Candidate.findById({ _id: id })
      return res
           .status(200)
-          .json(new apiResponse(
+          .json(new response(
                200,
                `Details of ${id}`,
                candidateData
