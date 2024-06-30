@@ -6,7 +6,7 @@
 import dotenv from 'dotenv'
 dotenv.config(
      {
-          path: './.env'
+          path: '../.env'
      })
 import { mongoDB } from './database/db.database.js'
 import { app } from './app.js'

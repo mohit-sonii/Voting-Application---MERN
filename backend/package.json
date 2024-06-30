@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "A revised backend database for voting application",
-  "main": "index.js",
+  "main": "index.server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.server.js",
