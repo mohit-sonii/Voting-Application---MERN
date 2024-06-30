@@ -1,5 +1,5 @@
- 
- 
+
+
 // Express applicatoin setup
 // Responsibility ---> This includes setting up the middleares,defininf routes and configuring any application level setting. the goal is to encapsulate the entire EXPRESS app in one file
 
@@ -15,10 +15,13 @@ import cors from "cors"
 const app = express()
 app.use(express.json())
 
-app.use(cors({
-     origin: `https://voting-application-mern.netlify.app/`,
-     optionsSuccessStatus: 200
-}))
+
+const corsOptions = {
+     origin: ['http://localhost:5173', 'https://voting-application-mern.netlify.app'],
+     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+     allowedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 
@@ -41,10 +44,14 @@ app.use('/:id/api/v1/user/profile', users)
 //query route
 app.use('/', query)
 
-
 app.use((err, req, res, next) => {
-     res.status(err.status || 500).json({ message: err.message });
+     const statusCode = err.statusCode || 500;
+     const message = err.message || 'Internal Server Error';
+     res.status(statusCode).json({
+          status: 'error',
+          statusCode,
+          message
+     });
 });
-
 
 export { app }
