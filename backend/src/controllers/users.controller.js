@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.util.js";
 import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.util.js"
 import { handleError } from "../utils/handleError.util.js";
-import { response } from "../utils/response.util.js"
+import { handleResponse } from "../utils/handleResponse.util.js"
 import { User } from "../models/user.model.js";
 import { Candidate } from "../models/candidate.model.js"
 import bcrypt from "bcrypt"
@@ -12,7 +12,7 @@ export const getUser = asyncHandler(async (req, res) => {
      if (!currentUser) throw new handleError(400, 'User is not authourized')
      return res
           .status(200)
-          .json(new response(
+          .json(new handleResponse(
                200,
                "User data is fetched",
                currentUser
@@ -60,7 +60,7 @@ export const updateUser = asyncHandler(async (req, res) => {
 
 
      return res.status(200)
-          .json(new response(
+          .json(new handleResponse(
                200,
                "Data Updated Successfully",
                user
@@ -98,7 +98,7 @@ export const updateUserPassword = asyncHandler(async (req, res) => {
           }).select("-password -refreshToken -role")
      return res
           .status(200)
-          .json(new response(
+          .json(new handleResponse(
                200,
                "Password Updated Successfully",
                updatedUserPass
@@ -123,7 +123,7 @@ export const updateUserPassword = asyncHandler(async (req, res) => {
 //           .status(200)
 //           .clearCookie("accessToken", options)
 //           .clearCookie("refreshToken", options)
-//           .json(new response(
+//           .json(new handleResponse(
 //                200,
 //                "User deleted successfully",
 //                {}
@@ -148,7 +148,7 @@ export const voteCandidate = asyncHandler(async (req, res) => {
      await currentUser.save()
      return res
           .status(200)
-          .json(new response(
+          .json(new handleResponse(
                200,
                "User voted successfully",
                currentUser

@@ -1,7 +1,7 @@
 import { Query } from "../models/query.model.js";
 import { asyncHandler } from "../utils/asyncHandler.util.js";
 import { handleError } from "../utils/handleError.util.js";
-import { response } from "../utils/response.util.js";
+import { handleResponse } from "../utils/handleResponse.util.js";
 
 
 
@@ -22,7 +22,7 @@ export const formData = asyncHandler(async (req, res) => {
           queryType,
           message
      })
-     return res.status(200).json(new response(
+     return res.status(200).json(new handleResponse(
           200,
           "Query Sent Successfully",
                saveQuery

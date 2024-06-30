@@ -1,6 +1,6 @@
 // response.util.js
 
-class response {
+class handleResponse {
      constructor(statusCode, message = "success", data) {
           this.statusCode = statusCode;
           this.message = message;
@@ -9,4 +9,4 @@ class response {
      }
 }
 
-export { response };
+export { handleResponse };
