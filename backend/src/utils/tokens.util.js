@@ -9,8 +9,7 @@ export const generateAccessToken = (user) =>{
           process.env.accessTokenSecret,
           {
                expiresIn:process.env.accessTokenExpiry
-          }
-     )
+          }     )
 }
 
 export const generateRefreshToken = (user)=>{
