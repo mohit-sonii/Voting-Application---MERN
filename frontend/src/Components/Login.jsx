@@ -34,7 +34,7 @@ function Login() {
                     uniqueId: data.uniqueId,
                     password: data.password
                }
-               const response = await api.post('api/v1/auth/login', user, {
+               const response = await api.post('https://t-est-for-deployment.vercel.app/api/v1/auth/login', user, {
                     headers: {
                          "Content-Type": "application/json"
                     }
