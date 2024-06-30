@@ -3,6 +3,7 @@
 // Express applicatoin setup
 // Responsibility ---> This includes setting up the middleares,defininf routes and configuring any application level setting. the goal is to encapsulate the entire EXPRESS app in one file
 
+
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import getDetails from "./routes/getDetails.routes.js"
