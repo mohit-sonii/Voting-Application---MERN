@@ -2,8 +2,8 @@ import { asyncHandler } from "../utils/asyncHandler.util.js";
 import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.util.js"
 import { handleError } from "../utils/handleError.util.js";
 import { handleResponse } from "../utils/handleResponse.util.js"
-import { User } from "../models/user.model.js";
 import { Candidate } from "../models/candidate.model.js"
+import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt"
 
 
