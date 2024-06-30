@@ -10,19 +10,19 @@ dotenv.config(
      })
 import { mongoDB } from './database/db.database.js'
 import { app } from './app.js'
-import { handleError } from './utils/handleError.util.js'
 
 
-
-mongoDB().then(() => {
-     if (process.env.NODE_ENV !== 'production') {
+const startServer = async () => {
+     try {
+          await mongoDB();
           const PORT = process.env.PORT || 8000;
           app.listen(PORT, () => {
                console.log(`Server is running on port ${PORT}`);
           });
+     } catch (err) {
+          console.error('Failed to connect to the database', err);
+          process.exit(1);
      }
-}).catch((err) => {
-     throw new handleError(err, 500, 'Error in running the server')
-})
-
+};
+startServer()
 
