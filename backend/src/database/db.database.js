@@ -21,6 +21,6 @@ export const mongoDB = async () => {
           // await createStateAndDistrict()
      }
      catch (err) {
-          next(err)
+          throw new handleError(500,"connection can not be established")
      }
 }
