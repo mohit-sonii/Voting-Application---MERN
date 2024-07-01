@@ -2,6 +2,7 @@
 
 import { Link, useParams } from 'react-router-dom'
 import api from '../axiosInstance'
+import { server } from '../server'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +27,7 @@ function NewPass() {
           e.preventDefault();
           try {
                if (data.password === data.repass) {
-                    const response = await api.patch(`api/v1/auth/login/forget-password/create-new-password/${id}`, { password: data.password }, {
+                    const response = await api.patch(`${server}/auth/login/forget-password/create-new-password/${id}`, { password: data.password }, {
                          headers: {
                               "Content-Type": "application/json"
                          }

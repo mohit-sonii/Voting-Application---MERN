@@ -6,6 +6,7 @@ import { userContext } from "../context.js"
 import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
+import { server } from "../server.js"
 import { useDispatch } from "react-redux"
 import { setUserId } from "../Redux/slicer.js"
 
@@ -34,7 +35,7 @@ function Login() {
                     uniqueId: data.uniqueId,
                     password: data.password
                }
-               const response = await api.post('https://t-est-for-deployment.vercel.app/api/v1/auth/login', user, {
+               const response = await api.post(`${server}/auth/login`, user, {
                     headers: {
                          "Content-Type": "application/json"
                     }
@@ -67,7 +68,7 @@ function Login() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+          return () => clearTimeout(timer); 
      }, [err]);
 
      return (

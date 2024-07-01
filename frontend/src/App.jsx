@@ -19,6 +19,18 @@ import ProfileUpdate from "./Components/ProfileUpdate.jsx"
 import UpdatePassword from "./Components/UpdatePassword.jsx"
 
 function App() {
+
+
+     useEffect(() => {
+          const handleBeforeUnload = (event) => {
+               localStorage.clear();
+          };
+          window.addEventListener('beforeunload', handleBeforeUnload);
+          return () => {
+               window.removeEventListener('beforeunload', handleBeforeUnload);
+          };
+     }, []);
+
      const [visitorType, setWhoTheVisitor] = useState('');
      const [visitorId, setVisitorId] = useState('')
      const [candidateId, setCandidateId] = useState('')

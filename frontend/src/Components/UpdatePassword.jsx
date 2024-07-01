@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import api from '../axiosInstance'
 import { useSelector } from 'react-redux'
 import "../Styles/updatePassword.css"
+import { server, serverWithId } from '../server'
 import { Link, useNavigate } from 'react-router-dom'
 import { userContext } from '../context'
 
@@ -33,7 +34,7 @@ function UpdatePassword() {
           }
           try {
                const token = localStorage.getItem('accessToken')
-               const response = await api.patch(`${userId}/api/v1/user/profile/update/password`, updates, {
+               const response = await api.patch(`${serverWithId}/${userId}/api/v1/user/profile/update/password`, updates, {
                     headers: {
                          Authorization: `Bearer ${token}`
                     }
@@ -130,9 +131,9 @@ function UpdatePassword() {
                               >
                                    <span>Update Password</span>
                               </button>
-                              <button type="button" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
+                              <button type="button"  className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
                                    <Link to={'/api/v1/auth/login/forget-password'}>
-                                        <span>Forget Password</span>
+                                        <span style={{color:'blueviolet'}}><strong>Forget Password</strong></span>
                                    </Link>
                               </button>
                          </div>

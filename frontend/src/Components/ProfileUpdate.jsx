@@ -5,6 +5,7 @@ import { userContext } from "../context"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "./Button"
 import api from "../axiosInstance"
+import { server, serverWithId } from "../server"
 
 function ProfileUpdate() {
 
@@ -40,7 +41,7 @@ function ProfileUpdate() {
           e.preventDefault()
           try {
                const token = localStorage.getItem('accessToken')
-               await api.patch(`${userId}/api/v1/user/profile/update`, data, {
+               await api.patch(`${serverWithId}/${userId}/api/v1/user/profile/update`, data, {
                     headers: {
                          Authorization: `Bearer ${token}`,
                          "Content-Type": "multipart/form-data"

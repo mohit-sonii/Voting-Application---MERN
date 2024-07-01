@@ -1,13 +1,17 @@
 
 import "../Styles/SignUp.css"
-import { useState,useEffect } from "react"
+import { useState, useEffect,useContext } from "react"
 import React from 'react'
+import { server } from "../server.js"
 import { Link } from "react-router-dom"
 import api from "../axiosInstance.js"
 import { useNavigate } from "react-router-dom"
-
+import { useDispatch } from "react-redux"
+import { setUserId } from "../Redux/slicer.js"
+import { userContext } from "../context.js"
 
 function Register() {
+     const dispatch = useDispatch()
      const [data, setData] = useState({
           firstName: '',
           lastName: '',
@@ -18,10 +22,11 @@ function Register() {
      })
      const [err, setErr] = useState('')
      const navigate = useNavigate()
+     const { changeVisitorType } = useContext(userContext)
+     const { updateVisitorId } = useContext(userContext)
      const handleChange = (e) => {
           const { name, value } = e.target;
           if (name === "avatar") {
-               // console.log(e.target.files[0], "this is the e.target.file")
                setData({ ...data, avatar: e.target.files[0] });
           } else {
                setData({ ...data, [name]: value })
@@ -30,7 +35,7 @@ function Register() {
      const handleSubmit = async (e) => {
           e.preventDefault();
           try {
-               const response = await api.post('api/v1/auth/register', data, {
+               const response = await api.post(`${server}/auth/register`, data, {
                     headers: {
                          "Content-Type": "multipart/form-data"
                     }
@@ -44,6 +49,9 @@ function Register() {
                          password: '',
                          avatar: ''
                     })
+                    changeVisitorType('user')
+                    updateVisitorId(response.data.data._id)
+                    dispatch(setUserId(response.data.data._id))
                     navigate(`/${response.data.data._id}`)
                }
                else {
@@ -58,11 +66,11 @@ function Register() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); 
+          return () => clearTimeout(timer);
      }, [err]);
      return (
           <div id="signup">
-                {err &&
+               {err &&
                     <div className="errorField">
                          <p>{err}</p>
                     </div>
@@ -103,7 +111,7 @@ function Register() {
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="password">Create Password </label>
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" name="password" id="password" required type="password" onChange={handleChange} value={data.password} />
                               </div>
-                              <div className="field avatar">
+                              <div className="field ">
                                    <label className="text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-light" htmlFor="avatar">Upload your Avatar </label>
                                    <input className="sm:w-3/4 text-sm lg:text-lg xl:text-xl 2xl:text-2xl  font-semibold" id="avatar" name="avatar" type="file" onChange={handleChange} />
                               </div>

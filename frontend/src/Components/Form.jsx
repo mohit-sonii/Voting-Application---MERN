@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react"
 import "../Styles/Form.css"
+import { server } from "../server.js"
 import api from "../axiosInstance.js"
 
 function Form() {
@@ -16,7 +17,7 @@ function Form() {
      const handleChange = (e) => {
           const { name, value } = e.target
           if (name == 'phone') {
-               const numericRegex = /^\d*$/; 
+               const numericRegex = /^\d*$/;
                if (!numericRegex.test(value)) {
                     return;
                }
@@ -26,7 +27,7 @@ function Form() {
 
      async function getAreaDetail() {
           try {
-               const response = await api.get('api/v1/api/districts-and-states/district-state')
+               const response = await api.get(`${server}/api/districts-and-states/district-state`)
                const areas = response.data.data?.[0]?.apiData?.states
                setArea(areas)
           } catch (err) {
@@ -85,7 +86,7 @@ function Form() {
                     message: data.message,
                     queryType: data.queryType
                };
-               const response = await api.post('/', addQuery, {
+               const response = await api.post(`${server}/`, addQuery, {
                     headers: {
                          "Content-Type": "application/json"
                     }
@@ -115,7 +116,7 @@ function Form() {
                setFormError(null);
           }, 2000);
 
-          return () => clearTimeout(timer); 
+          return () => clearTimeout(timer);
      }, [isSubmitted, formError]);
 
      return (
@@ -126,8 +127,7 @@ function Form() {
                </div>
 
                <form className="flex" onSubmit={handleSubmit} >
-                    <div className="allEnteries w-full grid  grid-cols-1 sm:grid-cols-2 gap-10  justify-between">
-
+                    <div className="allEnteries w-full grid  grid-cols-1 sm:grid-cols-2 gap-10 justify-between">
                          <div className="ele username">
                               <input className="text-lg lg:text-xl xl:text-2xl " type="text" name="username" value={data.username} id="username" onChange={handleChange} placeholder="Enter your name" required />
                          </div>
@@ -174,12 +174,12 @@ function Form() {
                     </div>
                </form>
                <div>
-                    {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Submitted Successfully</p>}
+                    {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Form submitted successfully, we will contact you soon</p>}
                     {formError &&
-                    <div className="errorField">
-                         <p>{formError}</p>
-                    </div>
-               }
+                         <div className="errorField">
+                              <p>{formError}</p>
+                         </div>
+                    }
                </div>
           </div>
      )

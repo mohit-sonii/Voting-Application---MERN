@@ -5,6 +5,7 @@ import api from '../axiosInstance'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { candidateContext, userContext } from '../context'
+import { server, serverWithId } from '../server'
 import { toogleVoted, setUserId } from '../Redux/slicer'
 
 function SpecificCandidate() {
@@ -23,12 +24,8 @@ function SpecificCandidate() {
 
      const getSpecificCandidateDetails = async () => {
           try {
-               const token = localStorage.getItem('accessToken')
-               const response = await api.get(`api/v1/candidates/candidate-list/${candidateId}`, {
-                    headers: {
-                         Authorization: `Bearer ${token}`
-                    }
-               })
+               const response = await api.get(`${server}/candidates/candidate-list/${candidateId}`)
+               console.log(response.data)
                const date = new Date(response.data.data.dob)
                const formattedDateLocal = date.toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -45,7 +42,7 @@ function SpecificCandidate() {
      const performVote = async () => {
           try {
                const token = localStorage.getItem('accessToken')
-               const response = await api.post(`api/v1/candidates/candidate-list/${candidateId}`, { candidateId }, {
+               const response = await api.post(`${server}/candidates/candidate-list/${candidateId}`, { candidateId }, {
                     headers: {
                          Authorization: `Bearer ${token}`
                     }

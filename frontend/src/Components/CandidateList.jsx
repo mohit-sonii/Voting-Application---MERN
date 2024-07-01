@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CandidateCard from './CandidateCard'
 import api from '../axiosInstance'
+import { server } from '../server'
 import { Link, useParams } from 'react-router-dom'
 import "../Styles/CandidateList.css"
 import {userContext} from '../context'
@@ -20,7 +21,7 @@ function CandidateList() {
           try {
 
                const token = localStorage.getItem('accessToken')
-               const response = await api.get('api/v1/candidates/candidate-list', {
+               const response = await api.get(`${server}/candidates/candidate-list`, {
                     headers: {
                          Authorization: `Bearer ${token}`
                     },

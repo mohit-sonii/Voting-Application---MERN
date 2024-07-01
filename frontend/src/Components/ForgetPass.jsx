@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { server } from '../server.js'
 import { useNavigate } from 'react-router-dom'
 import api from '../axiosInstance.js'
 
@@ -21,7 +22,7 @@ function ForgetPass() {
 
           e.preventDefault();
           try {
-               const response = await api.post('api/v1/auth/login/forget-password', data, {
+               const response = await api.post(`${server}/auth/login/forget-password`, data, {
                     headers: {
                          "Content-Type": "application/json",
                     }
@@ -32,7 +33,7 @@ function ForgetPass() {
                          uniqueId: '',
                          voterId: ''
                     })
-                    navigate(`/api/v1/auth/login/forget-password/create-new-password/${response.data.data._id}`);
+                    navigate(`${server}/auth/login/forget-password/create-new-password/${response.data.data._id}`);
                     setErr('')
                } else {
                     throw new Error("Error while forgeting the password")
@@ -46,7 +47,7 @@ function ForgetPass() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+          return () => clearTimeout(timer); 
      }, [err]);
 
      return (

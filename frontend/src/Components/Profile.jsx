@@ -3,6 +3,8 @@ import React, { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import "../Styles/Profile.css"
+import { server } from '../server'
+import { serverWithId } from '../server'
 import api from "../axiosInstance"
 import { userContext } from '../context'
 import Button from './Button'
@@ -21,7 +23,7 @@ function Profile() {
      const getUserDetails = async () => {
           try {
                const token = localStorage.getItem('accessToken')
-               const response = await api.get(`${userId}/api/v1/user/profile`, {
+               const response = await api.get(`${serverWithId}/${userId}/api/v1/user/profile`, {
                     headers: {
                          Authorization: `Bearer ${token}`
                     }
@@ -30,7 +32,7 @@ function Profile() {
                setUserData(response.data.data)
                updateUserData(response.data.data)
           } catch (err) {
-               setErr(err.response?.data?.message || 'Please Login again to see the credentials')
+               setErr(err.response?.data?.message || err.message || 'Please Login again to see the credentials')
           }
      }
 
