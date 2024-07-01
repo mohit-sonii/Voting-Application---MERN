@@ -52,9 +52,6 @@ const Navbar = () => {
                     {visitorType === 'user'
                          && <Button innerText="Vote Now" link="api/v1/candidates/candidate-list" />
                     }
-                    {visitorType === 'admin'
-                         && <Button innerText="Admin Panel" link="api/v1/auth/register" />
-                    }
 
                </div>
           </nav>

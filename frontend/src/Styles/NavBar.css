@@ -51,7 +51,7 @@ ul li::after{
      transition: all 0.5s ease-in-out;
      border-radius: 1rem;
      bottom:-6px;
-     background-color: rgb(79, 12, 204);
+     background-color:  rgb(163, 4, 184);
      left: 0;
 }
 ul li:hover::after{

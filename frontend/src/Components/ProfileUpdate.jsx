@@ -29,6 +29,7 @@ function ProfileUpdate() {
           const { name, value, files } = e.target
           if (name === 'avatar') {
                const file = files[0]
+               console.log(file.path)
                setData({ ...data, [name]: file })
                setAvatarPreview(URL.createObjectURL(file))
 

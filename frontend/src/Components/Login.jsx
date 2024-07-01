@@ -11,19 +11,19 @@ import { useDispatch } from "react-redux"
 import { setUserId } from "../Redux/slicer.js"
 
 function Login() {
-     const dispatch=useDispatch()
+     const dispatch = useDispatch()
      const [data, setData] = useState({
           uniqueId: '',
           password: '',
      })
      const [err, setErr] = useState('')
 
-     
+
      const handleChange = (e) => {
           const { name, value } = e.target;
           setData({ ...data, [name]: value })
      }
-     
+
      const navigate = useNavigate()
      const { visitorType, changeVisitorType } = useContext(userContext)
      const { visitorId, updateVisitorId } = useContext(userContext)
@@ -42,19 +42,19 @@ function Login() {
                })
                localStorage.setItem("accessToken", response.data.data.accessToken)
                if (response.status === 200) {
+                    updateVisitorId(response.data.data.user._id)
+                    dispatch(setUserId(response.data.data.user._id))
                     if (response.data.data.user.role === 'user') {
                          changeVisitorType('user')
+                         navigate(`/${response.data.data.user._id}`)
                     } else {
                          changeVisitorType('admin')
+                         navigate(`/admin/${response.data.data.user._id}`)
                     }
                     setData({
                          uniqueId: '',
                          password: '',
                     })
-                    updateVisitorId(response.data.data.user._id)
-                    dispatch(setUserId(response.data.data.user._id))
-                    navigate(`/${response.data.data.user._id}`)
-
                } else {
                     throw new Error("Error while login a user")
                }
@@ -68,7 +68,7 @@ function Login() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); 
+          return () => clearTimeout(timer);
      }, [err]);
 
      return (

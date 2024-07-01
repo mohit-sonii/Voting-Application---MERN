@@ -122,8 +122,8 @@ function Form() {
      return (
           <div className="formSection">
                <div className="form-headings">
-                    <p className=' text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-left'>Contact Us</p>
-                    <p className="text-2xl lg:text-2xl xl:text-3xl font-extralight">Report any problems or concerns related to the voting process</p>
+                    <p className=' text-3xl lg:text-4xl xl:text-5xl  2xl:text-6xl font-extrabold text-left'>Contact Us</p>
+                    <p className="text-2xl lg:text-2xl xl:text-3xl  font-extralight">Report any problems or concerns related to the voting process</p>
                </div>
 
                <form className="flex" onSubmit={handleSubmit} >
@@ -174,9 +174,9 @@ function Form() {
                     </div>
                </form>
                <div>
-                    {isSubmitted && <p className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Form submitted successfully, we will contact you soon</p>}
+                    {isSubmitted && <p className="text-xl text-white lg:text-2xl xl:text-3xl 2xl:text-4xl font-extralight ">Form submitted successfully, we will contact you soon</p>}
                     {formError &&
-                         <div className="errorField">
+                         <div className="errorField text-white">
                               <p>{formError}</p>
                          </div>
                     }

@@ -17,6 +17,7 @@ import { Provider } from "react-redux"
 import { store } from "./Redux/store.js"
 import ProfileUpdate from "./Components/ProfileUpdate.jsx"
 import UpdatePassword from "./Components/UpdatePassword.jsx"
+import AdminHome from "./Components/Admin/AdminHome.jsx"
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
                                         <Route path="/:id/api/v1/user/profile" element={<Profile />} />
                                         <Route path="/:id/api/v1/user/profile/update" element={<ProfileUpdate />} />
                                         <Route path="/:id/api/v1/user/profile/update/password" element={<UpdatePassword />} />
+                                        <Route path="/admin/:id" element={<AdminHome />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>

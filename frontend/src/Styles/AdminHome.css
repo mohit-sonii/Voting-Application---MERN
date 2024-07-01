@@ -1,0 +1,33 @@
+.main-container-for-admin-home {
+     background-color: #161515;
+     /* justify-content: center; */
+     align-items: center;
+}
+
+.logout-admin  {
+     width: 90%;
+     height: max-content;
+     display: flex;
+     justify-content: flex-end;
+}
+
+.admin-home {
+     margin: auto;
+     justify-content: center;
+     width: 90%;
+
+}
+
+.admin-home .admin-heading {
+     color: white;
+     width: 70%;
+     line-height: normal;
+}
+
+.admin-home .admin-subheading {
+     line-height: normal;
+     width: 80%;
+     color: rgb(129, 127, 127);
+     text-align: left;
+     font-weight: 400;
+}

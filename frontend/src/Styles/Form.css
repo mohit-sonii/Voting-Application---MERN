@@ -18,8 +18,10 @@
 select {
      width: 100%;
      border: none;
+     color: #f5f5f5;
      outline: none;
      border-radius: 0.5rem;
+     background-color: #494848;
      padding: 1rem;
      border: 1px solid black;
      height: 60px;
@@ -32,9 +34,10 @@ select {
 .textarea{
      width: 100%;
      border: none;
+     background-color: #494848;
      border-radius: 0.5rem;
      outline: none;
-     color: #494848;
+     color: #f5f5f5;
      border: 1px solid black;
      padding: 1.5rem;
 }
