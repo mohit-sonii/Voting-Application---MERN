@@ -1,6 +1,6 @@
 
 import "../Styles/SignUp.css"
-import { useState, useEffect,useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { server } from "../server.js"
 import { Link } from "react-router-dom"
@@ -50,9 +50,10 @@ function Register() {
                          avatar: ''
                     })
                     changeVisitorType('user')
-                    updateVisitorId(response.data.data._id)
-                    dispatch(setUserId(response.data.data._id))
-                    navigate(`/${response.data.data._id}`)
+                    localStorage.setItem('accessToken', response.data.data.accessToken)
+                    updateVisitorId(response.data.data.user._id)
+                    dispatch(setUserId(response.data.data.user._id))
+                    navigate(`/${response.data.data.user._id}`)
                }
                else {
                     throw new Error("Error while register a user")

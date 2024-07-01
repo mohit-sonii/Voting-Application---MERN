@@ -1,11 +1,15 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { server } from '../server.js'
 import { useNavigate } from 'react-router-dom'
 import api from '../axiosInstance.js'
+import { userContext } from '../context.js'
+import { useSelector } from 'react-redux'
 
 function ForgetPass() {
-
+     
+     const { visitorType } = useContext(userContext)
+     const userId = useSelector(state => state.userValues.userId)
 
      const [data, setData] = useState({
           uniqueId: '',
@@ -33,7 +37,7 @@ function ForgetPass() {
                          uniqueId: '',
                          voterId: ''
                     })
-                    navigate(`${server}/auth/login/forget-password/create-new-password/${response.data.data._id}`);
+                    navigate(`create-new-password/${response.data.data._id}`);
                     setErr('')
                } else {
                     throw new Error("Error while forgeting the password")
@@ -47,7 +51,7 @@ function ForgetPass() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); 
+          return () => clearTimeout(timer);
      }, [err]);
 
      return (
@@ -81,9 +85,16 @@ function ForgetPass() {
                               <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Check for my Account</span></button>
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
-                                   <Link to="/api/v1/auth/login">
-                                        <span>Back</span>
-                                   </Link>
+                                   {visitorType !== '' ?
+                                        <Link to={`/${userId}/api/v1/user/profile`}>
+                                             <span>Back</span>
+                                        </Link>
+                                        :
+                                        <Link to={`/api/v1/auth/login`}>
+                                             <span>Back</span>
+                                        </Link>
+
+                                   }
                               </button>
                          </div>
                     </form>

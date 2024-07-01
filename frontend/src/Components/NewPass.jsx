@@ -3,12 +3,16 @@
 import { Link, useParams } from 'react-router-dom'
 import api from '../axiosInstance'
 import { server } from '../server'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState, useEffect } from 'react'
+
 import { useNavigate } from 'react-router-dom'
+import { userContext } from '../context'
+import { useSelector } from 'react-redux'
 
 function NewPass() {
-
+     const { visitorType } = useContext(userContext)
+     const userId = useSelector(state => state.userValues.userId)
      const { id } = useParams()
      const [data, setData] = useState({
           password: '',
@@ -50,7 +54,7 @@ function NewPass() {
                setErr('');
           }, 2000);
 
-          return () => clearTimeout(timer); // Clear the timeout if the component unmounts or dependencies change
+          return () => clearTimeout(timer);
      }, [err]);
 
      return (
@@ -82,9 +86,16 @@ function NewPass() {
                               <button type="submit" id="button" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24"><span>Change Password</span></button>
 
                               <button type="button" id="back" className="text-2xl 2xl:text-3xl py-4 2xl:py-10 px-10 2xl:px-24">
-                                   <Link to="/user/auth/login">
-                                        <span>Back</span>
-                                   </Link>
+                                   {visitorType !== '' ?
+                                        <Link to={`/${userId}/api/v1/user/profile`}>
+                                             <span>Back</span>
+                                        </Link>
+                                        :
+                                        <Link to={`/api/v1/auth/login`}>
+                                             <span>Back</span>
+                                        </Link>
+
+                                   }
                               </button>
                          </div>
                     </form>

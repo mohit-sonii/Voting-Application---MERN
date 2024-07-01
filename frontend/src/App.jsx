@@ -30,6 +30,7 @@ function App() {
                window.removeEventListener('beforeunload', handleBeforeUnload);
           };
      }, []);
+;
 
      const [visitorType, setWhoTheVisitor] = useState('');
      const [visitorId, setVisitorId] = useState('')
