@@ -1,0 +1,29 @@
+.admin-add-candidate {
+     margin: auto;
+     margin-top: 50px;
+
+}
+
+.add-candidate-entries {
+     margin: auto;
+     width: 100%;
+}
+
+
+.add-candidate-formData {
+     width: 90%;
+
+}
+.add-candidate-formData .ele, .add-candidate-formData .field{
+     width: 40%;
+}
+
+
+.add-candidate-entries .add-candidate-formData input,
+.add-candidate-entries .add-candidate-formData select,
+.add-candidate-ele {
+     width: 100%;
+}
+
+
+

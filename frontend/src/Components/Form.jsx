@@ -51,7 +51,7 @@ function Form() {
                const res = apiAreas.map((item) => item.state)
                setState(res)
           } catch (error) {
-               setFormError(err.response?.data?.message || 'An error occured while sending your query')
+               setFormError(err.response?.data?.message || err.message || 'An error occured while talking with database')
           }
      };
 

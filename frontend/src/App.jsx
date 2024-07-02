@@ -18,6 +18,7 @@ import { store } from "./Redux/store.js"
 import ProfileUpdate from "./Components/ProfileUpdate.jsx"
 import UpdatePassword from "./Components/UpdatePassword.jsx"
 import AdminHome from "./Components/Admin/AdminHome.jsx"
+import AddCandidate from "./Components/Admin/AddCandidate.jsx"
 
 function App() {
 
@@ -70,6 +71,7 @@ function App() {
                                         <Route path="/:id/api/v1/user/profile/update" element={<ProfileUpdate />} />
                                         <Route path="/:id/api/v1/user/profile/update/password" element={<UpdatePassword />} />
                                         <Route path="/admin/:id" element={<AdminHome />} />
+                                        <Route path="/admin/:id/add-candidate" element={<AddCandidate />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>

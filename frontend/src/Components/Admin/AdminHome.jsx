@@ -63,7 +63,7 @@ function AdminHome() {
                          <p className="admin-subheading  text-2xl md:text-3xl lg:text-4xl">What you are planning to do?</p>
                     </div>
                     <div className="admin-functionalities flex gap-10">
-                         <Button innerText={'Add a Candidate'} />
+                         <Button innerText={'Add a Candidate'} link={'add-candidate'} />
                          <Button innerText={'Remove a Candidate'} />
                          <Button innerText={'Update a Candidate'} />
                          <Button innerText={'View Vote Counts'} />
