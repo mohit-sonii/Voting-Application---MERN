@@ -3,10 +3,11 @@ import React, { useContext } from 'react'
 import "../Styles/CandidateCard.css"
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
-import { candidateContext } from '../context'
+import { candidateContext, userContext } from '../context'
 
 function CandidateCard(props) {
-     const {updateCandidateId } = useContext(candidateContext)
+     const { updateCandidateId } = useContext(candidateContext)
+     const { visitorType } = useContext(userContext)
      const navigate = useNavigate()
      const handleSpecificCandidate = () => {
           updateCandidateId(`${props.link}`)
@@ -20,9 +21,13 @@ function CandidateCard(props) {
                <div className="candidate-content flex flex-col flex-wrap">
                     <p className='candidate-p font-bold text-2xl sm:text-3xl'>{props.candidateName}</p>
                     <p className="candidate-p text-lg sm:text-xl">{props.partyName}</p>
-                    <div onClick={handleSpecificCandidate}>
-                         <Button innerText={"More Details"} link={`${props.link}`} />
-                    </div>
+                    {visitorType === 'admin' ?
+                         <Button innerText={"Delete Candidate"} onClick={props.onClick} />
+                         :
+                         <div onClick={handleSpecificCandidate}>
+                              <Button innerText={"More Details"} link={`${props.link}`} />
+                         </div>
+                    }
                </div>
           </div>
      )

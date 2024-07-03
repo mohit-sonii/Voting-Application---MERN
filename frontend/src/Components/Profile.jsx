@@ -65,12 +65,12 @@ function Profile() {
                               : <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkVto1t4ROcxcqi0SrFtgSQQJ1Aau0ad1d3g&s" alt="No Avatar" className="avatar" />
                          }
                          <div className="info">
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>First Name:</strong> {user.firstName}</p>
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>Last Name:</strong> {user.lastName}</p>
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>Password:</strong> •••••••</p>
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>Unique ID:</strong> {user.uniqueId}</p>
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>Voter ID:</strong> {user.voterId}</p>
-                              <p className='text-2xl md:text-xl lg:text-2xl'><strong>Voted:</strong> {user.isVoted ? "Yes" : "No"}</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>First Name:</strong> {user.firstName}</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>Last Name:</strong> {user.lastName}</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>Password:</strong> •••••••</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>Unique ID:</strong> {user.uniqueId}</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>Voter ID:</strong> {user.voterId}</p>
+                              <p className='text-[#161515] text-2xl md:text-xl lg:text-2xl'><strong>Voted:</strong> {user.isVoted ? "Yes" : "No"}</p>
                          </div>
                     </div>
                </div>

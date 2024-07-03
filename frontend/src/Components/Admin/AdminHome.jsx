@@ -64,7 +64,7 @@ function AdminHome() {
                     </div>
                     <div className="admin-functionalities flex gap-10">
                          <Button innerText={'Add a Candidate'} link={'add-candidate'} />
-                         <Button innerText={'Remove a Candidate'} />
+                         <Button innerText={'Remove a Candidate'} link={'delete-candidate'} />
                          <Button innerText={'Update a Candidate'} />
                          <Button innerText={'View Vote Counts'} />
                          <Button innerText={'View Vote Counts'} />
