@@ -34,14 +34,19 @@ function DeleteCandidate() {
 
 
      const handleClick = async (id) => {
-          window.confirm('Are you sure to delete this candidate. This action is irreversable')
-          if (!confirm) return
-          const token = localStorage.getItem('accessToken')
-          await api.delete(`${server}/candidates/candidate-list/${id}`, {
-               headers: {
-                    Authorization: `Bearer ${token}`
-               }
-          })
+          try {
+               window.confirm('Are you sure to delete this candidate. This action is irreversable')
+               if (!confirm) return
+               console.log(id,'this is the Id from bakcend to delete ')
+               const token = localStorage.getItem('accessToken')
+               await api.delete(`${server}/candidates/candidate-list/${id}`, {
+                    headers: {
+                         Authorization: `Bearer ${token}`
+                    }
+               })
+          } catch (error) {
+               console.log(error, error.message)
+          }
      }
 
      useEffect(() => {
