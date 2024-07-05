@@ -22,7 +22,7 @@ function CandidateCard(props) {
                     <p className='candidate-p font-bold text-2xl sm:text-3xl'>{props.candidateName}</p>
                     <p className="candidate-p text-lg sm:text-xl">{props.partyName}</p>
                     {visitorType === 'admin' ?
-                         <Button innerText={"Delete Candidate"} onClick={props.onClick} />
+                         <Button innerText={props.innerText} onClick={props.onClick} />
                          :
                          <div onClick={handleSpecificCandidate}>
                               <Button innerText={"More Details"} link={`${props.link}`} />

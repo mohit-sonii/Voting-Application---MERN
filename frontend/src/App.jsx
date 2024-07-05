@@ -18,6 +18,7 @@ import { store } from "./Redux/store.js"
 import ProfileUpdate from "./Components/ProfileUpdate.jsx"
 import UpdatePassword from "./Components/UpdatePassword.jsx"
 import AdminHome from "./Components/Admin/AdminHome.jsx"
+import UpdateCandidate from "./Components/Admin/updateCandidate.jsx"
 import AddCandidate from "./Components/Admin/AddCandidate.jsx"
 import DeleteCandidate from "./Components/Admin/DeleteCandidate.jsx"
 
@@ -74,6 +75,7 @@ function App() {
                                         <Route path="/admin/:id" element={<AdminHome />} />
                                         <Route path="/admin/:id/add-candidate" element={<AddCandidate />} />
                                         <Route path="/admin/:id/delete-candidate" element={<DeleteCandidate />} />
+                                        <Route path="/admin/:id/update-candidate" element={<UpdateCandidate />} />
                                    </Routes>
                               </candidateContext.Provider>
                          </userContext.Provider>
