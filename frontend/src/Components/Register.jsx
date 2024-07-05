@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from "react"
 import React from 'react'
 import { server } from "../server.js"
 import { Link } from "react-router-dom"
-import api from "../axiosInstance.js"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setUserId } from "../Redux/slicer.js"
@@ -27,17 +26,6 @@ function Register() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "avatar") {
-      // const file = e.target.files[0]
-      // console.log(file, 'this is file')
-      // const reader = new FileReader()
-      // console.log(reader, 'this is reader')
-      // reader.onloadend = () => {
-      //      console.log(reader.result)
-      // }
-      // if (file) {
-      //      reader.readAsDataURL(file)
-      // }
-      // console.log(file, 'this is file')
       setData({ ...data, avatar: e.target.files[0] });
     } else {
       setData({ ...data, [name]: value })
