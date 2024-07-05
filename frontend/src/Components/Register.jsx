@@ -35,7 +35,6 @@ function Register() {
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-         console.log(data)
          const response = await axios.post(`${server}/auth/register`, data, {
             headers: {
                "Content-Type": "multipart/form-data"

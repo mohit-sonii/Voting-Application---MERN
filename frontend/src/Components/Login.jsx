@@ -1,6 +1,7 @@
 
 
 import api from "../axiosInstance.js"
+import axios from "axios"
 import "../Styles/Login.css"
 import { userContext } from "../context.js"
 import { useState, useEffect, useContext } from "react"
@@ -35,7 +36,7 @@ function Login() {
                     uniqueId: data.uniqueId,
                     password: data.password
                }
-               const response = await api.post(`${server}/auth/login`, user, {
+               const response = await axios.post(`${server}/auth/login`, user, {
                     headers: {
                          "Content-Type": "application/json"
                     }
@@ -59,7 +60,8 @@ function Login() {
                     throw new Error("Error while login a user")
                }
           } catch (error) {
-               setErr(error.response?.data?.message || 'An error occured while login a user')
+            console.log(error)
+               setErr(error.response?.data?.message || error.message ||'An error occured while login a user')
           }
      }
 
