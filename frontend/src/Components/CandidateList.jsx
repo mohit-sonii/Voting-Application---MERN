@@ -49,7 +49,7 @@ function CandidateList() {
                }
 
                <div className="heading-candidate flex  justify-between flex-col gap-5">
-                    <div className="onlyHeadings">
+                    <div className="onlyHeadings flex gap-10 flex-col">
                          <p className='subheading text-2xl md:text-3xl lg:text-4xl font-extrabold'>Choose your Candidate</p>
                          <p className='text-lg sm:text-xl'>Choose your candidate considering the Rules and Regulation</p>
                     </div>

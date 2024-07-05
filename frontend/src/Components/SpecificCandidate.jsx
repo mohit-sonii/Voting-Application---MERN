@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import "../Styles/SpecificCandidate.css"
 import Button from "./Button"
 import api from '../axiosInstance'
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { candidateContext, userContext } from '../context'
@@ -25,7 +26,6 @@ function SpecificCandidate() {
    const getSpecificCandidateDetails = async () => {
       try {
          const response = await api.get(`${server}/candidates/candidate-list/${candidateId}`)
-         console.log(response.data)
          const date = new Date(response.data.data.dob)
          const formattedDateLocal = date.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -42,7 +42,7 @@ function SpecificCandidate() {
    const performVote = async () => {
       try {
          const token = localStorage.getItem('accessToken')
-         const response = await api.post(`${server}/candidates/candidate-list/${candidateId}`, { candidateId }, {
+         const response = await axios.post(`${server}/candidates/candidate-list/${candidateId}`, { candidateId }, {
             headers: {
                Authorization: `Bearer ${token}`
             }
@@ -50,7 +50,6 @@ function SpecificCandidate() {
          setVoteResponse(response.data.message)
       } catch (err) {
          setErr(err.response?.data?.message || 'Please Login again to perform Voting')
-
       }
    }
 
@@ -123,13 +122,13 @@ function SpecificCandidate() {
                      <div className="vote-button  flex justify-center items-center" >
                         <Button innerText="Vote This Candidate" disabled={isVoted} onClick={handleClick} />
                      </div>
-                     : { err } ? <div className="errorField ">
-                        <p>User Already Voted!!</p>
-                     </div>
+                     : err !== ''
+                        ? <div className="errorField ">
+                           <p>User Already Voted!!</p>
+                        </div>
                         : <div className="greenField">
                            <p>Thanks for voting!!</p>
                         </div>
-
                   }
                </div>
                <div className="section-2 flex  gap-10 flex-col">
@@ -148,7 +147,7 @@ function SpecificCandidate() {
                            <p className='text-xl md:text-2xl lg:text-3xl '>`~  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis corporis quis cupiditate {item} similique magni rem voluptates aliquid saepe! Sint sequi culpa rerum fugit error vel sapiente! In, aut adipisci. Voluptas? `</p>
                            <br />
                            <p className='text-xl md:text-2xl lg:text-3xl '>`~  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis corporis quis cupiditate similique {item} magni rem voluptates aliquid saepe! Sint sequi culpa rerum fugit error vel sapiente! In, aut adipisci. Voluptas?`</p>
-                           
+
                         </div>
                      ))}
 
