@@ -1,8 +1,8 @@
 
 import { Router } from 'express'
-import { isAdmin, verifyJwt } from '../middlewares/auth.middleware.js'
-import { addCandidate, deleteCandidate, updateCandidate } from '../controllers/candidates.controller.js'
-import { upload } from '../middlewares/multer.middleware.js'
+import { isAdmin, verifyJwt } from '../middlewares/auth.middleware'
+import { addCandidate, deleteCandidate, updateCandidate } from '../controllers/candidates.controller'
+import { upload } from '../middlewares/multer.middleware'
 const router = Router()
 
 router.route('/').post(

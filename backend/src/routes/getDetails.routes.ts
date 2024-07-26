@@ -2,11 +2,11 @@
 // this is just to understand how can i get the data from a specific collection. So for that we will create a route to access the data and doing it more clearly we use a controller for admin 
 
 import { Router } from 'express'
-import { getAdminDetails } from "../controllers/getAdminData.controller.js"
-import { getStateDistrictsData } from "../controllers/getStateDistrict.controller.js"
-import { getCandidate, getSpecificCandidate } from '../controllers/candidates.controller.js'
-import { verifyJwt } from '../middlewares/auth.middleware.js'
-import { voteCandidate } from '../controllers/users.controller.js'
+import { getAdminDetails } from "../controllers/getAdminData.controller"
+import { getStateDistrictsData } from "../controllers/getStateDistrict.controller"
+import { getCandidate, getSpecificCandidate } from '../controllers/candidates.controller'
+import { verifyJwt } from '../middlewares/auth.middleware'
+import { voteCandidate } from '../controllers/users.controller'
 const router = Router()
 
 // GET admin Data

@@ -1,7 +1,7 @@
 
 
 import { Router } from "express";
-import {formData} from "../controllers/query.controller.js"
+import {formData} from "../controllers/query.controller"
 
 const router = Router()
 

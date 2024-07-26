@@ -1,8 +1,8 @@
 
 import { Router } from 'express'
-import { login, logout, register,forgetPassword,newPassword } from "../controllers/loginRegister.controller.js"
-import { verifyJwt } from '../middlewares/auth.middleware.js'
-import { upload } from '../middlewares/multer.middleware.js'
+import { login, logout, register,forgetPassword,newPassword } from "../controllers/loginRegister.controller"
+import { verifyJwt } from '../middlewares/auth.middleware'
+import { upload } from '../middlewares/multer.middleware'
 const router = Router()
 
 router.route('/login').post(login)

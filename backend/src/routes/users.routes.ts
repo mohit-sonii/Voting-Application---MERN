@@ -1,8 +1,8 @@
 
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/auth.middleware.js";
-import { updateUser,getUser,updateUserPassword } from "../controllers/users.controller.js";
-import { upload } from "../middlewares/multer.middleware.js"
+import { verifyJwt } from "../middlewares/auth.middleware";
+import { updateUser,getUser,updateUserPassword } from "../controllers/users.controller";
+import { upload } from "../middlewares/multer.middleware"
 const router = Router()
 
 router.route('/update').patch(verifyJwt, upload.single('avatar'), updateUser)
